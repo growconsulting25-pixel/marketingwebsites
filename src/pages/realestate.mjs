@@ -77,7 +77,7 @@ export const reHub = (lang) => {
     <section class="section" aria-labelledby="work-h">
       <div class="container">
         ${sectionHead({ eyebrow: fr ? 'Réalisations' : 'Work', title: fr ? 'Sites de courtiers, d’équipes et d’agences' : 'Broker, team and agency sites', id: 'work-h' })}
-        ${portfolioGrid(lang, { limit: 3 })}
+        ${portfolioGrid(lang, { limit: 3, realEstateOnly: true })}
       </div>
     </section>
 
@@ -151,7 +151,7 @@ export const reServicePage = (s, lang) => {
     <section class="section-tight" aria-labelledby="ex-h">
       <div class="container">
         ${sectionHead({ eyebrow: fr ? 'Exemples' : 'Examples', title: fr ? 'Réalisations et résultat' : 'Work and results', id: 'ex-h' })}
-        ${portfolioGrid(lang, { limit: 3 })}
+        ${portfolioGrid(lang, { limit: 3, realEstateOnly: true })}
         <div class="mini-case card reveal">
           <span class="badge">${fr ? 'Résultat' : 'Result'}</span>
           <p>${todo(fr ? 'Mini étude de cas : un résultat vérifié pour ce service (métrique, période, source)' : 'Mini case study: one verified result for this service (metric, period, source)', { block: true })}</p>

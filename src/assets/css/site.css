@@ -894,3 +894,9 @@ img.avatar { width: 48px; height: 48px; object-fit: cover; padding: 0; }
 .site-footer address a, .contact-alt a { overflow-wrap: anywhere; }
 .btn { max-width: 100%; }
 .crumbs ol { align-items: center; } .crumbs [aria-current] { display: inline-block; padding-block: 10px; }
+/* Portfolio with real screenshots */
+.work__shot { background: var(--surface); }
+.work__shot img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+.work__meta h3 { font-size: 1.1rem; }
+.work-grid { gap: var(--s-7) var(--s-5); }
+.work__shot { background: var(--surface-2); }

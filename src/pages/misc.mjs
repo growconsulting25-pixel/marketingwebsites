@@ -2,6 +2,7 @@ import config from '../../site.config.mjs';
 import { link } from '../routes.mjs';
 import { ui } from '../content/ui.mjs';
 import { articles, hubs } from '../content/articles.mjs';
+import { portfolio } from '../content/portfolio.mjs';
 import { html, icon, animWords, todo } from '../lib/html.mjs';
 import { breadcrumbs, abs, organizationSchema } from '../lib/layout.mjs';
 import { sectionHead, arrowBtn, faqBlock, faqSchema, finalCta, portfolioGrid, articleCard, leadForm, processSteps, testimonials } from '../lib/components.mjs';
@@ -26,7 +27,7 @@ export const work = (lang) => {
     title: fr ? 'Réalisations — sites de courtiers immobiliers et PME | Marketing Websites' : 'Our Work — Real Estate Broker & SME Websites | Marketing Websites',
     description: fr ? 'Portfolio de sites web de courtiers, d’équipes et d’agences immobilières au Québec, et de projets pour PME.' : 'Portfolio of websites for Quebec real estate brokers, teams and agencies, plus SME projects.',
     body: html`
-    ${simpleHero(lang, 'work', crumbs, fr ? 'Réalisations' : 'Our work', fr ? 'Des sites réels, des <em>résultats</em> mesurés' : 'Real sites, <em>measured</em> results', fr ? 'Filtrez par type de client. Chaque projet indique les services utilisés et, lorsqu’il est vérifié, un résultat.' : 'Filter by client type. Each project lists the services used and, when verified, a result.')}
+    ${simpleHero(lang, 'work', crumbs, fr ? 'Réalisations' : 'Our work', fr ? 'Des sites réels, des <em>résultats</em> mesurés' : 'Real sites, <em>measured</em> results', fr ? `${portfolio.length} projets réalisés pour des courtiers, des équipes, des agences et des entreprises d’ici. Filtrez par type de client.` : `${portfolio.length} projects for brokers, teams, agencies and local businesses. Filter by client type.`)}
     <section class="section-tight"><div class="container">${portfolioGrid(lang, { filters: true, limit: 50 })}</div></section>
     ${finalCta(lang, { title: fr ? 'Votre site pourrait être le prochain' : 'Your site could be next' })}`,
   };

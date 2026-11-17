@@ -223,27 +223,23 @@ export const featuredCase = (lang) => {
 
 const workCard = (lang, w, i) => {
   const fr = lang === 'fr';
-  const typeLabel = portfolioTypes[lang][w.type];
-  const shot = w.image
-    ? `<img src="${w.image}" alt="${esc(w.name)}" width="800" height="560" loading="lazy" decoding="async">`
-    : html`<div class="work__mock work__mock--${w.palette}" aria-hidden="true">
-        <div class="device__bar"><i></i><i></i><i></i></div>
-        <div class="work__mock-hero"><span></span><span></span></div>
-        <div class="work__mock-row">${houseArt(i)}${houseArt(i + 2)}${houseArt(i + 4)}</div>
-      </div>`;
   return html`
   <article class="work reveal" data-type="${w.type}" data-delay="${(i % 3) + 1}">
-    <div class="work__shot">${shot}${w.metric ? html`<span class="badge work__badge">${w.metric}</span>` : ''}</div>
+    <div class="work__shot">
+      <img src="${w.image}" alt="${fr ? 'Site web de' : 'Website for'} ${esc(w.name)}" width="${w.w}" height="${w.h}" loading="lazy" decoding="async">
+      ${w.metric ? html`<span class="badge work__badge">${w.metric}</span>` : ''}
+    </div>
     <div class="work__meta">
-      <h3>${w.placeholder ? todo((fr ? 'Client à ajouter — ' : 'Client to add — ') + w.name) : w.name}</h3>
-      <p><span class="tag">${typeLabel}</span> <span class="muted">${w.region}</span></p>
+      <h3>${w.name}</h3>
+      <p><span class="tag">${portfolioTypes[lang][w.type]}</span></p>
       ${w.url ? html`<a class="link" href="${w.url}" rel="noopener" target="_blank">${fr ? 'Voir le site' : 'Visit site'} ${icon('arrow')}</a>` : ''}
     </div>
   </article>`;
 };
 
-export const portfolioGrid = (lang, { filters = false, limit = 6 } = {}) => {
-  const items = portfolio.slice(0, limit);
+export const portfolioGrid = (lang, { filters = false, limit = 6, realEstateOnly = false } = {}) => {
+  const sorted = [...portfolio].sort((a, b) => (a.type === 'autre') - (b.type === 'autre'));
+  const items = (realEstateOnly ? sorted.filter((w) => w.type !== 'autre') : sorted).slice(0, limit);
   const types = portfolioTypes[lang];
   return html`
   ${filters ? html`<div class="filters" role="group" aria-label="${lang === 'fr' ? 'Filtrer les réalisations' : 'Filter work'}" data-filters>

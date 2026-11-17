@@ -1,17 +1,62 @@
-// Portfolio (strategy §6: 12–20 real broker/team/agency sites).
-// These entries are PLACEHOLDERS: replace each with a real client (written
-// permission), a screenshot in /src/assets/img/work/ (desktop + mobile, WebP/AVIF),
-// the live URL and ONE verified metric. Leave `metric` empty if none is verified.
-//
-// type: 'courtier' | 'equipe' | 'agence' | 'autre'
+// Portfolio — real projects from marketingwebsites.ca/portfolio/ (screenshots
+// copied from the current site). `type` was assigned from the project name:
+// please check it ('courtier' | 'equipe' | 'agence' | 'autre').
+// Optional per project: url (live site), metric (one VERIFIED result, e.g. '+40 % de demandes').
 
 export const portfolio = [
-  { slug: 'exemple-courtier-1', type: 'courtier', region: 'Montréal', name: 'Courtier résidentiel', palette: 1, placeholder: true, url: '', image: '', metric: null },
-  { slug: 'exemple-equipe-1', type: 'equipe', region: 'Laval', name: 'Équipe de courtiers', palette: 2, placeholder: true, url: '', image: '', metric: null },
-  { slug: 'exemple-agence-1', type: 'agence', region: 'Rive-Sud', name: 'Agence immobilière', palette: 3, placeholder: true, url: '', image: '', metric: null },
-  { slug: 'exemple-courtier-2', type: 'courtier', region: 'Québec', name: 'Courtier de prestige', palette: 4, placeholder: true, url: '', image: '', metric: null },
-  { slug: 'exemple-equipe-2', type: 'equipe', region: 'Laurentides', name: 'Équipe familiale', palette: 5, placeholder: true, url: '', image: '', metric: null },
-  { slug: 'exemple-pme-1', type: 'autre', region: 'Montréal', name: 'PME — services', palette: 6, placeholder: true, url: '', image: '', metric: null },
+  { slug: 'daboomdesserts-com', name: 'Daboom Desserts', type: 'autre', image: '/assets/img/work/daboomdesserts-com.webp', w: 800, h: 498 },
+  { slug: 'joellebitar-com-en', name: 'Joelle Bitar', type: 'courtier', image: '/assets/img/work/joellebitar-com-en.webp', w: 800, h: 497 },
+  { slug: 'badr-sidqui-2', name: 'Badr Sidqui', type: 'courtier', image: '/assets/img/work/badr-sidqui-2.webp', w: 800, h: 498 },
+  { slug: 'spicebros-com', name: 'Spice Bros', type: 'autre', image: '/assets/img/work/spicebros-com.webp', w: 800, h: 498 },
+  { slug: 'portovino-en-com', name: 'Portovino', type: 'autre', image: '/assets/img/work/portovino-en-com.webp', w: 800, h: 497 },
+  { slug: 'eliterealestategroup', name: 'Montreal’s Elite Real Estate Group', type: 'equipe', image: '/assets/img/work/eliterealestategroup.webp', w: 800, h: 498 },
+  { slug: 'nadiamaltais-com', name: 'Nadia Maltais', type: 'courtier', image: '/assets/img/work/nadiamaltais-com.webp', w: 800, h: 498 },
+  { slug: 'stephanie-boisvert-tessier', name: 'Stéphanie Boisvert-Tessier', type: 'courtier', image: '/assets/img/work/stephanie-boisvert-tessier.webp', w: 800, h: 498 },
+  { slug: 'irsa-laser', name: 'Clinique IRSA Laser', type: 'autre', image: '/assets/img/work/irsa-laser.webp', w: 800, h: 498 },
+  { slug: 'beauimmobilier', name: 'Beau L’Équipe Immobilière', type: 'equipe', image: '/assets/img/work/beauimmobilier.webp', w: 800, h: 498 },
+  { slug: 'mdcomtl-com', name: 'MDCO', type: 'autre', image: '/assets/img/work/mdcomtl-com.webp', w: 800, h: 498 },
+  { slug: 'renovationaf-com', name: 'Rénovation AF', type: 'autre', image: '/assets/img/work/renovationaf-com.webp', w: 800, h: 498 },
+  { slug: 'mathieuarseneault-com', name: 'Mathieu Arseneault Courtier Immobilier inc.', type: 'courtier', image: '/assets/img/work/mathieuarseneault-com.webp', w: 800, h: 498 },
+  { slug: 'docteur-demenagement', name: 'Doctor Mover', type: 'autre', image: '/assets/img/work/docteur-demenagement.webp', w: 800, h: 498 },
+  { slug: 'courtiermtl-com', name: 'Groupe Giuseppe Cartolano Inc.', type: 'equipe', image: '/assets/img/work/courtiermtl-com.webp', w: 800, h: 498 },
+  { slug: 'alexhaddou-com', name: 'Alex Haddou', type: 'courtier', image: '/assets/img/work/alexhaddou-com.webp', w: 800, h: 498 },
+  { slug: 'permahairremoval-com', name: 'Permanent Hair Removal Center', type: 'autre', image: '/assets/img/work/permahairremoval-com.webp', w: 800, h: 498 },
+  { slug: 'raymondsingh-com', name: 'Raymond Singh', type: 'courtier', image: '/assets/img/work/raymondsingh-com.webp', w: 800, h: 498 },
+  { slug: 'groupeyouthana-com', name: 'Groupe Youthana', type: 'equipe', image: '/assets/img/work/groupeyouthana-com.webp', w: 800, h: 498 },
+  { slug: 'bienergie-ca', name: 'Bienergie', type: 'autre', image: '/assets/img/work/bienergie-ca.webp', w: 800, h: 498 },
+  { slug: 'equipeannajessica-com', name: 'Équipe Anna & Jessica', type: 'equipe', image: '/assets/img/work/equipeannajessica-com.webp', w: 800, h: 498 },
+  { slug: 'team-orfeo-ca', name: 'Team Orfeo', type: 'equipe', image: '/assets/img/work/team-orfeo-ca.webp', w: 800, h: 498 },
+  { slug: 'vassvimmigration-com', name: 'Vito Vassallo', type: 'autre', image: '/assets/img/work/vassvimmigration-com.webp', w: 800, h: 498 },
+  { slug: 'demenagementgrandmontreal-com', name: 'Déménagement Grand Montreal', type: 'autre', image: '/assets/img/work/demenagementgrandmontreal-com.webp', w: 800, h: 498 },
+  { slug: 'jmprestigerealty-com', name: 'JM Prestige Realty', type: 'agence', image: '/assets/img/work/jmprestigerealty-com.webp', w: 800, h: 498 },
+  { slug: 'art-pair', name: 'Art Pair', type: 'autre', image: '/assets/img/work/art-pair.webp', w: 800, h: 498 },
+  { slug: 'gsa-financial-services', name: 'GSA Financial Services', type: 'autre', image: '/assets/img/work/gsa-financial-services.webp', w: 800, h: 498 },
+  { slug: 'mynotaire-ca', name: 'Patakfalvi Notaire inc.', type: 'autre', image: '/assets/img/work/mynotaire-ca.webp', w: 800, h: 498 },
+  { slug: 'chefflanctot-com-en', name: 'Cheff-Lanctot Group', type: 'equipe', image: '/assets/img/work/chefflanctot-com-en.webp', w: 800, h: 498 },
+  { slug: 'magalie-payen-com', name: 'Magalie Payen', type: 'courtier', image: '/assets/img/work/magalie-payen-com.webp', w: 800, h: 497 },
+  { slug: 'microbladingplus-ca', name: 'Microblading Plus', type: 'autre', image: '/assets/img/work/microbladingplus-ca.webp', w: 800, h: 498 },
+  { slug: 'stephanygvendu-com', name: 'Stéphany Gauthier', type: 'courtier', image: '/assets/img/work/stephanygvendu-com.webp', w: 800, h: 498 },
+  { slug: 'imaccareecentre', name: 'Laurier Macdonald Career Center', type: 'autre', image: '/assets/img/work/imaccareecentre.webp', w: 800, h: 479 },
+  { slug: 'taniabernardo-com-2', name: 'Tania Bernardo', type: 'courtier', image: '/assets/img/work/taniabernardo-com-2.webp', w: 800, h: 498 },
+  { slug: 'powerupleads-com-2', name: 'PowerUp Leads', type: 'autre', image: '/assets/img/work/powerupleads-com-2.webp', w: 800, h: 498 },
+  { slug: 'basha', name: 'Basha', type: 'autre', image: '/assets/img/work/basha.webp', w: 800, h: 497 },
+  { slug: 'expquebec-com', name: 'eXp Quebec', type: 'agence', image: '/assets/img/work/expquebec-com.webp', w: 800, h: 498 },
+  { slug: 'carmenbossio', name: 'Carmen Bossio Inc.', type: 'courtier', image: '/assets/img/work/carmenbossio.webp', w: 800, h: 498 },
+  { slug: 'chadyborgi-com', name: 'Chad Borgi', type: 'courtier', image: '/assets/img/work/chadyborgi-com.webp', w: 800, h: 498 },
+  { slug: 'construction-crsd', name: 'Construction CRSD', type: 'autre', image: '/assets/img/work/construction-crsd.webp', w: 800, h: 498 },
+  { slug: 'equipesollazzo-com', name: 'Équipe Sollazzo', type: 'equipe', image: '/assets/img/work/equipesollazzo-com.webp', w: 800, h: 498 },
+  { slug: 'thermoshades-com', name: 'ThermoShade', type: 'autre', image: '/assets/img/work/thermoshades-com.webp', w: 800, h: 498 },
+  { slug: 'abbeyandolivier-com', name: 'Abbey & Olivier', type: 'equipe', image: '/assets/img/work/abbeyandolivier-com.webp', w: 800, h: 498 },
+  { slug: 'unboncourtier-com', name: 'Martin Jacques', type: 'courtier', image: '/assets/img/work/unboncourtier-com.webp', w: 800, h: 498 },
+  { slug: 'alinezafirian-com', name: 'Aline Zafirian', type: 'courtier', image: '/assets/img/work/alinezafirian-com.webp', w: 800, h: 498 },
+  { slug: 'equipels-com', name: 'Équipe Lacasse Shapcott', type: 'equipe', image: '/assets/img/work/equipels-com.webp', w: 800, h: 498 },
+  { slug: 'lauraetdany', name: 'Laura & Dany', type: 'equipe', image: '/assets/img/work/lauraetdany.webp', w: 800, h: 479 },
+  { slug: 'wca', name: 'WCA Solutions', type: 'autre', image: '/assets/img/work/wca.webp', w: 800, h: 497 },
+  { slug: 'julia', name: 'Julia Ryzhik', type: 'courtier', image: '/assets/img/work/julia.webp', w: 800, h: 497 },
+  { slug: 'bbtutorials-com-en', name: 'Building Blocks Tutorials', type: 'autre', image: '/assets/img/work/bbtutorials-com-en.webp', w: 800, h: 498 },
+  { slug: 'nathalie-rodrigue', name: 'Nathalie Rodrigue Physiothérapeute', type: 'autre', image: '/assets/img/work/nathalie-rodrigue.webp', w: 800, h: 480 },
+  { slug: 'alejandra', name: 'Alejandra Caballero', type: 'courtier', image: '/assets/img/work/alejandra.webp', w: 800, h: 483 },
+  { slug: 'pierrealex', name: 'Pierre Alex Jeanty', type: 'autre', image: '/assets/img/work/pierrealex.webp', w: 800, h: 497 },
 ];
 
 export const portfolioTypes = {

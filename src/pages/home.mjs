@@ -62,7 +62,7 @@ export const home = (lang) => {
           ${sectionHead({ eyebrow: fr ? 'Réalisations' : 'Our work', title: fr ? 'Des sites de courtiers qui travaillent' : 'Broker sites that do the work', id: 'work-h' })}
           <a class="link reveal" href="${link('work', lang)}">${fr ? 'Toutes les réalisations' : 'All projects'} ${icon('arrow')}</a>
         </div>
-        ${portfolioGrid(lang, { limit: 6 })}
+        ${portfolioGrid(lang, { limit: 6, realEstateOnly: true })}
       </div>
     </section>
 
