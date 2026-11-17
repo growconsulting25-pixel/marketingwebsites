@@ -8,14 +8,9 @@ import { html, esc, icon } from './html.mjs';
 export const abs = (path) => config.siteUrl.replace(/\/$/, '') + path;
 const telHref = (p) => 'tel:' + p.replace(/[^\d+]/g, '');
 
-const logo = (lang) => html`
-  <a class="logo" href="${link('home', lang)}" aria-label="Marketing Websites — ${lang === 'fr' ? 'accueil' : 'home'}">
-    <svg class="logo__mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
-      <rect width="32" height="32" rx="9" fill="var(--text)"/>
-      <path d="M8 22V12l8-5 8 5v10" fill="none" stroke="var(--bg)" stroke-width="2.4" stroke-linejoin="round"/>
-      <circle cx="16" cy="17.5" r="2.6" fill="var(--accent-on-deep)"/>
-    </svg>
-    <span class="logo__word">Marketing<span>Websites</span></span>
+const logo = (lang, variant = '') => html`
+  <a class="logo" href="${link('home', lang)}" aria-label="Agence Marketing Websites — ${lang === 'fr' ? 'accueil' : 'home'}">
+    <img src="/assets/img/logo${variant}.svg" alt="Agence Marketing Websites" width="1573" height="1574">
   </a>`;
 
 const subList = (items, lang, hubId, hubLabel) => html`
@@ -81,7 +76,7 @@ const footer = (page) => {
     <div class="container">
       <div class="site-footer__top">
         <div class="site-footer__brand">
-          ${logo(lang)}
+          ${logo(lang, '-white')}
           <p>${t.footer.tagline}</p>
           <p class="muted-on-deep">${t.footer.since}</p>
           <a class="btn btn--light" href="${link('contact', lang)}" data-cta="consultation">${t.cta.consult} ${icon('arrow')}</a>
@@ -236,9 +231,9 @@ ${page.noindex ? '' : `<link rel="alternate" hreflang="fr-CA" href="${abs(routes
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${abs('/assets/img/og.png')}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#F7F3EC">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${assets.css}">
 <script defer src="${assets.js}"></script>

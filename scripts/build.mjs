@@ -29,9 +29,8 @@ const assets = { css: await hashed('assets/css/site.css'), js: await hashed('ass
 const fontDir = path.join(dist, 'assets', 'fonts');
 await mkdir(fontDir, { recursive: true });
 const fonts = [
-  ['@fontsource-variable/fraunces', 'fraunces-latin-opsz-normal.woff2'],
-  ['@fontsource-variable/fraunces', 'fraunces-latin-ext-opsz-normal.woff2'],
-  ['@fontsource-variable/fraunces', 'fraunces-latin-opsz-italic.woff2'],
+  ['@fontsource-variable/montserrat', 'montserrat-latin-wght-normal.woff2'],
+  ['@fontsource-variable/montserrat', 'montserrat-latin-ext-wght-normal.woff2'],
   ['@fontsource-variable/instrument-sans', 'instrument-sans-latin-wght-normal.woff2'],
   ['@fontsource-variable/instrument-sans', 'instrument-sans-latin-ext-wght-normal.woff2'],
 ];

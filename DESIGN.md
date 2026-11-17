@@ -2,7 +2,9 @@
 
 Source brief: *Marketing Websites — Website Rebuild Strategy* (Nov 17, 2026), §2, §4, §6, §7, §7a.
 
-**Direction in one sentence:** *warm-editorial* — a premium Quebec real-estate magazine, not a tech startup: off-white paper, deep ink, one confident terracotta accent, an expressive serif for headlines, with the broker's work (homes, listings, faces) framed as the hero.
+**Direction in one sentence (v2, Nov 17 — client feedback):** *modern real-estate SaaS* in the brand colours — white, dark blue (navy) and red — inspired by realestatewebmasters.com but more modern: dark navy hero bands with a fine blueprint grid and red glow, crisp white/light-grey sections, bold Montserrat headlines, product mock-ups (broker site + Centris, Utilmo CRM) as the hero visuals, and the official MW monogram logo.
+
+> v1 (warm-editorial, beige/green, serif) was rejected by the client: "looks like a restaurant website", not on-brand. Sections below are updated for v2; the v2 overrides live at the end of `site.css`.
 
 **Interaction tier: L2 — fluid.** Scroll reveals, nav scroll state, count-up proof numbers, an animated hero mock (Centris listings syncing), a CRM mock that receives a lead. CSS-first + ~5 KB vanilla JS. No GSAP/Lenis/WebGL (not needed for this tier, and it protects Core Web Vitals: LCP < 2.5 s, INP < 200 ms, CLS < 0.1).
 
@@ -24,6 +26,11 @@ Source brief: *Marketing Websites — Website Rebuild Strategy* (Nov 17, 2026), 
 ```css
 :root {
   /* surfaces */
+  /* v2 brand palette — replace with exact codes from the brand guide when available */
+  --bg:            #FFFFFF;  --surface-2: #F2F5F9;  --deep: #0B1F3A (navy);  --deep-2: #14305A;
+  --text:          #0B1F3A;  --muted: #4C5A6E;  --accent: #D7262E (red, white text 5.1:1);  --accent-hover: #B31D24;
+  --accent-on-deep: #FF7378 (red text on navy, 6.4:1);  --on-deep: #FFFFFF;  --on-deep-muted: #B9C6D8;
+  /* v1 values below are superseded */
   --bg:            #F7F3EC;  --bg-rgb: 247 243 236;      /* paper */
   --surface:       #FFFFFF;  --surface-rgb: 255 255 255;
   --surface-2:     #EFE8DC;  --surface-2-rgb: 239 232 220; /* sand band */
@@ -57,7 +64,8 @@ Roles: accent is reserved for primary CTAs, the active nav marker, metric badges
 
 ## 3. Typography
 
-- **Display / headings:** **Fraunces** (variable, opsz 9–144, wght 300–800, full Latin-Extended → French accents render well). Used at high optical size, weight 500–600, slight negative tracking.
+- **v2:** headings in **Montserrat** (variable, 700–800, tight tracking; echoes the logo's geometric capitals), body stays **Instrument Sans**. No italics, no serif.
+- ~~v1 display: **Fraunces**~~ (variable, opsz 9–144, wght 300–800, full Latin-Extended → French accents render well). Used at high optical size, weight 500–600, slight negative tracking.
 - **Body / UI:** **Instrument Sans** (variable, wght 400–700) — legible, slightly characterful grotesk, not Inter.
 - **Import:** self-hosted via `@fontsource-variable/fraunces` and `@fontsource-variable/instrument-sans` (woff2, latin + latin-ext subsets, `font-display: swap`), preloaded. Fallback: Google Fonts link if self-hosting is unavailable.
 - **Fallback stacks:**
