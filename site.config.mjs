@@ -13,8 +13,8 @@ export default {
   foundingYear: 2015,
 
   // NAP — must match the Google Business Profile exactly.
-  phone: '',            // e.g. '+1 514 000-0000'  (empty = phone buttons hidden)
-  email: '',            // e.g. 'info@marketingwebsites.ca' (empty = hidden)
+  phone: '+1 514-360-2187', // from the current site (empty = phone buttons hidden)
+  email: 'info@marketingwebsites.ca',
   address: {
     street: '',         // e.g. '1234 rue Exemple, bureau 200'
     city: 'Montréal',

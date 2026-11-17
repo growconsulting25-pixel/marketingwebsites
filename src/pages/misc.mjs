@@ -125,19 +125,13 @@ export const about = (lang) => {
     ${simpleHero(lang, 'about', crumbs, fr ? 'À propos' : 'About', fr ? 'Une équipe montréalaise au service des <em>courtiers</em> depuis 2015' : 'A Montreal team serving <em>brokers</em> since 2015', fr ? 'Nous avons commencé par bâtir des sites web. Nous avons vite compris qu’un courtier n’a pas besoin d’un site : il a besoin de mandats. D’où le système — et Utilmo, notre propre CRM.' : 'We started by building websites. We quickly learned that brokers don’t need a website: they need listings. Hence the system — and Utilmo, our own CRM.')}
     <section class="section-tight">
       <div class="container about-grid">
-        <div class="team-photo reveal">${todo(fr ? 'Photo réelle de l’équipe (bureau de Montréal)' : 'Real team photo (Montreal office)', { block: true })}</div>
+        <figure class="team-photo reveal"><img src="/assets/img/photos/equipe.webp" alt="${fr ? 'L’équipe de Marketing Websites' : 'The Marketing Websites team'}" width="1600" height="625" loading="lazy" decoding="async"></figure>
         <div class="reveal" data-delay="2">
           <h2 class="h3">${fr ? 'Ce qui nous distingue' : 'What sets us apart'}</h2>
           <ul class="ticks">
             ${(fr ? ['Conçu pour le Québec : français d’abord, Centris natif, règles publicitaires d’ici.', 'Un système connecté : site, publicité et CRM partagent les mêmes données.', 'Notre propre CRM, Utilmo — développé et soutenu à Montréal.', 'Bilingue par défaut, rédigé par des humains.'] : ['Built for Quebec: French-first, Centris-native, local advertising rules.', 'One connected system: site, ads and CRM share the same data.', 'Our own CRM, Utilmo — built and supported in Montreal.', 'Bilingual by default, written by people.']).map((x) => html`<li>${icon('check')}${x}</li>`)}
           </ul>
         </div>
-      </div>
-    </section>
-    <section class="section section--sand">
-      <div class="container">
-        ${sectionHead({ eyebrow: fr ? 'L’équipe' : 'The team', title: fr ? 'Les personnes derrière vos projets' : 'The people behind your projects' })}
-        <div class="cards-3">${[1, 2, 3].map((n) => html`<div class="card person reveal" data-delay="${n}"><span class="avatar avatar--lg" aria-hidden="true">${icon('user')}</span><h3>${todo(fr ? 'Nom' : 'Name')}</h3><p class="muted">${todo(fr ? 'Rôle' : 'Role')}</p></div>`)}</div>
       </div>
     </section>
     <section class="section">
@@ -147,7 +141,7 @@ export const about = (lang) => {
       </div>
     </section>
     <section class="section section--sand">
-      <div class="container">${sectionHead({ eyebrow: fr ? 'Témoignages' : 'Testimonials', title: fr ? 'Ils nous font confiance' : 'They trust us', center: true })}${testimonials(lang)}</div>
+      <div class="container">${sectionHead({ eyebrow: fr ? 'Témoignages' : 'Testimonials', title: fr ? 'Ils nous font confiance' : 'They trust us', center: true })}${testimonials(lang, 8)}</div>
     </section>
     ${finalCta(lang)}`,
   };

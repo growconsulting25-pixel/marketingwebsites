@@ -3,7 +3,7 @@ import { ui } from '../content/ui.mjs';
 import { html, icon, animWords } from '../lib/html.mjs';
 import { organizationSchema } from '../lib/layout.mjs';
 import {
-  heroMock, proofStrip, systemSection, situations, featuredCase, portfolioGrid, utilmoSpotlight,
+  heroMock, proofStrip, logoStrip, systemSection, situations, featuredCase, portfolioGrid, utilmoSpotlight,
   otherIndustries, processSteps, testimonials, latestResources, finalCta, sectionHead, arrowBtn,
 } from '../lib/components.mjs';
 
@@ -50,6 +50,7 @@ export const home = (lang) => {
       </div>
     </section>
 
+    ${logoStrip(lang)}
     ${proofStrip(lang)}
     ${systemSection(lang)}
     ${situations(lang)}
@@ -78,7 +79,7 @@ export const home = (lang) => {
     <section class="section section--sand" aria-labelledby="quotes-h">
       <div class="container">
         ${sectionHead({ eyebrow: fr ? 'Témoignages' : 'Testimonials', title: fr ? 'Ce que disent les courtiers' : 'What brokers say', id: 'quotes-h', center: true })}
-        ${testimonials(lang)}
+        ${testimonials(lang, 3, { skip: ['melissa'] })}
       </div>
     </section>
 

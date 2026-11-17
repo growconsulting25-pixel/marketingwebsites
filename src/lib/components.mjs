@@ -4,6 +4,7 @@ import { ui } from '../content/ui.mjs';
 import { reServices, systemSteps } from '../content/realestate.mjs';
 import { articles } from '../content/articles.mjs';
 import { portfolio, portfolioTypes } from '../content/portfolio.mjs';
+import { testimonials as testimonialsData, clientLogos } from '../content/testimonials.mjs';
 import { html, esc, icon, todo } from './html.mjs';
 
 const T = (lang) => ui[lang];
@@ -98,8 +99,8 @@ export const proofStrip = (lang) => {
   <section class="proof" aria-label="${fr ? 'En chiffres' : 'By the numbers'}">
     <div class="container proof__grid">
       ${stat(String(years), fr ? `ans à bâtir des sites (depuis ${config.foundingYear})` : `years building sites (since ${config.foundingYear})`, years)}
-      ${p.brokerSites ? stat(`${p.brokerSites}+`, fr ? 'sites de courtiers lancés' : 'broker sites launched', p.brokerSites) : stat(todo(fr ? 'Nb de sites' : 'Site count'), fr ? 'sites de courtiers lancés' : 'broker sites launched')}
-      ${p.googleRating ? stat(`${String(p.googleRating).replace('.', fr ? ',' : '.')}★`, fr ? `note Google (${p.googleReviewCount} avis)` : `Google rating (${p.googleReviewCount} reviews)`) : stat(todo(fr ? 'Note Google' : 'Google rating'), fr ? 'note moyenne Google' : 'average Google rating')}
+      ${p.brokerSites ? stat(`${p.brokerSites}+`, fr ? 'sites de courtiers lancés' : 'broker sites launched', p.brokerSites) : stat('Centris', fr ? 'inscriptions synchronisées automatiquement' : 'listings synced automatically')}
+      ${p.googleRating ? stat(`${String(p.googleRating).replace('.', fr ? ',' : '.')}★`, fr ? `note Google (${p.googleReviewCount} avis)` : `Google rating (${p.googleReviewCount} reviews)`) : stat('Utilmo', fr ? 'notre propre CRM, conçu à Montréal' : 'our own CRM, built in Montreal')}
       ${stat('FR · EN', fr ? 'bilingue par défaut, pas en option' : 'bilingual by default, not an add-on')}
     </div>
     <div class="marquee" aria-hidden="true"><div class="marquee__track">
@@ -108,24 +109,51 @@ export const proofStrip = (lang) => {
   </section>`;
 };
 
+// ── Logo strip (logos shown on the current site) ────────────────────────────
+export const logoStrip = (lang) => html`
+  <section class="logos" aria-label="${lang === 'fr' ? 'Ils nous font confiance' : 'They trust us'}">
+    <div class="container logos__in">
+      <p class="logos__label">${lang === 'fr' ? 'Des courtiers et entreprises affiliés à' : 'Brokers and businesses affiliated with'}</p>
+      <ul class="logos__list">
+        ${clientLogos.map((l) => html`<li><img src="/assets/img/logos/${l.file}.webp" alt="${esc(l.name)}" width="${l.w}" height="120" loading="lazy" decoding="async"></li>`)}
+      </ul>
+    </div>
+  </section>`;
+
+// ── How it works: 4 image cards (REW "boxed steps" pattern) ─────────────────
 export const systemSection = (lang, { eyebrow, title, lead } = {}) => {
   const fr = lang === 'fr';
   const steps = systemSteps[lang];
   const svcName = (id) => reServices.find((s) => s.id === id)?.[lang].nav;
+  const photo = { attract: 'attirer', convert: 'convertir', follow: 'suivre', measure: 'mesurer' };
+  const head = fr
+    ? { attract: 'Soyez trouvé en premier, sur Google, Maps et les réseaux', convert: 'Un site qui transforme les visites en demandes', follow: 'Chaque prospect relancé, automatiquement', measure: 'Sachez exactement ce qui rapporte' }
+    : { attract: 'Be found first, on Google, Maps and social', convert: 'A site that turns visits into inquiries', follow: 'Every lead followed up, automatically', measure: 'Know exactly what pays off' };
+  const alt = fr
+    ? { attract: 'Téléphone affichant des applications de recherche et de réseaux sociaux', convert: 'Maison moderne éclairée au crépuscule', follow: 'Équipe en réunion autour d’un bureau', measure: 'Ordinateur portable affichant un tableau de bord de statistiques' }
+    : { attract: 'Phone showing search and social apps', convert: 'Modern house lit at dusk', follow: 'Team meeting around a desk', measure: 'Laptop showing an analytics dashboard' };
   return html`
-  <section class="section system" aria-labelledby="system-h">
+  <section class="section how" aria-labelledby="system-h">
     <div class="container">
-      ${sectionHead({ eyebrow: eyebrow || (fr ? 'Le système' : 'The system'), title: title || (fr ? 'Un seul système, du premier clic au mandat signé' : 'One system, from first click to signed listing'), lead: lead || (fr ? 'Votre site, vos publicités et votre CRM partagent les mêmes données. Vous savez enfin ce qui rapporte.' : 'Your site, your ads and your CRM share the same data. You finally know what pays off.'), id: 'system-h' })}
-      <div class="system__grid reveal">
-        <div class="system__line" aria-hidden="true"></div>
+      <header class="how__head reveal">
+        <p class="eyebrow eyebrow--on-deep">${eyebrow || (fr ? 'Comment ça marche' : 'How it works')}</p>
+        <h2 id="system-h">${title || (fr ? html`Attirer. Convertir. <em>Suivre.</em> Mesurer.` : html`Attract. Convert. <em>Follow up.</em> Measure.`)}</h2>
+        <p class="lead">${lead || (fr ? 'Quatre étapes, un seul pipeline : du premier clic d’un vendeur jusqu’au mandat signé. Votre site, vos publicités et votre CRM partagent les mêmes données.' : 'Four steps, one pipeline: from a seller’s first click to the signed listing. Your site, ads and CRM share the same data.')}</p>
+      </header>
+      <ol class="how__grid">
         ${steps.map((s, i) => html`
-          <article class="system__step system__step--${s.key}">
-            <span class="system__n">${s.n}</span>
-            <h3>${s.title}</h3>
-            <p>${s.text}</p>
-            <ul class="system__links">${[...new Set(s.links)].map((id) => html`<li><a href="${link(id, lang)}">${svcName(id)} ${icon('arrow')}</a></li>`)}</ul>
-          </article>`)}
-      </div>
+          <li class="how__card reveal" data-delay="${(i % 2) + 1}">
+            <figure class="how__media">
+              <img src="/assets/img/photos/${photo[s.key]}-720.webp" srcset="/assets/img/photos/${photo[s.key]}-720.webp 720w, /assets/img/photos/${photo[s.key]}.webp 1200w" sizes="(min-width: 1024px) 560px, 100vw" alt="${alt[s.key]}" width="720" height="480" loading="lazy" decoding="async">
+              <span class="how__step"><b class="tabnum">${s.n}</b> ${s.title}</span>
+            </figure>
+            <div class="how__body">
+              <h3>${head[s.key]}</h3>
+              <p>${s.text}</p>
+              <ul class="how__links">${[...new Set(s.links)].map((id) => html`<li><a href="${link(id, lang)}">${svcName(id)} ${icon('arrow')}</a></li>`)}</ul>
+            </div>
+          </li>`)}
+      </ol>
     </div>
   </section>`;
 };
@@ -160,28 +188,34 @@ export const situations = (lang) => {
   </section>`;
 };
 
+// ── Featured client story (REW case-study pattern, real testimonial) ────────
 export const featuredCase = (lang) => {
   const fr = lang === 'fr';
+  const t = testimonialsData.find((x) => x.id === 'melissa');
+  const tiles = fr
+    ? [['Plus de mandats', '« J’ai obtenu plus de mandats »'], ['Plus de prospects', '« il m’a aidée à générer plus de prospects »'], ['Plus de visibilité', 'Pour elle, ses inscriptions et sa marque']]
+    : [['More listings', '“I definitely got more listings”'], ['More leads', '“it helped me generate more leads”'], ['More visibility', 'For her, her listings and her brand']];
   return html`
-  <section class="section case-band" aria-labelledby="case-h">
-    <div class="container case">
-      <div class="case__copy reveal">
-        <p class="eyebrow eyebrow--on-deep">${fr ? 'Étude de cas' : 'Case study'}</p>
-        <h2 id="case-h">${todo(fr ? 'Titre du résultat — ex. « 3× plus de demandes d’évaluation en 6 mois »' : 'Result headline — e.g. “3× more valuation requests in 6 months”')}</h2>
-        <dl class="case__steps">
-          <div><dt>${fr ? 'Situation' : 'Situation'}</dt><dd>${todo(fr ? 'Courtier, secteur, problème de départ' : 'Broker, area, starting problem')}</dd></div>
-          <div><dt>${fr ? 'Ce que nous avons fait' : 'What we did'}</dt><dd>${todo(fr ? 'Site + Centris + campagne + Utilmo' : 'Site + Centris + campaign + Utilmo')}</dd></div>
-          <div><dt>${fr ? 'Résultat vérifié' : 'Verified result'}</dt><dd>${todo(fr ? 'Métrique, période et source (GA4, Utilmo, plateforme pub)' : 'Metric, period and source (GA4, Utilmo, ad platform)')}</dd></div>
-        </dl>
-        <blockquote class="case__quote">${todo(fr ? 'Citation du client, avec permission écrite' : 'Client quote, with written permission')}</blockquote>
-      </div>
-      <div class="case__visual reveal" data-delay="2">
-        <div class="metric-card">
-          <span class="badge">${fr ? 'Résultat' : 'Result'}</span>
-          <span class="metric-card__num">${todo('+___ %')}</span>
-          <span class="metric-card__label">${fr ? 'demandes d’évaluation, avant/après' : 'valuation requests, before/after'}</span>
-          <svg class="metric-card__chart" viewBox="0 0 200 70" aria-hidden="true"><path d="M0 60 L30 56 L60 58 L90 44 L120 38 L150 24 L180 16 L200 8" fill="none" stroke="var(--accent-on-deep)" stroke-width="3" stroke-linecap="round"/><path d="M0 60 L30 56 L60 58 L90 44 L120 38 L150 24 L180 16 L200 8 V70 H0z" fill="var(--accent-on-deep)" opacity=".12"/></svg>
-        </div>
+  <section class="section story" aria-labelledby="case-h">
+    <div class="container story__in">
+      <figure class="story__media reveal">
+        <img src="/assets/img/photos/maison-soir.webp" srcset="/assets/img/photos/maison-soir-720.webp 720w, /assets/img/photos/maison-soir.webp 1200w" sizes="(min-width: 1024px) 600px, 100vw" alt="${fr ? 'Maison illuminée en soirée' : 'House lit up in the evening'}" width="1200" height="800" loading="lazy" decoding="async">
+        <figcaption class="story__person">
+          <img src="${t.photo}" alt="" width="64" height="64" loading="lazy">
+          <span><b>${t.name}</b>${t.role[lang]}</span>
+        </figcaption>
+      </figure>
+      <div class="story__copy reveal" data-delay="2">
+        <p class="eyebrow">${fr ? 'Histoire de client · Courtière résidentielle' : 'Client story · Residential broker'}</p>
+        <h2 id="case-h">${fr ? html`Un site à son image, <em>plus de mandats</em>` : html`A site that reflects her, <em>more listings</em>`}</h2>
+        <ul class="story__tiles">
+          ${tiles.map(([h, p]) => html`<li><b>${h}</b><span>${p}</span></li>`)}
+        </ul>
+        <blockquote class="story__quote">
+          <p>${t[lang]}</p>
+          ${fr ? html`<footer>${t.name} · <span class="muted">traduit de l’anglais</span></footer>` : html`<footer>${t.name}</footer>`}
+        </blockquote>
+        <div class="btn-row">${arrowBtn(link('work', lang), fr ? 'Voir nos réalisations' : 'See our work')}<a class="link" href="${link('re-websites', lang)}">${fr ? 'Site web de courtier' : 'Broker websites'} ${icon('arrow')}</a></div>
       </div>
     </div>
   </section>`;
@@ -263,17 +297,19 @@ export const processSteps = (lang, steps) => {
   </ol>`;
 };
 
-export const testimonials = (lang, n = 3) => {
+export const testimonials = (lang, n = 3, { skip = [] } = {}) => {
   const fr = lang === 'fr';
+  const list = testimonialsData.filter((t) => !skip.includes(t.id)).slice(0, n);
   return html`
   <div class="quotes">
-    ${Array.from({ length: n }, (_, i) => html`
-      <figure class="quote card reveal" data-delay="${i + 1}">
-        <svg class="quote__mark" viewBox="0 0 32 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1 12 0l1 4c-4 1-6 4-6 8h6v12zm19 0V14c0-8 4-13 12-14l1 4c-4 1-6 4-6 8h6v12z" fill="currentColor"/></svg>
-        <blockquote>${todo(fr ? 'Témoignage réel, avec permission écrite (ou avis Google intégré)' : 'Real testimonial, with written permission (or embedded Google review)', { block: true })}</blockquote>
-        <figcaption><span class="avatar" aria-hidden="true">${icon('user')}</span><span>${todo(fr ? 'Nom, agence' : 'Name, agency')}</span></figcaption>
+    ${list.map((t, i) => html`
+      <figure class="quote card reveal" data-delay="${(i % 3) + 1}">
+        <div class="quote__stars" aria-label="5/5">${[1, 2, 3, 4, 5].map(() => icon('star'))}</div>
+        <blockquote lang="${lang}-CA">${t[lang]}</blockquote>
+        <figcaption><img class="avatar" src="${t.photo}" alt="" width="48" height="48" loading="lazy"><span><b>${t.name}</b><span class="muted">${t.role[lang]}</span></span></figcaption>
       </figure>`)}
   </div>
+  ${fr ? html`<p class="quotes__note muted small center">Témoignages traduits de l’anglais.</p>` : ''}
   ${config.googleReviewsUrl ? html`<p class="center"><a class="link" href="${config.googleReviewsUrl}" rel="noopener" target="_blank">${icon('star')} ${fr ? 'Lire nos avis Google' : 'Read our Google reviews'}</a></p>` : ''}`;
 };
 
