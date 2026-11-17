@@ -1,0 +1,22 @@
+{
+  "name": "marketingwebsites-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "marketingwebsites.ca — French-first, bilingual static site (real estate marketing system + general services).",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "check": "node scripts/build.mjs && node scripts/check.mjs",
+    "check:launch": "node scripts/build.mjs && node scripts/check.mjs --launch",
+    "test:redirects": "node scripts/test-redirects.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/instrument-sans": "^5.3.0"
+  }
+}

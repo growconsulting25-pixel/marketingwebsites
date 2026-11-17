@@ -1,0 +1,6 @@
+old_path,new_path,type,reason
+# Fill from the URL audit (strategy §10). One-to-one, no chains, never everything to the homepage.
+# Lines starting with # are ignored. type: 301 (moved) or 410 (retired).
+# Example:
+# /services-immobilier/,/immobilier/,301,old real estate landing page
+# /en/real-estate-websites/,/en/real-estate/broker-websites/,301,renamed slug

@@ -1,0 +1,241 @@
+/* marketingwebsites.ca — progressive enhancement (site works without JS). */
+(() => {
+  'use strict';
+  const doc = document.documentElement;
+  doc.classList.add('js');
+  const cfg = JSON.parse(document.getElementById('mw-config')?.textContent || '{}');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  /* ── Storage (may throw in private mode) ─────────────────────────────── */
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch { /* ignore */ } },
+    sget(k) { try { return sessionStorage.getItem(k); } catch { return null; } },
+    sset(k, v) { try { sessionStorage.setItem(k, v); } catch { /* ignore */ } },
+  };
+
+  /* ── Analytics: GA4 only after consent (Quebec Law 25) ───────────────── */
+  window.dataLayer = window.dataLayer || [];
+  const gtag = function () { window.dataLayer.push(arguments); };
+  let gaLoaded = false;
+  const loadGA = () => {
+    if (gaLoaded || !cfg.ga4) return;
+    gaLoaded = true;
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(cfg.ga4);
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', cfg.ga4, { anonymize_ip: true, language: cfg.lang });
+  };
+  const track = (name, params = {}) => {
+    if (gaLoaded) gtag('event', name, { language: cfg.lang, page_path: location.pathname, ...params });
+  };
+
+  const consentEl = $('[data-consent]');
+  const consent = store.get('mw-consent');
+  if (consent === 'granted') loadGA();
+  if (!consent && consentEl) consentEl.hidden = false;
+  $$('[data-consent-choice]').forEach((b) => b.addEventListener('click', () => {
+    const v = b.dataset.consentChoice;
+    store.set('mw-consent', v);
+    consentEl.hidden = true;
+    if (v === 'granted') loadGA();
+  }));
+  $$('[data-consent-open]').forEach((b) => b.addEventListener('click', () => { consentEl.hidden = false; $('button', consentEl)?.focus(); }));
+
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a, button');
+    if (!a) return;
+    if (a.dataset.track) track(a.dataset.track);
+    const cta = a.dataset.cta;
+    if (cta === 'book_consultation') track('book_consultation');
+    else if (cta === 'book_demo') track('book_demo');
+    else if (cta) track('cta_click', { cta });
+  });
+
+  /* ── UTM / attribution (kept for the session) ────────────────────────── */
+  const params = new URLSearchParams(location.search);
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach((k) => {
+    if (params.get(k)) store.sset('mw-' + k, params.get(k));
+  });
+  if (!store.sget('mw-landing')) {
+    store.sset('mw-landing', location.pathname);
+    store.sset('mw-referrer', document.referrer || '');
+  }
+
+  /* ── Header scroll state ─────────────────────────────────────────────── */
+  const header = $('[data-header]');
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { header?.classList.toggle('is-scrolled', window.scrollY > 12); ticking = false; });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── Mobile menu + submenus ──────────────────────────────────────────── */
+  const menuBtn = $('[data-menu]');
+  const nav = $('[data-nav]');
+  const setMenu = (open) => {
+    menuBtn.setAttribute('aria-expanded', String(open));
+    nav.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
+    if (open) $('a, button', nav)?.focus();
+  };
+  menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (menuBtn?.getAttribute('aria-expanded') === 'true') { setMenu(false); menuBtn.focus(); }
+    $$('[data-sub-toggle][aria-expanded="true"]').forEach((t) => { t.setAttribute('aria-expanded', 'false'); $('#' + t.getAttribute('aria-controls'))?.classList.remove('is-open'); });
+  });
+  nav?.addEventListener('keydown', (e) => { // focus trap while the mobile sheet is open
+    if (e.key !== 'Tab' || !nav.classList.contains('is-open')) return;
+    const f = $$('a, button', nav).filter((el) => el.offsetParent !== null);
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); menuBtn.focus(); }
+    else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); menuBtn.focus(); }
+  });
+  $$('[data-sub-toggle]').forEach((t) => t.addEventListener('click', () => {
+    const open = t.getAttribute('aria-expanded') !== 'true';
+    t.setAttribute('aria-expanded', String(open));
+    $('#' + t.getAttribute('aria-controls'))?.classList.toggle('is-open', open);
+  }));
+  nav?.addEventListener('click', (e) => { if (e.target.closest('a[href^="#"]')) setMenu(false); });
+
+  /* ── Reveal on scroll, count-up, CRM drop-in ─────────────────────────── */
+  const countUp = (el) => {
+    const end = Number(el.dataset.count);
+    if (!end || reduced) return;
+    const suffix = el.textContent.replace(/[\d\s]/g, '');
+    const t0 = performance.now();
+    const dur = 1200;
+    const step = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const crm = $('[data-crm]');
+  if (crm && !reduced) crm.classList.add('is-armed');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('is-in');
+        $$('[data-count]', en.target).forEach(countUp);
+        io.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+    $$('.reveal, .system__grid, [data-crm]').forEach((el) => io.observe(el));
+  } else {
+    $$('.reveal').forEach((el) => el.classList.add('is-in'));
+  }
+
+  /* ── Sticky CTA hides while a form is on screen ──────────────────────── */
+  const sticky = $('[data-sticky]');
+  const finalCta = $('[data-final-cta]');
+  if (sticky && finalCta && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([en]) => sticky.classList.toggle('is-hidden', en.isIntersecting), { threshold: 0.15 }).observe(finalCta);
+  }
+
+  /* ── Portfolio filter ────────────────────────────────────────────────── */
+  const filters = $('[data-filters]');
+  if (filters) {
+    filters.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-filter]');
+      if (!b) return;
+      $$('[data-filter]', filters).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      const f = b.dataset.filter;
+      $$('[data-work-grid] .work').forEach((w) => { w.hidden = f !== 'all' && w.dataset.type !== f; });
+    });
+  }
+
+  /* ── Lead forms → Utilmo ─────────────────────────────────────────────── */
+  const msg = {
+    fr: { required: 'Ce champ est obligatoire.', email: 'Entrez un courriel valide (ex. nom@domaine.ca).', url: 'Entrez une adresse complète (https://…).', tel: 'Entrez un numéro de téléphone valide.' },
+    en: { required: 'This field is required.', email: 'Enter a valid email (e.g. name@domain.ca).', url: 'Enter a full address (https://…).', tel: 'Enter a valid phone number.' },
+  }[cfg.lang === 'en' ? 'en' : 'fr'];
+
+  const validate = (form) => {
+    let firstBad = null;
+    $$('input, select, textarea', form).forEach((el) => {
+      if (el.type === 'hidden' || el.closest('.hp') || el.type === 'checkbox') return;
+      const err = form.querySelector('#' + el.id + '-err');
+      let m = '';
+      if (el.required && !el.value.trim()) m = msg.required;
+      else if (el.type === 'email' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(el.value)) m = msg.email;
+      else if (el.type === 'url' && el.value && !/^https?:\/\/\S+\.\S+/.test(el.value)) m = msg.url;
+      else if (el.type === 'tel' && el.value && el.value.replace(/\D/g, '').length < 10) m = msg.tel;
+      el.setAttribute('aria-invalid', m ? 'true' : 'false');
+      if (err) err.textContent = m;
+      if (m && !firstBad) firstBad = el;
+    });
+    return firstBad;
+  };
+
+  // Pre-select package from ?forfait= on the quote page.
+  const forfait = params.get('forfait');
+
+  $$('[data-lead-form]').forEach((form) => {
+    const type = form.dataset.leadForm;
+    if (forfait && type === 'quote') {
+      const g = form.querySelector('[name="goal"]');
+      if (g && !g.value) g.value = (cfg.lang === 'en' ? 'Package: ' : 'Forfait : ') + forfait;
+    }
+    // Re-check a flagged field as soon as it is corrected (not on blur: clearing
+    // errors on blur reflows the form mid-click and the submit click is lost).
+    $$('input, select, textarea', form).forEach((el) => ['input', 'change'].forEach((ev) => el.addEventListener(ev, () => {
+      if (el.getAttribute('aria-invalid') !== 'true') return;
+      const err = form.querySelector('#' + el.id + '-err');
+      const telOk = el.type !== 'tel' || !el.value || el.value.replace(/\D/g, '').length >= 10;
+      if (el.checkValidity() && telOk) { el.setAttribute('aria-invalid', 'false'); if (err) err.textContent = ''; }
+    })));
+    let started = false;
+    form.addEventListener('focusin', () => { if (!started) { started = true; track('form_start', { form_type: type }); } });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = $('[data-form-status]', form);
+      status.classList.remove('is-error');
+      const bad = validate(form);
+      if (bad) { status.textContent = cfg.strings.invalid; status.classList.add('is-error'); bad.focus(); return; }
+      if (form.querySelector('[name="company_website"]').value) return; // honeypot
+
+      form.page_url.value = location.href;
+      form.referrer.value = store.sget('mw-referrer') || document.referrer || '';
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach((k) => { if (form[k]) form[k].value = store.sget('mw-' + k) || ''; });
+
+      const btn = $('button[type="submit"]', form);
+      const label = btn.innerHTML;
+      btn.disabled = true;
+      btn.textContent = cfg.strings.sending;
+      status.textContent = cfg.strings.sending;
+
+      try {
+        if (cfg.formEndpoint) {
+          const res = await fetch(cfg.formEndpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+        } else {
+          console.warn('[mw] formEndpoint is not configured — demo mode, nothing was sent.');
+        }
+        track('generate_lead', { form_type: type });
+        location.href = cfg.thanks + '?type=' + encodeURIComponent(type);
+      } catch (err) {
+        status.textContent = cfg.strings.error;
+        status.classList.add('is-error');
+        btn.disabled = false;
+        btn.innerHTML = label;
+      }
+    });
+  });
+
+  /* ── Thank-you page: show the matching next step ─────────────────────── */
+  const thanksType = params.get('type');
+  if (thanksType && $('[data-thanks]')) {
+    $$('[data-thanks]').forEach((b) => { b.hidden = b.dataset.thanks !== thanksType; });
+  }
+})();

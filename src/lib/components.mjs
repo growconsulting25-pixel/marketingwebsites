@@ -1,0 +1,386 @@
+import config from '../../site.config.mjs';
+import { link } from '../routes.mjs';
+import { ui } from '../content/ui.mjs';
+import { reServices, systemSteps } from '../content/realestate.mjs';
+import { articles } from '../content/articles.mjs';
+import { portfolio, portfolioTypes } from '../content/portfolio.mjs';
+import { html, esc, icon, todo } from './html.mjs';
+
+const T = (lang) => ui[lang];
+export const arrowBtn = (href, label, { cls = '', cta = '' } = {}) =>
+  html`<a class="btn ${cls}" href="${href}"${cta ? ` data-cta="${cta}"` : ''}>${label} ${icon('arrow')}</a>`;
+
+// ── Illustrations (drawn in SVG — no stock imagery) ─────────────────────────
+// Colours come from --art-* variables (see site.css), 6 palettes.
+export const houseArt = (n = 0, label = '') => `<svg class="house-art house-art--${(n % 6) + 1}" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" ${label ? `role="img" aria-label="${esc(label)}"` : 'aria-hidden="true"'}>
+<rect class="ha-sky" width="160" height="100"/><circle class="ha-sun" cx="128" cy="22" r="10"/>
+<rect class="ha-ground" y="78" width="160" height="22"/>
+<path class="ha-wall" d="M30 78V48l28-20 28 20v30z"/><path class="ha-roof-line" d="M24 50 58 25l34 25"/>
+<rect class="ha-roof" x="50" y="58" width="14" height="20"/><rect class="ha-win" x="38" y="50" width="9" height="9"/><rect class="ha-win" x="69" y="50" width="9" height="9"/>
+<path class="ha-wall ha-far" d="M96 78V56h40v22z"/><path class="ha-roof-line ha-far" d="M92 58l24-14 24 14"/>
+<circle class="ha-tree" cx="14" cy="70" r="10"/><circle class="ha-tree" cx="148" cy="72" r="9"/></svg>`;
+
+const listingCard = (lang, i, price, area, specs) => html`
+  <div class="listing" style="--i:${i}">
+    ${houseArt(i)}
+    <div class="listing__body">
+      <span class="listing__price">${price}</span>
+      <span class="listing__area">${area}</span>
+      <span class="listing__specs">${specs}</span>
+    </div>
+  </div>`;
+
+export const heroMock = (lang) => {
+  const fr = lang === 'fr';
+  return html`
+  <div class="hero-mock" role="img" aria-label="${fr ? 'Exemple : site de courtier avec inscriptions Centris synchronisées, sur ordinateur et sur mobile' : 'Example: broker website with synced Centris listings, on desktop and mobile'}">
+    <div class="device device--desktop">
+      <div class="device__bar"><i></i><i></i><i></i><span>${fr ? 'votrenom.ca' : 'yourname.ca'}</span></div>
+      <div class="device__screen">
+        <div class="ms-nav"><b>${fr ? 'Votre Nom' : 'Your Name'}</b><span></span><span></span><span></span><em>${fr ? 'Évaluation' : 'Valuation'}</em></div>
+        <div class="ms-hero">
+          <div class="ms-hero__txt"><small>${fr ? 'Courtier immobilier résidentiel' : 'Residential real estate broker'}</small><strong>${fr ? 'Vendre au bon prix, sans stress.' : 'Sell at the right price, stress-free.'}</strong></div>
+          <div class="ms-portrait" aria-hidden="true"></div>
+        </div>
+        <div class="ms-sync"><span class="pulse"></span>${fr ? 'Synchronisé avec Centris' : 'Synced with Centris'} · <span class="tabnum">${fr ? 'il y a 2 min' : '2 min ago'}</span></div>
+        <div class="ms-listings">
+          ${listingCard(lang, 0, fr ? '649 000 $' : '$649,000', 'Rosemont', fr ? '3 ch. · 2 sdb' : '3 bd · 2 ba')}
+          ${listingCard(lang, 1, fr ? '1 150 000 $' : '$1,150,000', 'Outremont', fr ? '4 ch. · 3 sdb' : '4 bd · 3 ba')}
+          ${listingCard(lang, 2, fr ? '489 000 $' : '$489,000', 'Laval', fr ? '2 ch. · 1 sdb' : '2 bd · 1 ba')}
+        </div>
+      </div>
+    </div>
+    <div class="device device--phone">
+      <div class="device__notch"></div>
+      <div class="device__screen">
+        <small>${fr ? 'Évaluation gratuite' : 'Free valuation'}</small>
+        <strong>${fr ? 'Combien vaut ma propriété?' : 'What’s my home worth?'}</strong>
+        <span class="ph-field">${fr ? 'Adresse' : 'Address'}</span>
+        <span class="ph-field">${fr ? 'Type de propriété' : 'Property type'}</span>
+        <span class="ph-btn">${fr ? 'Recevoir mon évaluation' : 'Get my valuation'}</span>
+      </div>
+    </div>
+    <div class="toast-mock">${icon('inbox')}<span><b>${fr ? 'Nouvelle demande' : 'New request'}</b>${fr ? 'Évaluation · Rosemont' : 'Valuation · Rosemont'}</span></div>
+  </div>`;
+};
+
+export const utilmoMock = (lang) => {
+  const fr = lang === 'fr';
+  const col = (title, cards) => html`<div class="crm__col"><h4>${title}</h4>${cards}</div>`;
+  const card = (name, tag, src) => html`<div class="crm__card"><b>${name}</b><span>${tag}</span><em>${src}</em></div>`;
+  return html`
+  <div class="crm" role="img" aria-label="${fr ? 'Exemple : pipeline de prospects dans Utilmo' : 'Example: lead pipeline in Utilmo'}" data-crm>
+    <div class="crm__bar"><b>Utilmo</b><span>${fr ? 'Prospects' : 'Leads'}</span><span>${fr ? 'Campagnes' : 'Campaigns'}</span><span>${fr ? 'Statistiques' : 'Analytics'}</span></div>
+    <div class="crm__board">
+      ${col(fr ? 'Nouveau' : 'New', html`<div class="crm__card crm__card--new" data-crm-new><b>M. Lavoie</b><span>${fr ? 'Évaluation · Rosemont' : 'Valuation · Rosemont'}</span><em>Google Ads</em></div>${card('S. Nguyen', fr ? 'Alerte acheteur' : 'Buyer alert', 'Site web')}`)}
+      ${col(fr ? 'Qualifié' : 'Qualified', card('A. Côté', fr ? 'Vendeur · 3 mois' : 'Seller · 3 months', 'Meta'))}
+      ${col(fr ? 'Rendez-vous' : 'Meeting', card('J. Martin', fr ? 'Visite · Laval' : 'Visit · Laval', 'Centris'))}
+      ${col(fr ? 'Mandat' : 'Listing', card('P. Roy', fr ? 'Mandat signé' : 'Listing signed', 'SEO'))}
+    </div>
+    <div class="crm__toast" aria-hidden="true">+1 ${fr ? 'prospect' : 'lead'}</div>
+  </div>`;
+};
+
+// ── Sections ────────────────────────────────────────────────────────────────
+export const sectionHead = ({ eyebrow, title, lead, center = false, id = '' }) => html`
+  <header class="section-head${center ? ' section-head--center' : ''} reveal">
+    ${eyebrow ? html`<p class="eyebrow">${eyebrow}</p>` : ''}
+    <h2${id ? ` id="${id}"` : ''}>${title}</h2>
+    ${lead ? html`<p class="lead">${lead}</p>` : ''}
+  </header>`;
+
+export const proofStrip = (lang) => {
+  const fr = lang === 'fr';
+  const years = new Date().getFullYear() - config.foundingYear;
+  const p = config.proof;
+  const stat = (value, label, count) => html`<div class="proof__item reveal"><span class="proof__num tabnum"${count != null ? ` data-count="${count}"` : ''}>${value}</span><span class="proof__label">${label}</span></div>`;
+  return html`
+  <section class="proof" aria-label="${fr ? 'En chiffres' : 'By the numbers'}">
+    <div class="container proof__grid">
+      ${stat(String(years), fr ? `ans à bâtir des sites (depuis ${config.foundingYear})` : `years building sites (since ${config.foundingYear})`, years)}
+      ${p.brokerSites ? stat(`${p.brokerSites}+`, fr ? 'sites de courtiers lancés' : 'broker sites launched', p.brokerSites) : stat(todo(fr ? 'Nb de sites' : 'Site count'), fr ? 'sites de courtiers lancés' : 'broker sites launched')}
+      ${p.googleRating ? stat(`${String(p.googleRating).replace('.', fr ? ',' : '.')}★`, fr ? `note Google (${p.googleReviewCount} avis)` : `Google rating (${p.googleReviewCount} reviews)`) : stat(todo(fr ? 'Note Google' : 'Google rating'), fr ? 'note moyenne Google' : 'average Google rating')}
+      ${stat('FR · EN', fr ? 'bilingue par défaut, pas en option' : 'bilingual by default, not an add-on')}
+    </div>
+    <div class="marquee" aria-hidden="true"><div class="marquee__track">
+      ${[0, 1].map(() => html`<span>Montréal</span><span>Laval</span><span>Longueuil</span><span>Québec</span><span>Gatineau</span><span>Sherbrooke</span><span>Trois-Rivières</span><span>Rive-Nord</span><span>Rive-Sud</span><span>Laurentides</span><span>Lanaudière</span><span>Montérégie</span>`)}
+    </div></div>
+  </section>`;
+};
+
+export const systemSection = (lang, { eyebrow, title, lead } = {}) => {
+  const fr = lang === 'fr';
+  const steps = systemSteps[lang];
+  const svcName = (id) => reServices.find((s) => s.id === id)?.[lang].nav;
+  return html`
+  <section class="section system" aria-labelledby="system-h">
+    <div class="container">
+      ${sectionHead({ eyebrow: eyebrow || (fr ? 'Le système' : 'The system'), title: title || (fr ? 'Un seul système, du premier clic au mandat signé' : 'One system, from first click to signed listing'), lead: lead || (fr ? 'Votre site, vos publicités et votre CRM partagent les mêmes données. Vous savez enfin ce qui rapporte.' : 'Your site, your ads and your CRM share the same data. You finally know what pays off.'), id: 'system-h' })}
+      <div class="system__grid reveal">
+        <div class="system__line" aria-hidden="true"></div>
+        ${steps.map((s, i) => html`
+          <article class="system__step system__step--${s.key}">
+            <span class="system__n">${s.n}</span>
+            <h3>${s.title}</h3>
+            <p>${s.text}</p>
+            <ul class="system__links">${[...new Set(s.links)].map((id) => html`<li><a href="${link(id, lang)}">${svcName(id)} ${icon('arrow')}</a></li>`)}</ul>
+          </article>`)}
+      </div>
+    </div>
+  </section>`;
+};
+
+export const situations = (lang) => {
+  const fr = lang === 'fr';
+  const items = fr
+    ? [
+        { icon: 'user', title: 'Courtier solo', text: 'Une marque personnelle qui attire des vendeurs et met vos inscriptions en valeur.', id: 're-websites', cta: 'Site web de courtier' },
+        { icon: 'users', title: 'Équipe', text: 'Des prospects distribués à la bonne personne, et un suivi que personne n’oublie.', id: 're-teams', cta: 'Sites d’équipes' },
+        { icon: 'building', title: 'Agence ou bannière', text: 'Une image cohérente, des pages courtiers et du recrutement.', id: 're-teams', cta: 'Sites d’agences' },
+      ]
+    : [
+        { icon: 'user', title: 'Solo broker', text: 'A personal brand that attracts sellers and showcases your listings.', id: 're-websites', cta: 'Broker websites' },
+        { icon: 'users', title: 'Team', text: 'Leads routed to the right person, and follow-up nobody forgets.', id: 're-teams', cta: 'Team websites' },
+        { icon: 'building', title: 'Agency or banner', text: 'A consistent brand, broker pages and recruiting.', id: 're-teams', cta: 'Agency websites' },
+      ];
+  return html`
+  <section class="section situations" aria-labelledby="sit-h">
+    <div class="container situations__in">
+      ${sectionHead({ eyebrow: fr ? 'Votre situation' : 'Your situation', title: fr ? 'Par où commencer?' : 'Where should you start?', lead: fr ? 'Choisissez ce qui vous ressemble : nous vous montrons ce qui fonctionne pour des courtiers comme vous.' : 'Pick what fits you: we’ll show you what works for brokers like you.', id: 'sit-h' })}
+      <div class="situations__cards">
+        ${items.map((it, i) => html`
+          <a class="card card--link situation reveal" data-delay="${i + 1}" href="${link(it.id, lang)}">
+            <span class="situation__icon">${icon(it.icon)}</span>
+            <h3>${it.title}</h3>
+            <p>${it.text}</p>
+            <span class="card__more">${it.cta} ${icon('arrow')}</span>
+          </a>`)}
+      </div>
+    </div>
+  </section>`;
+};
+
+export const featuredCase = (lang) => {
+  const fr = lang === 'fr';
+  return html`
+  <section class="section case-band" aria-labelledby="case-h">
+    <div class="container case">
+      <div class="case__copy reveal">
+        <p class="eyebrow eyebrow--on-deep">${fr ? 'Étude de cas' : 'Case study'}</p>
+        <h2 id="case-h">${todo(fr ? 'Titre du résultat — ex. « 3× plus de demandes d’évaluation en 6 mois »' : 'Result headline — e.g. “3× more valuation requests in 6 months”')}</h2>
+        <dl class="case__steps">
+          <div><dt>${fr ? 'Situation' : 'Situation'}</dt><dd>${todo(fr ? 'Courtier, secteur, problème de départ' : 'Broker, area, starting problem')}</dd></div>
+          <div><dt>${fr ? 'Ce que nous avons fait' : 'What we did'}</dt><dd>${todo(fr ? 'Site + Centris + campagne + Utilmo' : 'Site + Centris + campaign + Utilmo')}</dd></div>
+          <div><dt>${fr ? 'Résultat vérifié' : 'Verified result'}</dt><dd>${todo(fr ? 'Métrique, période et source (GA4, Utilmo, plateforme pub)' : 'Metric, period and source (GA4, Utilmo, ad platform)')}</dd></div>
+        </dl>
+        <blockquote class="case__quote">${todo(fr ? 'Citation du client, avec permission écrite' : 'Client quote, with written permission')}</blockquote>
+      </div>
+      <div class="case__visual reveal" data-delay="2">
+        <div class="metric-card">
+          <span class="badge">${fr ? 'Résultat' : 'Result'}</span>
+          <span class="metric-card__num">${todo('+___ %')}</span>
+          <span class="metric-card__label">${fr ? 'demandes d’évaluation, avant/après' : 'valuation requests, before/after'}</span>
+          <svg class="metric-card__chart" viewBox="0 0 200 70" aria-hidden="true"><path d="M0 60 L30 56 L60 58 L90 44 L120 38 L150 24 L180 16 L200 8" fill="none" stroke="var(--accent-on-deep)" stroke-width="3" stroke-linecap="round"/><path d="M0 60 L30 56 L60 58 L90 44 L120 38 L150 24 L180 16 L200 8 V70 H0z" fill="var(--accent-on-deep)" opacity=".12"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>`;
+};
+
+const workCard = (lang, w, i) => {
+  const fr = lang === 'fr';
+  const typeLabel = portfolioTypes[lang][w.type];
+  const shot = w.image
+    ? `<img src="${w.image}" alt="${esc(w.name)}" width="800" height="560" loading="lazy" decoding="async">`
+    : html`<div class="work__mock work__mock--${w.palette}" aria-hidden="true">
+        <div class="device__bar"><i></i><i></i><i></i></div>
+        <div class="work__mock-hero"><span></span><span></span></div>
+        <div class="work__mock-row">${houseArt(i)}${houseArt(i + 2)}${houseArt(i + 4)}</div>
+      </div>`;
+  return html`
+  <article class="work reveal" data-type="${w.type}" data-delay="${(i % 3) + 1}">
+    <div class="work__shot">${shot}${w.metric ? html`<span class="badge work__badge">${w.metric}</span>` : ''}</div>
+    <div class="work__meta">
+      <h3>${w.placeholder ? todo((fr ? 'Client à ajouter — ' : 'Client to add — ') + w.name) : w.name}</h3>
+      <p><span class="tag">${typeLabel}</span> <span class="muted">${w.region}</span></p>
+      ${w.url ? html`<a class="link" href="${w.url}" rel="noopener" target="_blank">${fr ? 'Voir le site' : 'Visit site'} ${icon('arrow')}</a>` : ''}
+    </div>
+  </article>`;
+};
+
+export const portfolioGrid = (lang, { filters = false, limit = 6 } = {}) => {
+  const items = portfolio.slice(0, limit);
+  const types = portfolioTypes[lang];
+  return html`
+  ${filters ? html`<div class="filters" role="group" aria-label="${lang === 'fr' ? 'Filtrer les réalisations' : 'Filter work'}" data-filters>
+    ${Object.entries(types).map(([k, v], i) => html`<button type="button" class="tag tag--btn" aria-pressed="${i === 0}" data-filter="${k}">${v}</button>`)}
+  </div>` : ''}
+  <div class="work-grid" data-work-grid>${items.map((w, i) => workCard(lang, w, i))}</div>`;
+};
+
+export const utilmoSpotlight = (lang) => {
+  const fr = lang === 'fr';
+  return html`
+  <section class="section utilmo" aria-labelledby="utilmo-h">
+    <div class="container utilmo__in">
+      <div class="utilmo__copy">
+        ${sectionHead({ eyebrow: fr ? 'Notre CRM' : 'Our CRM', title: fr ? 'Utilmo : chaque prospect, suivi jusqu’au mandat' : 'Utilmo: every lead, followed to the listing', id: 'utilmo-h' })}
+        <ul class="ticks reveal">
+          ${(fr ? ['Pages d’atterrissage reliées au CRM', 'Pipeline de prospects avec leur source', 'Campagnes courriel et relances automatiques', 'Statistiques : ce qui rapporte vraiment'] : ['Landing pages connected to the CRM', 'Lead pipeline with each source', 'Email campaigns and automatic follow-ups', 'Analytics: what actually pays off']).map((x) => html`<li>${icon('check')}${x}</li>`)}
+        </ul>
+        <p class="reveal small muted">${fr ? 'Utilmo est développé et opéré par Marketing Websites Inc. — peu d’agences d’ici possèdent leur propre CRM.' : 'Utilmo is built and operated by Marketing Websites Inc. — few local agencies own their CRM.'}</p>
+        <div class="btn-row reveal">${arrowBtn(link('demo', lang), T(lang).cta.demo, { cta: 'demo' })}<a class="link" href="${link('re-utilmo', lang)}">${fr ? 'Découvrir Utilmo' : 'Discover Utilmo'} ${icon('arrow')}</a></div>
+      </div>
+      <div class="utilmo__visual reveal" data-delay="2">${utilmoMock(lang)}</div>
+    </div>
+  </section>`;
+};
+
+export const otherIndustries = (lang) => {
+  const fr = lang === 'fr';
+  const items = fr ? ['Conception web', 'SEO', 'Google Ads', 'Médias sociaux', 'Commerce électronique', 'Développement sur mesure'] : ['Web design', 'SEO', 'Google Ads', 'Social media', 'Ecommerce', 'Custom development'];
+  return html`
+  <section class="section-tight other" aria-labelledby="other-h">
+    <div class="container other__in reveal">
+      <div>
+        <p class="eyebrow">${fr ? 'Pas en immobilier?' : 'Not in real estate?'}</p>
+        <h2 id="other-h" class="h3">${fr ? 'Nous accompagnons aussi les PME d’ici depuis 2015.' : 'We’ve also been helping local SMEs since 2015.'}</h2>
+      </div>
+      <ul class="chips">${items.map((x) => html`<li class="tag">${x}</li>`)}</ul>
+      ${arrowBtn(link('services', lang), T(lang).cta.allServices, { cls: 'btn--ghost' })}
+    </div>
+  </section>`;
+};
+
+export const processSteps = (lang, steps) => {
+  const fr = lang === 'fr';
+  const s = steps || (fr
+    ? [['Consultation', '30 minutes pour comprendre vos objectifs et votre marché.', 'Semaine 0'], ['Stratégie', 'Plan, pages, campagnes et indicateurs à suivre.', 'Semaine 1'], ['Conception', 'Design, rédaction FR/EN, intégrations Centris et Utilmo.', 'Semaines 2–5'], ['Lancement', 'Tests, mise en ligne, formation.', 'Semaine 6'], ['Croissance', 'Publicité, contenu et rapport mensuel.', 'En continu']]
+    : [['Consultation', '30 minutes to understand your goals and market.', 'Week 0'], ['Strategy', 'Plan, pages, campaigns and KPIs to track.', 'Week 1'], ['Design', 'Design, FR/EN copy, Centris and Utilmo integrations.', 'Weeks 2–5'], ['Launch', 'Testing, go-live, training.', 'Week 6'], ['Growth', 'Ads, content and monthly reporting.', 'Ongoing']]);
+  return html`
+  <ol class="process">
+    ${s.map(([t, d, w], i) => html`<li class="process__step reveal" data-delay="${Math.min(i + 1, 4)}"><span class="process__n tabnum">${String(i + 1).padStart(2, '0')}</span><div><h3>${t}</h3><p>${d}</p>${w ? html`<span class="process__when">${w}</span>` : ''}</div></li>`)}
+  </ol>`;
+};
+
+export const testimonials = (lang, n = 3) => {
+  const fr = lang === 'fr';
+  return html`
+  <div class="quotes">
+    ${Array.from({ length: n }, (_, i) => html`
+      <figure class="quote card reveal" data-delay="${i + 1}">
+        <svg class="quote__mark" viewBox="0 0 32 24" aria-hidden="true"><path d="M0 24V14C0 6 4 1 12 0l1 4c-4 1-6 4-6 8h6v12zm19 0V14c0-8 4-13 12-14l1 4c-4 1-6 4-6 8h6v12z" fill="currentColor"/></svg>
+        <blockquote>${todo(fr ? 'Témoignage réel, avec permission écrite (ou avis Google intégré)' : 'Real testimonial, with written permission (or embedded Google review)', { block: true })}</blockquote>
+        <figcaption><span class="avatar" aria-hidden="true">${icon('user')}</span><span>${todo(fr ? 'Nom, agence' : 'Name, agency')}</span></figcaption>
+      </figure>`)}
+  </div>
+  ${config.googleReviewsUrl ? html`<p class="center"><a class="link" href="${config.googleReviewsUrl}" rel="noopener" target="_blank">${icon('star')} ${fr ? 'Lire nos avis Google' : 'Read our Google reviews'}</a></p>` : ''}`;
+};
+
+export const articleCard = (lang, a, i = 0) => {
+  const c = a[lang];
+  const fr = lang === 'fr';
+  return html`
+  <a class="card card--link article-card reveal" data-delay="${(i % 3) + 1}" href="${link(a.id, lang)}">
+    <span class="tag">${({ 'sites-web': fr ? 'Sites web' : 'Websites', publicite: fr ? 'Publicité' : 'Advertising', leads: fr ? 'Génération de leads' : 'Lead generation', crm: fr ? 'Suivi et CRM' : 'Follow-up & CRM' })[a.hub]}</span>
+    <h3>${c.title}</h3>
+    <p>${c.description}</p>
+    <span class="card__more">${T(lang).cta.read} · ${a.minutes} min ${icon('arrow')}</span>
+  </a>`;
+};
+
+export const latestResources = (lang, ids) => {
+  const list = ids ? articles.filter((a) => ids.includes(a.id)) : articles.slice(0, 3);
+  return html`<div class="cards-3">${list.map((a, i) => articleCard(lang, a, i))}</div>`;
+};
+
+export const faqBlock = (lang, faq, { id = 'faq' } = {}) => html`
+  <div class="faq" id="${id}">
+    ${faq.map(([q, a]) => html`<details class="faq__item"><summary><span>${q}</span><span class="faq__icon" aria-hidden="true">${icon('plus')}</span></summary><div class="faq__a"><p>${a}</p></div></details>`)}
+  </div>`;
+
+export const faqSchema = (faq) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+});
+
+// ── Forms (strategy §6: three conversion paths) ─────────────────────────────
+const field = (id, label, input, { required = false, hint = '', full = false, lang } = {}) => html`
+  <div class="field${full ? ' field--full' : ''}">
+    <label for="${id}">${label}${required ? html` <span class="req" aria-hidden="true">*</span><span class="sr-only"> (${T(lang).form.required})</span>` : ''}</label>
+    ${input}
+    ${hint ? html`<p class="field__hint" id="${id}-hint">${hint}</p>` : ''}
+    <p class="field__error" id="${id}-err" aria-live="polite"></p>
+  </div>`;
+const select = (id, name, opts, lang, required) => html`<select id="${id}" name="${name}"${required ? ' required' : ''} aria-describedby="${id}-err"><option value="">${T(lang).form.choose}</option>${opts.map((o) => html`<option>${o}</option>`)}</select>`;
+
+export const leadForm = (lang, type = 'consultation', { idPrefix = 'f' } = {}) => {
+  const f = T(lang).form;
+  const p = (s) => `${idPrefix}-${s}`;
+  const submit = { consultation: T(lang).cta.consult, quote: T(lang).cta.quote, demo: T(lang).cta.demo }[type];
+  const fields = [
+    field(p('name'), f.name, html`<input id="${p('name')}" name="name" type="text" autocomplete="name" required aria-describedby="${p('name')}-err">`, { required: true, lang }),
+    field(p('email'), f.email, html`<input id="${p('email')}" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="${p('email')}-err">`, { required: true, lang }),
+    field(p('phone'), f.phone, html`<input id="${p('phone')}" name="phone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="${p('phone')}-err">`, { lang }),
+  ];
+  if (type === 'demo') {
+    fields.push(field(p('team'), f.teamSize, select(p('team'), 'team_size', f.teamSizes, lang, true), { required: true, lang }));
+    fields.push(field(p('crm'), f.currentCrm, html`<input id="${p('crm')}" name="current_crm" type="text" aria-describedby="${p('crm')}-err">`, { lang }));
+  } else {
+    fields.push(field(p('role'), f.role, select(p('role'), 'role', f.roles, lang, true), { required: true, lang }));
+  }
+  if (type === 'quote') {
+    const svcOpts = lang === 'fr'
+      ? ['Site web de courtier', 'Intégration Centris', 'Site d’équipe ou d’agence', 'Publicité Google / Meta', 'SEO', 'CRM Utilmo', 'Site web PME', 'Commerce électronique', 'Développement sur mesure']
+      : ['Broker website', 'Centris integration', 'Team or agency site', 'Google / Meta ads', 'SEO', 'Utilmo CRM', 'SME website', 'Ecommerce', 'Custom development'];
+    fields.push(html`<fieldset class="field field--full"><legend>${f.services}</legend><div class="checks">${svcOpts.map((o, i) => html`<label class="check"><input type="checkbox" name="services" value="${o}"><span>${o}</span></label>`)}</div></fieldset>`);
+    fields.push(field(p('budget'), f.budget, select(p('budget'), 'budget', f.budgets, lang, true), { required: true, lang }));
+    fields.push(field(p('timeline'), f.timeline, select(p('timeline'), 'timeline', f.timelines, lang, true), { required: true, lang }));
+    fields.push(field(p('site'), f.site, html`<input id="${p('site')}" name="current_site" type="url" inputmode="url" placeholder="https://" aria-describedby="${p('site')}-err">`, { lang, full: true }));
+  }
+  if (type !== 'demo') {
+    fields.push(field(p('goal'), f.goal, html`<textarea id="${p('goal')}" name="goal" rows="3" placeholder="${esc(f.goalPh)}" aria-describedby="${p('goal')}-err"></textarea>`, { lang, full: true }));
+  }
+  return html`
+  <form class="lead-form" method="post" action="${config.formEndpoint || link('thanks', lang)}" data-lead-form="${type}" novalidate>
+    <input type="hidden" name="form_type" value="${type}">
+    <input type="hidden" name="language" value="${lang}">
+    <input type="hidden" name="page_url" value="">
+    <input type="hidden" name="referrer" value="">
+    ${['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].map((n) => `<input type="hidden" name="${n}" value="">`)}
+    <div class="hp" aria-hidden="true"><label>Website <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
+    <div class="form-grid">${fields}</div>
+    <label class="check check--consent"><input type="checkbox" name="marketing_consent" value="yes"><span>${f.consent}</span></label>
+    <p class="form-note">${f.privacyNote} <a href="${link('privacy', lang)}">${f.privacyLink}</a>.</p>
+    <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+    <button class="btn btn--lg" type="submit">${submit} ${icon('arrow')}</button>
+  </form>`;
+};
+
+export const finalCta = (lang, { title, lead, type = 'consultation' } = {}) => {
+  const fr = lang === 'fr';
+  return html`
+  <section class="section final-cta" id="consultation" aria-labelledby="final-h" data-final-cta>
+    <div class="container final-cta__in">
+      <div class="final-cta__copy reveal">
+        <p class="eyebrow eyebrow--on-deep">${fr ? 'Prochaine étape' : 'Next step'}</p>
+        <h2 id="final-h">${title || (fr ? 'Parlons de vos 12 prochains mois' : 'Let’s talk about your next 12 months')}</h2>
+        <p class="lead">${lead || (fr ? 'Une consultation de 30 minutes, gratuite et sans engagement : nous regardons votre présence actuelle et vous repartez avec un plan concret.' : 'A free, no-commitment 30-minute consultation: we review your current presence and you leave with a concrete plan.')}</p>
+        <ul class="ticks ticks--on-deep">
+          ${(fr ? ['Réponse en 1 jour ouvrable', 'En français ou en anglais', 'Aucune obligation'] : ['Reply within 1 business day', 'In French or English', 'No obligation']).map((x) => html`<li>${icon('check')}${x}</li>`)}
+        </ul>
+        ${config.phone ? html`<p class="final-cta__phone">${fr ? 'Vous préférez parler maintenant?' : 'Prefer to talk now?'} <a href="tel:${config.phone.replace(/[^\d+]/g, '')}" data-track="click_phone">${icon('phone')} ${config.phone}</a></p>` : ''}
+      </div>
+      <div class="final-cta__form card reveal" data-delay="2">${leadForm(lang, type, { idPrefix: 'cta' })}</div>
+    </div>
+  </section>`;
+};
+
+export const relatedServices = (lang, ids) => html`
+  <div class="cards-related">
+    ${ids.map((id, i) => {
+      const s = reServices.find((x) => x.id === id);
+      return html`<a class="card card--link related reveal" data-delay="${i + 1}" href="${link(id, lang)}"><span class="situation__icon">${icon(s.icon)}</span><div><h3>${s[lang].nav}</h3><p>${s[lang].description}</p></div>${icon('arrow', 'related__arrow')}</a>`;
+    })}
+  </div>`;
