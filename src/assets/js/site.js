@@ -135,6 +135,35 @@
     $$('.reveal').forEach((el) => el.classList.add('is-in'));
   }
 
+  /* ── Hero: typed address in the phone form ───────────────────────────── */
+  $$('[data-type-text]').forEach((el) => {
+    const text = el.dataset.typeText;
+    if (reduced) { el.textContent = text; return; }
+    let i = 0;
+    const tick = () => {
+      el.textContent = text.slice(0, i);
+      if (i <= text.length) { i += 1; setTimeout(tick, 55 + Math.random() * 60); }
+      else setTimeout(() => { i = 0; tick(); }, 4200);
+    };
+    setTimeout(tick, 1400);
+  });
+
+  /* ── Hero: subtle 3D tilt following the pointer (desktop only) ───────── */
+  const tilt = $('[data-tilt]');
+  if (tilt && !reduced && window.matchMedia('(hover: hover) and (min-width: 1024px)').matches) {
+    let raf = 0;
+    window.addEventListener('pointermove', (e) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const x = e.clientX / window.innerWidth - 0.5;
+        const y = e.clientY / window.innerHeight - 0.5;
+        tilt.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
+        tilt.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg');
+      });
+    }, { passive: true });
+  }
+
   /* ── Sticky CTA hides while a form is on screen ──────────────────────── */
   const sticky = $('[data-sticky]');
   const finalCta = $('[data-final-cta]');

@@ -33,51 +33,93 @@ const listingCard = (lang, i, price, area, specs) => html`
 
 export const heroMock = (lang) => {
   const fr = lang === 'fr';
+  const L = [
+    { img: 'outremont', price: fr ? '1 150 000 $' : '$1,150,000', area: 'Outremont', specs: fr ? '4 ch. · 3 sdb · 2 450 pi²' : '4 bd · 3 ba · 2,450 sq ft', tag: fr ? 'Nouveau' : 'New' },
+    { img: 'laval', price: fr ? '689 000 $' : '$689,000', area: 'Laval (Sainte-Dorothée)', specs: fr ? '3 ch. · 2 sdb · garage double' : '3 bd · 2 ba · double garage', tag: fr ? 'Visite libre' : 'Open house' },
+    { img: 'rosemont', price: fr ? '849 000 $' : '$849,000', area: 'Rosemont', specs: fr ? '3 ch. · 2 sdb · terrasse' : '3 bd · 2 ba · terrace', tag: fr ? 'Vendu' : 'Sold' },
+  ];
   return html`
-  <div class="hero-mock" role="img" aria-label="${fr ? 'Exemple : site de courtier avec inscriptions Centris synchronisées, sur ordinateur et sur mobile' : 'Example: broker website with synced Centris listings, on desktop and mobile'}">
+  <div class="hero-mock" role="img" aria-label="${fr ? 'Exemple : site de courtier avec inscriptions Centris synchronisées et formulaire d’évaluation sur mobile' : 'Example: broker website with synced Centris listings and a mobile valuation form'}" data-tilt>
     <div class="device device--desktop">
-      <div class="device__bar"><i></i><i></i><i></i><span>${fr ? 'votrenom.ca' : 'yourname.ca'}</span></div>
+      <div class="device__bar"><i></i><i></i><i></i><span>${fr ? 'votrenom.ca/proprietes' : 'yourname.ca/listings'}</span></div>
       <div class="device__screen">
-        <div class="ms-nav"><b>${fr ? 'Votre Nom' : 'Your Name'}</b><span></span><span></span><span></span><em>${fr ? 'Évaluation' : 'Valuation'}</em></div>
-        <div class="ms-hero">
-          <div class="ms-hero__txt"><small>${fr ? 'Courtier immobilier résidentiel' : 'Residential real estate broker'}</small><strong>${fr ? 'Vendre au bon prix, sans stress.' : 'Sell at the right price, stress-free.'}</strong></div>
-          <div class="ms-portrait" aria-hidden="true"></div>
+        <div class="ms-nav"><b>${fr ? 'Votre Nom' : 'Your Name'}</b><span>${fr ? 'Propriétés' : 'Listings'}</span><span>${fr ? 'Vendre' : 'Sell'}</span><span>${fr ? 'Acheter' : 'Buy'}</span><em>${fr ? 'Évaluation' : 'Valuation'}</em></div>
+        <div class="ms-banner">
+          <img src="/assets/img/listings/salon.webp" alt="" width="900" height="612" fetchpriority="high">
+          <div class="ms-banner__txt"><small>${fr ? 'Courtier immobilier résidentiel' : 'Residential real estate broker'}</small><strong>${fr ? 'Vendre au bon prix, sans stress.' : 'Sell at the right price, stress-free.'}</strong>
+            <span class="ms-search">${icon('search')} ${fr ? 'Ville, quartier ou n° Centris' : 'City, area or Centris #'}</span></div>
         </div>
         <div class="ms-sync"><span class="pulse"></span>${fr ? 'Synchronisé avec Centris' : 'Synced with Centris'} · <span class="tabnum">${fr ? 'il y a 2 min' : '2 min ago'}</span></div>
         <div class="ms-listings">
-          ${listingCard(lang, 0, fr ? '649 000 $' : '$649,000', 'Rosemont', fr ? '3 ch. · 2 sdb' : '3 bd · 2 ba')}
-          ${listingCard(lang, 1, fr ? '1 150 000 $' : '$1,150,000', 'Outremont', fr ? '4 ch. · 3 sdb' : '4 bd · 3 ba')}
-          ${listingCard(lang, 2, fr ? '489 000 $' : '$489,000', 'Laval', fr ? '2 ch. · 1 sdb' : '2 bd · 1 ba')}
+          ${L.map((l, i) => html`
+          <div class="listing" style="--i:${i}">
+            <div class="listing__img"><img src="/assets/img/listings/${l.img}.webp" alt="" width="560" height="373" loading="eager"><span class="listing__tag${l.tag === 'Vendu' || l.tag === 'Sold' ? ' is-sold' : ''}">${l.tag}</span></div>
+            <div class="listing__body"><span class="listing__price tabnum">${l.price}</span><span class="listing__area">${l.area}</span><span class="listing__specs">${l.specs}</span></div>
+          </div>`)}
         </div>
       </div>
     </div>
     <div class="device device--phone">
       <div class="device__notch"></div>
-      <div class="device__screen">
-        <small>${fr ? 'Évaluation gratuite' : 'Free valuation'}</small>
+      <div class="device__screen ph-form">
+        <div class="ph-steps" aria-hidden="true"><i class="is-done"></i><i class="is-on"></i><i></i></div>
+        <small>${fr ? 'Évaluation gratuite · Étape 2 de 3' : 'Free valuation · Step 2 of 3'}</small>
         <strong>${fr ? 'Combien vaut ma propriété?' : 'What’s my home worth?'}</strong>
-        <span class="ph-field">${fr ? 'Adresse' : 'Address'}</span>
-        <span class="ph-field">${fr ? 'Type de propriété' : 'Property type'}</span>
+        <label>${fr ? 'Adresse' : 'Address'}<span class="ph-field ph-field--typed"><span data-type-text="${fr ? '4820, rue Saint-Denis, Montréal' : '4820 Saint-Denis St, Montreal'}"></span><i class="caret"></i></span></label>
+        <label>${fr ? 'Type de propriété' : 'Property type'}</label>
+        <span class="ph-chips"><b class="is-on">${fr ? 'Maison' : 'House'}</b><b>Condo</b><b>Plex</b></span>
+        <span class="ph-row"><label>${fr ? 'Chambres' : 'Bedrooms'}<span class="ph-field">3</span></label><label>${fr ? 'Salles de bain' : 'Bathrooms'}<span class="ph-field">2</span></label></span>
+        <label>${fr ? 'Quand pensez-vous vendre?' : 'When do you plan to sell?'}<span class="ph-field ph-select">${fr ? 'D’ici 3 à 6 mois' : 'Within 3–6 months'}</span></label>
+        <label>${fr ? 'Courriel' : 'Email'}<span class="ph-field">marie.l@courriel.ca</span></label>
         <span class="ph-btn">${fr ? 'Recevoir mon évaluation' : 'Get my valuation'}</span>
+        <span class="ph-note">${icon('shield')} ${fr ? 'Gratuit · sans engagement' : 'Free · no commitment'}</span>
       </div>
     </div>
-    <div class="toast-mock">${icon('inbox')}<span><b>${fr ? 'Nouvelle demande' : 'New request'}</b>${fr ? 'Évaluation · Rosemont' : 'Valuation · Rosemont'}</span></div>
+    <div class="toast-mock">${icon('inbox')}<span><b>${fr ? 'Nouvelle demande d’évaluation' : 'New valuation request'}</b>${fr ? 'Rosemont · envoyée à Utilmo' : 'Rosemont · sent to Utilmo'}</span></div>
   </div>`;
 };
 
+// Utilmo dashboard (recreated from the real UI, fictional contacts — no client data)
 export const utilmoMock = (lang) => {
   const fr = lang === 'fr';
-  const col = (title, cards) => html`<div class="crm__col"><h4>${title}</h4>${cards}</div>`;
-  const card = (name, tag, src) => html`<div class="crm__card"><b>${name}</b><span>${tag}</span><em>${src}</em></div>`;
+  const side = fr
+    ? [['layout', 'Dashboard'], ['building', 'Propriétés'], ['users', 'Contacts/CRM'], ['globe', 'Site Web'], ['megaphone', 'Pages de publicité'], ['calendar', 'Calendrier'], ['cart', 'Marketplace']]
+    : [['layout', 'Dashboard'], ['building', 'Properties'], ['users', 'Contacts/CRM'], ['globe', 'Website'], ['megaphone', 'Ad pages'], ['calendar', 'Calendar'], ['cart', 'Marketplace']];
+  const feed = fr
+    ? [['new', 'inbox', 'Nouvelle demande d’évaluation de Marie Lavoie (Rosemont)', 'mer. 18 novembre 2026'], ['mail', 'mail', 'Courriel reçu de Jean Tremblay.', ''], ['bday', 'user', 'C’est l’anniversaire de Sophie Gagnon!', ''], ['late', 'user', 'Luc Bergeron : n’a pas été contacté depuis 7 jours', 'mar. 17 novembre 2026'], ['task', 'calendar', 'Suivi à faire aujourd’hui avec Nadia Roy : « vente de propriété »', ''], ['late', 'user', 'Karim Haddad : n’a pas été contacté depuis 8 jours', 'lun. 16 novembre 2026']]
+    : [['new', 'inbox', 'New valuation request from Marie Lavoie (Rosemont)', 'Wed. November 18, 2026'], ['mail', 'mail', 'Email received from Jean Tremblay.', ''], ['bday', 'user', 'It’s Sophie Gagnon’s birthday!', ''], ['late', 'user', 'Luc Bergeron: not contacted for 7 days', 'Tue. November 17, 2026'], ['task', 'calendar', 'Follow-up due today with Nadia Roy: “property sale”', ''], ['late', 'user', 'Karim Haddad: not contacted for 8 days', 'Mon. November 16, 2026']];
+  const days = fr ? ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'] : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   return html`
-  <div class="crm" role="img" aria-label="${fr ? 'Exemple : pipeline de prospects dans Utilmo' : 'Example: lead pipeline in Utilmo'}" data-crm>
-    <div class="crm__bar"><b>Utilmo</b><span>${fr ? 'Prospects' : 'Leads'}</span><span>${fr ? 'Campagnes' : 'Campaigns'}</span><span>${fr ? 'Statistiques' : 'Analytics'}</span></div>
-    <div class="crm__board">
-      ${col(fr ? 'Nouveau' : 'New', html`<div class="crm__card crm__card--new" data-crm-new><b>M. Lavoie</b><span>${fr ? 'Évaluation · Rosemont' : 'Valuation · Rosemont'}</span><em>Google Ads</em></div>${card('S. Nguyen', fr ? 'Alerte acheteur' : 'Buyer alert', 'Site web')}`)}
-      ${col(fr ? 'Qualifié' : 'Qualified', card('A. Côté', fr ? 'Vendeur · 3 mois' : 'Seller · 3 months', 'Meta'))}
-      ${col(fr ? 'Rendez-vous' : 'Meeting', card('J. Martin', fr ? 'Visite · Laval' : 'Visit · Laval', 'Centris'))}
-      ${col(fr ? 'Mandat' : 'Listing', card('P. Roy', fr ? 'Mandat signé' : 'Listing signed', 'SEO'))}
+  <div class="laptop" role="img" aria-label="${fr ? 'Tableau de bord Utilmo sur un ordinateur portable : calendrier des suivis et assistant virtuel (contacts fictifs)' : 'Utilmo dashboard on a laptop: follow-up calendar and virtual assistant (fictional contacts)'}" data-crm>
+    <div class="laptop__screen">
+      <div class="um">
+        <div class="um__top">
+          <span class="um__logo" aria-hidden="true"><svg viewBox="0 0 40 40" width="26" height="26"><rect x="2" y="2" width="36" height="36" rx="8" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="20" y="30" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="26" fill="currentColor">u</text></svg></span>
+          <span class="um__search">${fr ? 'Essayez la recherche « Application mobile »' : 'Try searching “Mobile app”'} ${icon('search')}</span>
+          <span class="um__icons">${icon('calendar')}${icon('users')}${icon('phone')}${icon('mail')}<span class="um__bell">${icon('inbox')}<i></i></span><span class="um__avatar"></span></span>
+        </div>
+        <div class="um__body">
+          <nav class="um__side">${side.map(([ic, t], i) => html`<span class="${i === 0 ? 'is-on' : ''}">${icon(ic)}<b>${t}</b></span>`)}</nav>
+          <div class="um__main">
+            <div class="um__tabs"><b class="is-on">${fr ? 'Assistant virtuel' : 'Virtual assistant'}</b><b>${fr ? 'Statistiques sur les prospects' : 'Lead statistics'}</b><b>${fr ? 'Statistiques du site web' : 'Website statistics'}</b></div>
+            <div class="um__grid">
+              <div class="um__panel um__cal">
+                <div class="um__month"><span>‹</span><b>${fr ? 'Novembre 2026' : 'November 2026'}</b><span>›</span></div>
+                <div class="um__days">${days.map((d) => html`<i>${d}</i>`)}${Array.from({ length: 35 }, (_, k) => { const n = k + 1; const d = n <= 30 ? n : n - 30; return html`<span class="${n === 18 ? 'is-today' : ''}${n > 30 ? ' is-out' : ''}${[19, 24, 26].includes(n) ? ' has-ev' : ''}">${d}</span>`; })}</div>
+                <p class="um__follow"><b>${fr ? 'Suivis' : 'Follow-ups'}</b> · ${fr ? '18 novembre 2026' : 'November 18, 2026'}</p>
+                <div class="um__event">${fr ? '14 h — Appel avec Marie Lavoie (évaluation)' : '2 pm — Call with Marie Lavoie (valuation)'}</div>
+                <span class="um__btn">${fr ? 'Ajouter un suivi' : 'Add a follow-up'}</span>
+              </div>
+              <div class="um__panel um__feed">
+                <div class="um__feedhead"><b>${fr ? 'ASSISTANT VIRTUEL' : 'VIRTUAL ASSISTANT'}</b><span>Options ▾</span></div>
+                ${feed.map(([k, ic, t, d], i) => html`${d ? html`<p class="um__date">${d}</p>` : ''}<div class="um__item um__item--${k}" style="--i:${i}">${icon(ic)}<span>${t}</span><em>Actions ▾</em></div>`)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="laptop__base" aria-hidden="true"></div>
     <div class="crm__toast" aria-hidden="true">+1 ${fr ? 'prospect' : 'lead'}</div>
   </div>`;
 };
@@ -115,7 +157,7 @@ export const logoStrip = (lang) => html`
     <div class="container logos__in">
       <p class="logos__label">${lang === 'fr' ? 'Des courtiers et entreprises affiliés à' : 'Brokers and businesses affiliated with'}</p>
       <ul class="logos__list">
-        ${clientLogos.map((l) => html`<li><img src="/assets/img/logos/${l.file}.webp" alt="${esc(l.name)}" width="${l.w}" height="120" loading="lazy" decoding="async"></li>`)}
+        ${[0, 1].map((dup) => clientLogos.map((l) => html`<li${dup ? ' aria-hidden="true"' : ''}><img src="/assets/img/logos/${l.file}.webp" alt="${dup ? '' : esc(l.name)}" width="${l.w}" height="120" loading="lazy" decoding="async"></li>`))}
       </ul>
     </div>
   </section>`;
