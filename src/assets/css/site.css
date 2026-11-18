@@ -1076,3 +1076,27 @@ img.avatar { width: 48px; height: 48px; object-fit: cover; padding: 0; }
 :root { --accent-on-deep: #F0677D; --accent-display-on-deep: #D0304B; } /* small red text on dark (4.5:1) / brand red for large headings (3.4:1) */
 .hero h1 em, .page-hero h1 em, .how__head h2 em { color: var(--accent-display-on-deep); }
 .ph-form .ph-email, .ph-form .ph-note { display: none; }
+
+/* ═══ v6 — how-it-works carousel; article photos ═══ */
+.carousel { position: relative; }
+.carousel__track.how__grid { display: flex; grid-template-columns: none; gap: var(--s-5); overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; overscroll-behavior-x: contain; padding-block: var(--s-2) var(--s-4); }
+.carousel__track::-webkit-scrollbar { display: none; }
+.carousel__track:focus-visible { outline-offset: 6px; border-radius: 20px; }
+.carousel__track .how__card { flex: 0 0 calc((100% - 2 * var(--s-5)) / 3); scroll-snap-align: start; }
+@media (max-width: 1023px) { .carousel__track .how__card { flex-basis: calc((100% - var(--s-5)) / 2); } }
+@media (max-width: 639px) { .carousel__track .how__card { flex-basis: 86%; } }
+.how__card .how__body h3 { font-size: clamp(1.15rem, 1.05rem + .5vw, 1.4rem); }
+.carousel__btn { position: absolute; top: 34%; z-index: 2; display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--bg); color: var(--deep); box-shadow: 0 12px 30px -8px rgb(0 0 0 / .5); cursor: pointer; transition: transform .2s var(--ease), background-color .2s var(--ease), color .2s var(--ease); }
+.carousel__btn:hover { background: var(--accent); color: var(--accent-contrast); transform: scale(1.06); }
+.carousel__btn:active { transform: scale(.96); }
+.carousel__btn--prev { left: -26px; } .carousel__btn--prev .i { transform: rotate(180deg); }
+.carousel__btn--next { right: -26px; }
+@media (max-width: 1279px) { .carousel__btn--prev { left: 6px; } .carousel__btn--next { right: 6px; } }
+@media (max-width: 639px) { .carousel__btn { width: 44px; height: 44px; top: 26%; } }
+
+.article-card { padding-top: 0; overflow: hidden; }
+.article-card__img { margin: 0 calc(var(--s-6) * -1) var(--s-5); aspect-ratio: 16 / 9; overflow: hidden; }
+.article-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.article-card:hover .article-card__img img { transform: scale(1.05); }
+.article__img { margin-block: 0 var(--s-6); }
+.article__img img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border-radius: var(--radius-l); box-shadow: var(--shadow-3); margin-top: calc(var(--s-7) * -1); position: relative; }

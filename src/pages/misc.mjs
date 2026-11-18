@@ -92,6 +92,7 @@ export const articlePage = (a, lang) => {
           </div>
         </div>
       </header>
+      ${a.image ? html`<figure class="container narrow article__img"><img src="${a.image.src}" alt="${a.image[lang]}" width="${a.image.w}" height="${a.image.h}" fetchpriority="high"></figure>` : ''}
       <div class="container narrow prose">
         <p class="lead answer">${c.intro}</p>
         ${c.sections.map(([h, body]) => html`<h2>${h}</h2>${resolve(body)}`)}

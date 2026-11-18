@@ -21,7 +21,7 @@ export const hubs = {
 
 export const articles = [
   {
-    id: 'art-pages', hub: 'sites-web', money: 're-websites', published: '2026-11-17', updated: '2026-11-17', minutes: 6,
+    id: 'art-pages', image: { src: '/assets/img/articles/pages-essentielles.webp', w: 800, h: 533, fr: 'Bureau avec un ordinateur affichant un site web', en: 'Desk with a computer showing a website' }, hub: 'sites-web', money: 're-websites', published: '2026-11-17', updated: '2026-11-17', minutes: 6,
     fr: {
       title: 'Les 10 pages essentielles d’un site de courtier immobilier',
       description: 'Les 10 pages qu’un site de courtier immobilier au Québec doit avoir pour attirer des vendeurs et des acheteurs — et ce que chacune doit contenir.',
@@ -98,7 +98,7 @@ export const articles = [
     },
   },
   {
-    id: 'art-response', hub: 'crm', money: 're-utilmo', published: '2026-11-17', updated: '2026-11-17', minutes: 5,
+    id: 'art-response', image: { src: '/assets/img/articles/delai-reponse.webp', w: 800, h: 533, fr: 'Personne qui répond à un message sur son téléphone devant un ordinateur', en: 'Person replying to a message on a phone in front of a laptop' }, hub: 'crm', money: 're-utilmo', published: '2026-11-17', updated: '2026-11-17', minutes: 5,
     fr: {
       title: 'Délai de réponse aux prospects : pourquoi les premières minutes comptent',
       description: 'Pourquoi répondre vite à un prospect immobilier change tout, et comment organiser votre suivi pour ne plus laisser refroidir une demande d’évaluation.',
@@ -141,7 +141,7 @@ export const articles = [
     },
   },
   {
-    id: 'art-budget', hub: 'publicite', money: 're-ads', published: '2026-11-17', updated: '2026-11-17', minutes: 6,
+    id: 'art-budget', image: { src: '/assets/img/articles/budget-publicite.webp', w: 800, h: 459, fr: 'Calculatrice et documents budgétaires sur une table', en: 'Calculator and budget documents on a table' }, hub: 'publicite', money: 're-ads', published: '2026-11-17', updated: '2026-11-17', minutes: 6,
     fr: {
       title: 'Budget publicitaire d’un courtier immobilier : comment le calculer',
       description: 'Comment fixer un budget Google Ads et Meta réaliste quand on est courtier immobilier au Québec : partir du nombre de mandats visés, pas d’un montant au hasard.',

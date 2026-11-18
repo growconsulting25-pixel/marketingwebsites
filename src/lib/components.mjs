@@ -182,9 +182,12 @@ export const systemSection = (lang, { eyebrow, title, lead } = {}) => {
         <h2 id="system-h">${title || (fr ? html`Attirer. Convertir. <em>Suivre.</em> Mesurer.` : html`Attract. Convert. <em>Follow up.</em> Measure.`)}</h2>
         <p class="lead">${lead || (fr ? 'Quatre étapes, un seul pipeline : du premier clic d’un vendeur jusqu’au mandat signé. Votre site, vos publicités et votre CRM partagent les mêmes données.' : 'Four steps, one pipeline: from a seller’s first click to the signed listing. Your site, ads and CRM share the same data.')}</p>
       </header>
-      <ol class="how__grid">
+      <div class="carousel" data-carousel>
+        <button class="carousel__btn carousel__btn--prev" type="button" data-carousel-prev aria-label="${fr ? 'Étape précédente' : 'Previous step'}">${icon('arrow')}</button>
+        <button class="carousel__btn carousel__btn--next" type="button" data-carousel-next aria-label="${fr ? 'Étape suivante' : 'Next step'}">${icon('arrow')}</button>
+      <ol class="how__grid carousel__track" tabindex="0" aria-label="${fr ? 'Les quatre étapes — faites défiler' : 'The four steps — scroll'}" data-carousel-track>
         ${steps.map((s, i) => html`
-          <li class="how__card reveal" data-delay="${(i % 2) + 1}">
+          <li class="how__card" data-slide>
             <figure class="how__media">
               <img src="/assets/img/photos/${photo[s.key]}-720.webp" srcset="/assets/img/photos/${photo[s.key]}-720.webp 720w, /assets/img/photos/${photo[s.key]}.webp 1200w" sizes="(min-width: 1024px) 560px, 100vw" alt="${alt[s.key]}" width="720" height="480" loading="lazy" decoding="async">
               <span class="how__step"><b class="tabnum">${s.n}</b> ${s.title}</span>
@@ -196,6 +199,7 @@ export const systemSection = (lang, { eyebrow, title, lead } = {}) => {
             </div>
           </li>`)}
       </ol>
+      </div>
     </div>
   </section>`;
 };
@@ -356,6 +360,7 @@ export const articleCard = (lang, a, i = 0) => {
   const fr = lang === 'fr';
   return html`
   <a class="card card--link article-card reveal" data-delay="${(i % 3) + 1}" href="${link(a.id, lang)}">
+    ${a.image ? html`<figure class="article-card__img"><img src="${a.image.src}" alt="${esc(a.image[lang])}" width="${a.image.w}" height="${a.image.h}" loading="lazy" decoding="async"></figure>` : ''}
     <span class="tag">${({ 'sites-web': fr ? 'Sites web' : 'Websites', publicite: fr ? 'Publicité' : 'Advertising', leads: fr ? 'Génération de leads' : 'Lead generation', crm: fr ? 'Suivi et CRM' : 'Follow-up & CRM' })[a.hub]}</span>
     <h3>${c.title}</h3>
     <p>${c.description}</p>

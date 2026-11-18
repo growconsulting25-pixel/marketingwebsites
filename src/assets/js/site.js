@@ -164,6 +164,42 @@
     }, { passive: true });
   }
 
+  /* ── Infinite carousel (how it works) ────────────────────────────────── */
+  $$('[data-carousel]').forEach((root) => {
+    const track = $('[data-carousel-track]', root);
+    const slides = $$('[data-slide]', track);
+    if (!track || slides.length < 2) return;
+    // Clone one full set before and after so the loop has no visible end.
+    const mk = (el) => { const c = el.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.setAttribute('inert', ''); c.dataset.clone = ''; return c; };
+    slides.forEach((el) => track.appendChild(mk(el)));
+    slides.slice().reverse().forEach((el) => track.insertBefore(mk(el), track.firstChild));
+    const setW = () => slides[0].offsetWidth + parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 0);
+    const span = () => setW() * slides.length;
+    const home = () => { track.style.scrollBehavior = 'auto'; track.scrollLeft = span(); track.style.scrollBehavior = ''; };
+    requestAnimationFrame(home);
+    window.addEventListener('resize', home, { passive: true });
+    let t;
+    track.addEventListener('scroll', () => {
+      clearTimeout(t);
+      t = setTimeout(() => { // after scrolling settles, jump back into the middle set
+        const s = span();
+        if (track.scrollLeft < s * 0.5) { track.style.scrollBehavior = 'auto'; track.scrollLeft += s; track.style.scrollBehavior = ''; }
+        else if (track.scrollLeft > s * 1.5) { track.style.scrollBehavior = 'auto'; track.scrollLeft -= s; track.style.scrollBehavior = ''; }
+      }, 120);
+    }, { passive: true });
+    const go = (dir) => track.scrollBy({ left: dir * setW(), behavior: reduced ? 'auto' : 'smooth' });
+    $('[data-carousel-prev]', root)?.addEventListener('click', () => go(-1));
+    $('[data-carousel-next]', root)?.addEventListener('click', () => go(1));
+    track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
+    // Slow autoplay; stops on hover, focus or touch, and never with reduced motion.
+    if (reduced) return;
+    let paused = false; let visible = false;
+    ['pointerenter', 'focusin', 'touchstart'].forEach((ev) => root.addEventListener(ev, () => { paused = true; }, { passive: true }));
+    ['pointerleave', 'focusout'].forEach((ev) => root.addEventListener(ev, () => { paused = false; }));
+    if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(root);
+    setInterval(() => { if (!paused && visible && !document.hidden) go(1); }, 4500);
+  });
+
   /* ── Sticky CTA hides while a form is on screen ──────────────────────── */
   const sticky = $('[data-sticky]');
   const finalCta = $('[data-final-cta]');
