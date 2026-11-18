@@ -70,7 +70,7 @@ export const heroMock = (lang) => {
         <span class="ph-chips"><b class="is-on">${fr ? 'Maison' : 'House'}</b><b>Condo</b><b>Plex</b></span>
         <span class="ph-row"><label>${fr ? 'Chambres' : 'Bedrooms'}<span class="ph-field">3</span></label><label>${fr ? 'Salles de bain' : 'Bathrooms'}<span class="ph-field">2</span></label></span>
         <label>${fr ? 'Quand pensez-vous vendre?' : 'When do you plan to sell?'}<span class="ph-field ph-select">${fr ? 'D’ici 3 à 6 mois' : 'Within 3–6 months'}</span></label>
-        <label>${fr ? 'Courriel' : 'Email'}<span class="ph-field">marie.l@courriel.ca</span></label>
+        <label class="ph-email">${fr ? 'Courriel' : 'Email'}<span class="ph-field">marie.l@courriel.ca</span></label>
         <span class="ph-btn">${fr ? 'Recevoir mon évaluation' : 'Get my valuation'}</span>
         <span class="ph-note">${icon('shield')} ${fr ? 'Gratuit · sans engagement' : 'Free · no commitment'}</span>
       </div>
