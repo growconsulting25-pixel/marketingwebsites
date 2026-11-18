@@ -30,3 +30,19 @@ for (const f of files) {
   }
 }
 console.log(`Preview written to ${out} (${files.length} files)`);
+
+// --artifact: shape the copy for a claude.ai Artifact (the home page becomes
+// main.html without its own <html>/<head>/<body> wrapper; host-only files are dropped).
+if (process.argv.includes('--artifact')) {
+  const { unlink } = await import('node:fs/promises');
+  for (const f of ['_redirects', '_headers', 'placeholders.json', 'robots.txt', 'sitemap.xml', 'sitemap-fr.xml', 'sitemap-en.xml']) await unlink(path.join(out, f)).catch(() => {});
+  let h = await readFile(path.join(out, 'index.html'), 'utf8');
+  h = h.replace(/^<!doctype html>\s*<html[^>]*>\s*<head>\s*/i, '').replace('</head>\n', '').replace('</body>\n</html>', '').replace(/<body class="[^"]*">/, '');
+  const title = h.match(/<title>.*?<\/title>/)[0];
+  h = title + '\n' + h.replace(title, '');
+  await writeFile(path.join(out, 'main.html'), h);
+  await unlink(path.join(out, 'index.html'));
+  const list = (await walk(out)).map((f) => path.relative(out, f).split(path.sep).join('/')).filter((f) => f !== 'main.html').sort();
+  await writeFile(path.join(out, 'files.json'), JSON.stringify(list.map((p) => ({ path: p }))));
+  console.log(`Artifact copy ready: ${list.length} supporting files (files.json)`);
+}
