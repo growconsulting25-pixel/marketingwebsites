@@ -1,8 +1,8 @@
 import config from '../../site.config.mjs';
 import { routes, link } from '../routes.mjs';
 import { ui } from '../content/ui.mjs';
-import { reServices } from '../content/realestate.mjs';
-import { generalServices } from '../content/general.mjs';
+import { services } from '../content/services.mjs';
+import { industries } from '../content/industries.mjs';
 import { html, esc, icon } from './html.mjs';
 
 export const abs = (path) => config.siteUrl.replace(/\/$/, '') + path;
@@ -13,48 +13,45 @@ const logo = (lang, variant = '') => html`
     <img src="/assets/img/logo${variant}.svg" alt="Agence Marketing Websites" width="1573" height="1574">
   </a>`;
 
-const subList = (items, lang, hubId, hubLabel) => html`
-  <ul class="sub__list">
-    ${items.map((s) => html`<li><a href="${link(s.id, lang)}">${icon(s.icon)}<span>${s[lang].nav}${s.soon ? ` <em class="soon">${lang === 'fr' ? 'Bientôt' : 'Soon'}</em>` : ''}</span></a></li>`)}
-  </ul>
-  <a class="sub__hub" href="${link(hubId, lang)}">${hubLabel} ${icon('arrow')}</a>`;
+const mega = (items, lang, hubId, hubLabel, lead) => html`
+  <div class="mega__in">
+    <ul class="mega__list">
+      ${items.map((s) => html`<li><a href="${link(s.id, lang)}"><span class="mega__ic">${icon(s.icon)}</span><span><b>${s[lang].nav}</b><small>${s[lang].short}</small></span></a></li>`)}
+    </ul>
+    <a class="mega__hub" href="${link(hubId, lang)}"><span><b>${hubLabel}</b><small>${lead}</small></span>${icon('arrow')}</a>
+  </div>`;
 
 const header = (page) => {
   const { lang, id } = page;
   const t = ui[lang];
-  const other = lang === 'fr' ? 'en' : 'fr';
-  const section = (k) => (id === k || id.startsWith(k + '-') || (k === 'resources' && id.startsWith('art-')) ? ' aria-current="page"' : '');
-  const reSection = id === 're' || id.startsWith('re-') ? ' aria-current="page"' : '';
-  const svcSection = id === 'services' || id.startsWith('svc-') ? ' aria-current="page"' : '';
+  const fr = lang === 'fr';
+  const other = fr ? 'en' : 'fr';
+  const cur = (test) => (test ? ' aria-current="page"' : '');
+  const toggle = (sub, label) => html`<button class="sub-toggle" type="button" aria-expanded="false" aria-controls="${sub}" data-sub-toggle><span class="sr-only">${label} — ${fr ? 'sous-menu' : 'submenu'}</span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>`;
   return html`
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
   <header class="site-header" data-header>
     <div class="container site-header__in">
       ${logo(lang)}
-      <nav class="nav" id="site-nav" aria-label="${lang === 'fr' ? 'Navigation principale' : 'Main navigation'}" data-nav>
+      <nav class="nav" id="site-nav" aria-label="${fr ? 'Navigation principale' : 'Main navigation'}" data-nav>
         <ul class="nav__list">
           <li class="nav__item has-sub">
-            <a class="nav__link" href="${link('re', lang)}"${reSection}>${t.nav.re}</a>
-            <button class="sub-toggle" type="button" aria-expanded="false" aria-controls="sub-re" data-sub-toggle>
-              <span class="sr-only">${t.nav.re} — ${lang === 'fr' ? 'sous-menu' : 'submenu'}</span>
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </button>
-            <div class="sub" id="sub-re">${subList(reServices.filter((s) => !s.hidden), lang, 're', t.nav.reHub)}</div>
+            <a class="nav__link" href="${link('services', lang)}"${cur(id === 'services' || id.startsWith('svc-'))}>${t.nav.services}</a>${toggle('sub-svc', t.nav.services)}
+            <div class="sub mega" id="sub-svc">${mega(services, lang, 'services', t.nav.svcHub, fr ? 'Un seul partenaire pour votre site, votre visibilité et vos prospects.' : 'One partner for your site, your visibility and your leads.')}</div>
           </li>
           <li class="nav__item has-sub">
-            <a class="nav__link" href="${link('services', lang)}"${svcSection}>${t.nav.services}</a>
-            <button class="sub-toggle" type="button" aria-expanded="false" aria-controls="sub-svc" data-sub-toggle>
-              <span class="sr-only">${t.nav.services} — ${lang === 'fr' ? 'sous-menu' : 'submenu'}</span>
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </button>
-            <div class="sub" id="sub-svc">${subList(generalServices, lang, 'services', t.nav.svcHub)}</div>
+            <a class="nav__link" href="${link('industries', lang)}"${cur(id === 'industries' || id.startsWith('ind-'))}>${t.nav.industries}</a>${toggle('sub-ind', t.nav.industries)}
+            <div class="sub mega mega--ind" id="sub-ind">${mega(industries, lang, 'industries', t.nav.indHub, fr ? 'Votre industrie n’est pas listée? Nous accompagnons toutes les PME.' : 'Not listed? We work with businesses in every industry.')}</div>
           </li>
-          <li class="nav__item"><a class="nav__link" href="${link('work', lang)}"${section('work')}>${t.nav.work}</a></li>
-          <li class="nav__item"><a class="nav__link" href="${link('resources', lang)}"${section('resources')}>${t.nav.resources}</a></li>
-          <li class="nav__item"><a class="nav__link" href="${link('about', lang)}"${section('about')}>${t.nav.about}</a></li>
+          <li class="nav__item"><a class="nav__link" href="${link('work', lang)}"${cur(id === 'work')}>${t.nav.work}</a></li>
+          <li class="nav__item"><a class="nav__link" href="${link('svc-crm', lang)}"${cur(id === 'svc-crm' || id === 'demo')}>Utilmo</a></li>
+          <li class="nav__item"><a class="nav__link" href="${link('about', lang)}"${cur(id === 'about')}>${t.nav.about}</a></li>
+          <li class="nav__item"><a class="nav__link" href="${link('blog', lang)}"${cur(id === 'blog' || id.startsWith('art-'))}>${t.nav.blog}</a></li>
         </ul>
-        <a class="btn nav__cta" href="${link('contact', lang)}" data-cta="consultation">${t.cta.consult} ${icon('arrow')}</a>
+        <a class="btn nav__cta" href="${link('quote', lang)}" data-cta="quote">${t.cta.quote} ${icon('arrow')}</a>
       </nav>
       <div class="site-header__tools">
+        ${config.phone ? html`<a class="header-phone" href="${telHref(config.phone)}" data-track="click_phone">${icon('phone')}<span>${config.phone.replace('+1 ', '')}</span></a>` : ''}
         <a class="lang" href="${routes[id][other]}" hreflang="${other}-CA" lang="${other}" aria-label="${t.langSwitch.aria}"><span aria-hidden="true">${t.langSwitch.short}</span></a>
         <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu>
           <span class="menu-btn__open">${icon('menu')}<span class="sr-only">${t.nav.menu}</span></span>
@@ -68,9 +65,11 @@ const header = (page) => {
 const footer = (page) => {
   const { lang, id } = page;
   const t = ui[lang];
-  const other = lang === 'fr' ? 'en' : 'fr';
+  const fr = lang === 'fr';
+  const other = fr ? 'en' : 'fr';
   const a = config.address;
   const year = new Date().getFullYear();
+  const socials = Object.entries(config.social).filter(([, v]) => v);
   return html`
   <footer class="site-footer">
     <div class="container">
@@ -79,31 +78,25 @@ const footer = (page) => {
           ${logo(lang, '-white')}
           <p>${t.footer.tagline}</p>
           <p class="muted-on-deep">${t.footer.since}</p>
-          <a class="btn btn--light" href="${link('contact', lang)}" data-cta="consultation">${t.cta.consult} ${icon('arrow')}</a>
+          ${socials.length ? html`<ul class="socials">${socials.map(([k, v]) => html`<li><a href="${v}" rel="noopener" target="_blank">${k}</a></li>`)}</ul>` : ''}
         </div>
         <div class="site-footer__cols">
           <div>
-            <h2 class="site-footer__h">${t.footer.reCol}</h2>
-            <ul>
-              <li><a href="${link('re', lang)}">${t.nav.reHub}</a></li>
-              ${reServices.filter((s) => !s.hidden).map((s) => html`<li><a href="${link(s.id, lang)}">${s[lang].nav}</a></li>`)}
-            </ul>
+            <h2 class="site-footer__h">${t.footer.svcCol}</h2>
+            <ul>${services.map((s) => html`<li><a href="${link(s.id, lang)}">${s[lang].nav}</a></li>`)}</ul>
           </div>
           <div>
-            <h2 class="site-footer__h">${t.footer.svcCol}</h2>
-            <ul>
-              <li><a href="${link('services', lang)}">${t.nav.svcHub}</a></li>
-              ${generalServices.map((s) => html`<li><a href="${link(s.id, lang)}">${s[lang].nav}</a></li>`)}
-            </ul>
+            <h2 class="site-footer__h">${t.footer.indCol}</h2>
+            <ul>${industries.map((s) => html`<li><a href="${link(s.id, lang)}">${s[lang].nav}</a></li>`)}<li><a href="${link('industries', lang)}">${t.nav.indHub}</a></li></ul>
           </div>
           <div>
             <h2 class="site-footer__h">${t.footer.coCol}</h2>
             <ul>
               <li><a href="${link('work', lang)}">${t.nav.work}</a></li>
-              <li><a href="${link('resources', lang)}">${t.nav.resources}</a></li>
               <li><a href="${link('about', lang)}">${t.nav.about}</a></li>
-              <li><a href="${link('quote', lang)}">${t.cta.quote}</a></li>
+              <li><a href="${link('blog', lang)}">${t.nav.blog}</a></li>
               <li><a href="${link('demo', lang)}">${t.cta.demo}</a></li>
+              <li><a href="${link('contact', lang)}">Contact</a></li>
             </ul>
           </div>
           <div itemscope itemtype="https://schema.org/LocalBusiness">
@@ -122,7 +115,7 @@ const footer = (page) => {
         </div>
       </div>
       <div class="site-footer__bottom">
-        <p>© ${year} ${config.legalName}. ${t.footer.rights} ${t.footer.utilmo}</p>
+        <p>© ${year} ${config.legalName.replace(/\.$/, '')}. ${t.footer.rights} ${t.footer.utilmo}</p>
         <p><a href="${link('privacy', lang)}">${t.footer.privacy}</a> · <button type="button" class="linklike" data-consent-open>${t.footer.cookies}</button></p>
       </div>
     </div>
@@ -131,7 +124,7 @@ const footer = (page) => {
 
 const stickyBar = (page) => {
   const t = ui[page.lang];
-  const target = page.stickyCta || { id: 'contact', label: t.cta.consultShort, cta: 'consultation' };
+  const target = page.stickyCta || { id: 'quote', label: t.cta.quoteShort, cta: 'quote' };
   return html`
   <div class="sticky-cta" data-sticky>
     <a class="btn" href="${link(target.id, page.lang)}" data-cta="${target.cta}">${icon('calendar')} ${target.label}</a>
@@ -154,7 +147,7 @@ const consentBanner = (lang) => {
 
 export const breadcrumbSchema = (page) => {
   if (!page.breadcrumbs?.length) return null;
-  const items = [{ name: ui[page.lang].breadcrumbHome, path: link('home', page.lang) }, ...page.breadcrumbs.map((b) => ({ name: b.label, path: b.id ? link(b.id, page.lang) : routes[page.id][page.lang] }))];
+  const items = [{ name: ui[page.lang].breadcrumbHome, path: link('home', page.lang) }, ...page.breadcrumbs.map((b) => ({ name: b.label, path: link(b.id, page.lang) }))];
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -179,15 +172,17 @@ export const organizationSchema = () => {
   const a = config.address;
   const org = {
     '@context': 'https://schema.org',
-    '@type': ['Organization', 'LocalBusiness'],
+    '@type': ['Organization', 'ProfessionalService'],
     '@id': abs('/#organization'),
     name: config.name,
     legalName: config.legalName,
     url: abs('/'),
     logo: abs('/assets/img/logo.svg'),
+    image: abs('/assets/img/og.png'),
     foundingDate: String(config.foundingYear),
-    areaServed: { '@type': 'AdministrativeArea', name: 'Québec' },
-    knowsLanguage: ['fr-CA', 'en-CA'],
+    areaServed: [{ '@type': 'City', name: 'Montréal' }, { '@type': 'AdministrativeArea', name: 'Québec' }],
+    knowsLanguage: ['en-CA', 'fr-CA'],
+    knowsAbout: services.map((s) => s.en.nav),
     address: { '@type': 'PostalAddress', addressLocality: a.city, addressRegion: a.region, addressCountry: a.country, ...(a.street && { streetAddress: a.street }), ...(a.postalCode && { postalCode: a.postalCode }) },
   };
   if (config.phone) org.telephone = config.phone;
@@ -217,11 +212,11 @@ export const layout = (page, assets) => {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
-${page.noindex ? '<meta name="robots" content="noindex, follow">' : ''}
+${page.noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name="robots" content="index, follow, max-image-preview:large">'}
 <link rel="canonical" href="${url}">
-${page.noindex ? '' : `<link rel="alternate" hreflang="fr-CA" href="${abs(routes[id].fr)}">
-<link rel="alternate" hreflang="en-CA" href="${abs(routes[id].en)}">
-<link rel="alternate" hreflang="x-default" href="${abs(routes[id].fr)}">`}
+${page.noindex ? '' : `<link rel="alternate" hreflang="en-CA" href="${abs(routes[id].en)}">
+<link rel="alternate" hreflang="fr-CA" href="${abs(routes[id].fr)}">
+<link rel="alternate" hreflang="x-default" href="${abs(routes[id].en)}">`}
 <meta property="og:type" content="${page.ogType || 'website'}">
 <meta property="og:site_name" content="${config.name}">
 <meta property="og:locale" content="${lang}_CA">
@@ -231,7 +226,7 @@ ${page.noindex ? '' : `<link rel="alternate" hreflang="fr-CA" href="${abs(routes
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${abs('/assets/img/og.png')}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0B1F3A">
+<meta name="theme-color" content="#191B28">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>

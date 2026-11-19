@@ -1,18 +1,16 @@
-import { reServices } from '../content/realestate.mjs';
-import { generalServices } from '../content/general.mjs';
+import { services } from '../content/services.mjs';
+import { industries } from '../content/industries.mjs';
 import { articles } from '../content/articles.mjs';
 import { home } from './home.mjs';
-import { reHub, reServicePage, rePackages } from './realestate.mjs';
-import { servicesHub, generalServicePage } from './general.mjs';
+import { servicesHub, servicePage } from './services.mjs';
+import { industriesHub, industryPage } from './industries.mjs';
 import { work, resources, articlePage, about, contact, quote, demo, thanks, privacy } from './misc.mjs';
 
-// Returns a list of page builders; each is called with the language.
+// Each builder is called once per language.
 export const pageBuilders = [
-  home, reHub, rePackages,
-  ...reServices.filter((s) => !s.hidden).map((s) => (lang) => reServicePage(s, lang)),
-  servicesHub,
-  ...generalServices.map((s) => (lang) => generalServicePage(s, lang)),
-  work, resources,
-  ...articles.map((a) => (lang) => articlePage(a, lang)),
+  home,
+  servicesHub, ...services.map((s) => (lang) => servicePage(s, lang)),
+  industriesHub, ...industries.map((d) => (lang) => industryPage(d, lang)),
+  work, resources, ...articles.map((a) => (lang) => articlePage(a, lang)),
   about, contact, quote, demo, thanks, privacy,
 ];

@@ -24,8 +24,8 @@ export const work = (lang) => {
   const crumbs = [{ id: 'work', label: fr ? 'Réalisations' : 'Work' }];
   return {
     id: 'work', lang, breadcrumbs: crumbs,
-    title: fr ? 'Réalisations — sites de courtiers immobiliers et PME | Marketing Websites' : 'Our Work — Real Estate Broker & SME Websites | Marketing Websites',
-    description: fr ? 'Portfolio de sites web de courtiers, d’équipes et d’agences immobilières au Québec, et de projets pour PME.' : 'Portfolio of websites for Quebec real estate brokers, teams and agencies, plus SME projects.',
+    title: fr ? 'Portfolio | Agence de marketing numérique Montréal | Marketing Websites' : 'Portfolio | Digital Marketing Agency Montreal | Marketing Websites',
+    description: fr ? 'Portfolio de sites web réalisés par Marketing Websites pour des PME, restaurants, cliniques, entrepreneurs, professionnels et courtiers immobiliers.' : 'Portfolio of websites built by Marketing Websites for small businesses, restaurants, clinics, contractors, professionals and real estate brokers.',
     body: html`
     ${simpleHero(lang, 'work', crumbs, fr ? 'Réalisations' : 'Our work', fr ? 'Des sites réels, des <em>résultats</em> mesurés' : 'Real sites, <em>measured</em> results', fr ? `${portfolio.length} projets réalisés pour des courtiers, des équipes, des agences et des entreprises d’ici. Filtrez par type de client.` : `${portfolio.length} projects for brokers, teams, agencies and local businesses. Filter by client type.`)}
     <section class="section-tight"><div class="container">${portfolioGrid(lang, { filters: true, limit: 50 })}</div></section>
@@ -36,16 +36,16 @@ export const work = (lang) => {
 // ── Resources ───────────────────────────────────────────────────────────────
 export const resources = (lang) => {
   const fr = lang === 'fr';
-  const crumbs = [{ id: 'resources', label: fr ? 'Ressources' : 'Resources' }];
+  const crumbs = [{ id: 'blog', label: fr ? 'Blogue' : 'Blog' }];
   const pillars = fr
-    ? { 'sites-web': 'Le guide du site web de courtier immobilier au Québec', publicite: 'Publicité Google et Meta pour courtiers immobiliers', leads: 'Attirer des vendeurs : le système complet', crm: 'Ne plus perdre un prospect : le suivi pour courtiers' }
-    : { 'sites-web': 'The Quebec broker website guide', publicite: 'Google and Meta ads for real estate brokers', leads: 'Attracting sellers: the complete system', crm: 'Never lose a lead: follow-up for brokers' };
+    ? { 'sites-web': 'Le guide de la conception de site web au Québec', publicite: 'Google Ads et Meta pour les PME', leads: 'Générer des prospects en ligne : le système complet', crm: 'Ne plus perdre un prospect : le guide du suivi' }
+    : { 'sites-web': 'The Quebec website design guide', publicite: 'Google Ads and Meta for small businesses', leads: 'Generating leads online: the complete system', crm: 'Never lose a lead: the follow-up guide' };
   return {
-    id: 'resources', lang, breadcrumbs: crumbs,
-    title: fr ? 'Ressources marketing pour courtiers immobiliers | Marketing Websites' : 'Marketing Resources for Real Estate Brokers | Marketing Websites',
-    description: fr ? 'Guides et articles pour courtiers immobiliers du Québec : sites web, publicité, génération de leads et suivi CRM.' : 'Guides and articles for Quebec real estate brokers: websites, advertising, lead generation and CRM follow-up.',
+    id: 'blog', lang, breadcrumbs: crumbs,
+    title: fr ? 'Blogue marketing numérique | Marketing Websites' : 'Digital Marketing Blog | Marketing Websites',
+    description: fr ? 'Guides et articles sur la conception web, le SEO, Google Ads, les médias sociaux et le suivi des prospects pour les PME du Québec.' : 'Guides and articles on web design, SEO, Google Ads, social media and lead follow-up for Quebec businesses.',
     body: html`
-    ${simpleHero(lang, 'resources', crumbs, fr ? 'Ressources' : 'Resources', fr ? 'Conseils concrets pour <em>courtiers</em>' : 'Practical advice for <em>brokers</em>', fr ? 'Ce que nous avons appris en bâtissant des sites, des campagnes et un CRM pour des courtiers du Québec.' : 'What we’ve learned building sites, campaigns and a CRM for Quebec brokers.')}
+    ${simpleHero(lang, 'blog', crumbs, fr ? 'Blogue' : 'Blog', fr ? 'Conseils concrets en <em>marketing numérique</em>' : 'Practical <em>digital marketing</em> advice', fr ? 'Sites web, SEO, publicité et suivi des prospects : ce que nous apprenons en accompagnant des entreprises d’ici depuis 2015.' : 'Websites, SEO, advertising and lead follow-up: what we learn working with local businesses since 2015.')}
     <section class="section-tight">
       <div class="container">
         <nav class="hub-nav reveal" aria-label="${fr ? 'Thèmes' : 'Topics'}">${hubs[lang].map((h) => html`<a class="tag tag--btn" href="#${h.key}">${h.label}</a>`)}</nav>
@@ -67,7 +67,7 @@ export const articlePage = (a, lang) => {
   const c = a[lang];
   const fr = lang === 'fr';
   const resolve = (s) => s.replace(/\{\{([\w-]+)\}\}/g, (_, id) => link(id, lang));
-  const crumbs = [{ id: 'resources', label: fr ? 'Ressources' : 'Resources' }, { id: a.id, label: c.title }];
+  const crumbs = [{ id: 'blog', label: fr ? 'Blogue' : 'Blog' }, { id: a.id, label: c.title }];
   const date = (d) => new Date(d + 'T12:00:00').toLocaleDateString(fr ? 'fr-CA' : 'en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
   const related = articles.filter((x) => x.id !== a.id).slice(0, 2);
   return {
@@ -120,18 +120,18 @@ export const about = (lang) => {
   const crumbs = [{ id: 'about', label: fr ? 'À propos' : 'About' }];
   return {
     id: 'about', lang, breadcrumbs: crumbs,
-    title: fr ? 'À propos — agence montréalaise depuis 2015 | Marketing Websites' : 'About — Montreal Agency Since 2015 | Marketing Websites',
-    description: fr ? 'Marketing Websites est une agence web et marketing de Montréal fondée en 2015, spécialisée dans le marketing des courtiers immobiliers et créatrice du CRM Utilmo.' : 'Marketing Websites is a Montreal web and marketing agency founded in 2015, specialized in real estate broker marketing and creator of the Utilmo CRM.',
+    title: fr ? 'À propos | Agence web à Montréal depuis 2015 | Marketing Websites' : 'About Us | Montreal Web Agency Since 2015 | Marketing Websites',
+    description: fr ? 'Agence web et marketing numérique fondée à Montréal en 2015 : sites web, SEO, Google Ads, médias sociaux et CRM Utilmo pour les PME.' : 'Montreal web and digital marketing agency founded in 2015: websites, SEO, Google Ads, social media and the Utilmo CRM for businesses.',
     schema: [organizationSchema()],
     body: html`
-    ${simpleHero(lang, 'about', crumbs, fr ? 'À propos' : 'About', fr ? 'Une équipe montréalaise au service des <em>courtiers</em> depuis 2015' : 'A Montreal team serving <em>brokers</em> since 2015', fr ? 'Nous avons commencé par bâtir des sites web. Nous avons vite compris qu’un courtier n’a pas besoin d’un site : il a besoin de mandats. D’où le système — et Utilmo, notre propre CRM.' : 'We started by building websites. We quickly learned that brokers don’t need a website: they need listings. Hence the system — and Utilmo, our own CRM.')}
+    ${simpleHero(lang, 'about', crumbs, fr ? 'À propos' : 'About', fr ? 'Une équipe montréalaise au service des <em>PME</em> depuis 2015' : 'A Montreal team growing <em>businesses</em> since 2015', fr ? 'Nous avons commencé par bâtir des sites web. Nous avons vite compris qu’une entreprise n’a pas besoin d’un site : elle a besoin de clients. D’où notre approche à service complet — site, visibilité, publicité — et Utilmo, notre propre CRM.' : 'We started by building websites. We quickly learned that businesses don’t need a website: they need customers. Hence our full-service approach — site, visibility, advertising — and Utilmo, our own CRM.')}
     <section class="section-tight">
       <div class="container about-grid">
         <figure class="team-photo reveal"><img src="/assets/img/photos/equipe.webp" alt="${fr ? 'L’équipe de Marketing Websites' : 'The Marketing Websites team'}" width="1600" height="625" loading="lazy" decoding="async"></figure>
         <div class="reveal" data-delay="2">
           <h2 class="h3">${fr ? 'Ce qui nous distingue' : 'What sets us apart'}</h2>
           <ul class="ticks">
-            ${(fr ? ['Conçu pour le Québec : français d’abord, Centris natif, règles publicitaires d’ici.', 'Un système connecté : site, publicité et CRM partagent les mêmes données.', 'Notre propre CRM, Utilmo — développé et soutenu à Montréal.', 'Bilingue par défaut, rédigé par des humains.'] : ['Built for Quebec: French-first, Centris-native, local advertising rules.', 'One connected system: site, ads and CRM share the same data.', 'Our own CRM, Utilmo — built and supported in Montreal.', 'Bilingual by default, written by people.']).map((x) => html`<li>${icon('check')}${x}</li>`)}
+            ${(fr ? ['Service complet : site, SEO, publicité, médias sociaux et CRM sous un même toit.', 'Un système connecté : site, publicité et CRM partagent les mêmes données.', 'Notre propre CRM, Utilmo, développé et soutenu à Montréal.', 'Bilingue par défaut, rédigé par des humains.'] : ['Full service: site, SEO, ads, social media and CRM under one roof.', 'One connected system: site, ads and CRM share the same data.', 'Our own CRM, Utilmo, built and supported in Montreal.', 'Bilingual by default, written by people.']).map((x) => html`<li>${icon('check')}${x}</li>`)}
           </ul>
         </div>
       </div>
@@ -222,7 +222,7 @@ export const demo = (lang) => {
       lead: fr ? 'Une démo en direct avec vos propres cas : pages d’atterrissage, pipeline de prospects, relances et statistiques.' : 'A live demo with your own cases: landing pages, lead pipeline, follow-ups and analytics.',
       aside: html`<ul class="ticks">${(fr ? ['Démo personnalisée, pas une vidéo', 'Questions sur l’import de vos contacts', 'Aucune carte de crédit'] : ['A tailored demo, not a video', 'Questions about importing your contacts', 'No credit card']).map((x) => html`<li>${icon('check')}${x}</li>`)}</ul>
       ${config.calendar.demo ? html`<a class="btn btn--ghost" href="${config.calendar.demo}" target="_blank" rel="noopener" data-cta="book_demo">${icon('calendar')} ${fr ? 'Choisir une plage horaire' : 'Pick a time slot'}</a>` : ''}
-      <p class="small"><a class="link" href="${link('re-utilmo', lang)}">${fr ? 'En savoir plus sur Utilmo' : 'Learn more about Utilmo'} ${icon('arrow')}</a></p>`,
+      <p class="small"><a class="link" href="${link('svc-crm', lang)}">${fr ? 'En savoir plus sur Utilmo' : 'Learn more about Utilmo'} ${icon('arrow')}</a></p>`,
     }),
     title: fr ? 'Réserver une démo d’Utilmo, le CRM pour courtiers | Marketing Websites' : 'Book a Demo of Utilmo, the Broker CRM | Marketing Websites',
     description: fr ? 'Réservez une démo de 30 minutes d’Utilmo : CRM, pages d’atterrissage, campagnes courriel et statistiques pour courtiers immobiliers.' : 'Book a 30-minute demo of Utilmo: CRM, landing pages, email campaigns and analytics for real estate brokers.',
@@ -254,7 +254,7 @@ export const thanks = (lang) => {
         </div>
         <p class="muted">${fr ? 'Un courriel de confirmation vient de vous être envoyé.' : 'A confirmation email is on its way.'}</p>
         <div class="btn-row btn-row--center">
-          <a class="btn btn--ghost" href="${link('resources', lang)}">${fr ? 'Lire nos ressources' : 'Read our resources'}</a>
+          <a class="btn btn--ghost" href="${link('blog', lang)}">${fr ? 'Lire le blogue' : 'Read the blog'}</a>
           <a class="btn btn--ghost" href="${link('work', lang)}">${ui[lang].cta.work}</a>
         </div>
       </div>
@@ -312,7 +312,7 @@ export const notFound = (lang) => {
         <p class="lead">${fr ? 'Le site a fait peau neuve. Voici les pages les plus consultées :' : 'Our site has been rebuilt. Here are the most visited pages:'}</p>
         <div class="btn-row btn-row--center">
           <a class="btn" href="${link('home', lang)}">${fr ? 'Accueil' : 'Home'}</a>
-          <a class="btn btn--ghost" href="${link('re', lang)}">${fr ? 'Marketing immobilier' : 'Real estate marketing'}</a>
+          <a class="btn btn--ghost" href="${link('industries', lang)}">Industries</a>
           <a class="btn btn--ghost" href="${link('services', lang)}">Services</a>
           <a class="btn btn--ghost" href="${link('contact', lang)}">Contact</a>
         </div>

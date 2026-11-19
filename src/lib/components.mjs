@@ -1,7 +1,7 @@
 import config from '../../site.config.mjs';
 import { link } from '../routes.mjs';
 import { ui } from '../content/ui.mjs';
-import { reServices, systemSteps } from '../content/realestate.mjs';
+import { services, getService } from '../content/services.mjs';
 import { articles } from '../content/articles.mjs';
 import { portfolio, portfolioTypes } from '../content/portfolio.mjs';
 import { testimonials as testimonialsData, clientLogos } from '../content/testimonials.mjs';
@@ -155,18 +155,30 @@ export const proofStrip = (lang) => {
 export const logoStrip = (lang) => html`
   <section class="logos" aria-label="${lang === 'fr' ? 'Ils nous font confiance' : 'They trust us'}">
     <div class="container logos__in">
-      <p class="logos__label">${lang === 'fr' ? 'Des courtiers et entreprises affiliés à' : 'Brokers and businesses affiliated with'}</p>
-      <ul class="logos__list">
+      <p class="logos__label">${lang === 'fr' ? 'Ils nous font confiance' : 'Trusted by local businesses'}</p>
+      <div class="logos__viewport"><ul class="logos__list">
         ${[0, 1].map((dup) => clientLogos.map((l) => html`<li${dup ? ' aria-hidden="true"' : ''}><img src="/assets/img/logos/${l.file}.webp" alt="${dup ? '' : esc(l.name)}" width="${l.w}" height="120" loading="lazy" decoding="async"></li>`))}
-      </ul>
+      </ul></div>
     </div>
   </section>`;
 
 // ── How it works: 4 image cards (REW "boxed steps" pattern) ─────────────────
 export const systemSection = (lang, { eyebrow, title, lead } = {}) => {
   const fr = lang === 'fr';
-  const steps = systemSteps[lang];
-  const svcName = (id) => reServices.find((s) => s.id === id)?.[lang].nav;
+  const steps = fr
+    ? [
+        { key: 'attract', n: '01', title: 'Attirer', text: 'SEO, Google Ads et médias sociaux pour être trouvé par les bons clients.', links: ['svc-seo', 'svc-ads', 'svc-social'] },
+        { key: 'convert', n: '02', title: 'Convertir', text: 'Un site web ou une boutique en ligne qui transforme les visites en demandes et en ventes.', links: ['svc-web', 'svc-ecom'] },
+        { key: 'follow', n: '03', title: 'Suivre', text: 'Utilmo capte chaque prospect et automatise les relances.', links: ['svc-crm'] },
+        { key: 'measure', n: '04', title: 'Mesurer', text: 'Tableaux de bord et rapports : coût par prospect, sources et ventes.', links: ['svc-analytics'] },
+      ]
+    : [
+        { key: 'attract', n: '01', title: 'Attract', text: 'SEO, Google Ads and social media to be found by the right customers.', links: ['svc-seo', 'svc-ads', 'svc-social'] },
+        { key: 'convert', n: '02', title: 'Convert', text: 'A website or online store that turns visits into inquiries and sales.', links: ['svc-web', 'svc-ecom'] },
+        { key: 'follow', n: '03', title: 'Follow up', text: 'Utilmo captures every lead and automates follow-ups.', links: ['svc-crm'] },
+        { key: 'measure', n: '04', title: 'Measure', text: 'Dashboards and reports: cost per lead, sources and sales.', links: ['svc-analytics'] },
+      ];
+  const svcName = (id) => getService(id)?.[lang].nav;
   const photo = { attract: 'attirer', convert: 'convertir', follow: 'suivre', measure: 'mesurer' };
   const head = fr
     ? { attract: 'Soyez trouvé en premier, sur Google, Maps et les réseaux', convert: 'Un site qui transforme les visites en demandes', follow: 'Chaque prospect relancé, automatiquement', measure: 'Sachez exactement ce qui rapporte' }
@@ -180,7 +192,7 @@ export const systemSection = (lang, { eyebrow, title, lead } = {}) => {
       <header class="how__head reveal">
         <p class="eyebrow eyebrow--on-deep">${eyebrow || (fr ? 'Comment ça marche' : 'How it works')}</p>
         <h2 id="system-h">${title || (fr ? html`Attirer. Convertir. <em>Suivre.</em> Mesurer.` : html`Attract. Convert. <em>Follow up.</em> Measure.`)}</h2>
-        <p class="lead">${lead || (fr ? 'Quatre étapes, un seul pipeline : du premier clic d’un vendeur jusqu’au mandat signé. Votre site, vos publicités et votre CRM partagent les mêmes données.' : 'Four steps, one pipeline: from a seller’s first click to the signed listing. Your site, ads and CRM share the same data.')}</p>
+        <p class="lead">${lead || (fr ? 'Quatre étapes, un seul partenaire : du premier clic jusqu’à la vente. Votre site, vos publicités et votre CRM partagent les mêmes données.' : 'Four steps, one partner: from the first click to the sale. Your site, ads and CRM share the same data.')}</p>
       </header>
       <div class="carousel" data-carousel>
         <button class="carousel__btn carousel__btn--prev" type="button" data-carousel-prev aria-label="${fr ? 'Étape précédente' : 'Previous step'}">${icon('arrow')}</button>
@@ -208,14 +220,14 @@ export const situations = (lang) => {
   const fr = lang === 'fr';
   const items = fr
     ? [
-        { icon: 'user', title: 'Courtier solo', text: 'Une marque personnelle qui attire des vendeurs et met vos inscriptions en valeur.', id: 're-websites', cta: 'Site web de courtier' },
-        { icon: 'users', title: 'Équipe', text: 'Des prospects distribués à la bonne personne, et un suivi que personne n’oublie.', id: 're-teams', cta: 'Sites d’équipes' },
-        { icon: 'building', title: 'Agence ou bannière', text: 'Une image cohérente, des pages courtiers et du recrutement.', id: 're-teams', cta: 'Sites d’agences' },
+        { icon: 'user', title: 'Courtier solo', text: 'Une marque personnelle qui attire des vendeurs et met vos inscriptions en valeur.', id: 'ind-realestate', cta: 'Site web de courtier' },
+        { icon: 'users', title: 'Équipe', text: 'Des prospects distribués à la bonne personne, et un suivi que personne n’oublie.', id: 'ind-realestate', cta: 'Sites d’équipes' },
+        { icon: 'building', title: 'Agence ou bannière', text: 'Une image cohérente, des pages courtiers et du recrutement.', id: 'ind-realestate', cta: 'Sites d’agences' },
       ]
     : [
-        { icon: 'user', title: 'Solo broker', text: 'A personal brand that attracts sellers and showcases your listings.', id: 're-websites', cta: 'Broker websites' },
-        { icon: 'users', title: 'Team', text: 'Leads routed to the right person, and follow-up nobody forgets.', id: 're-teams', cta: 'Team websites' },
-        { icon: 'building', title: 'Agency or banner', text: 'A consistent brand, broker pages and recruiting.', id: 're-teams', cta: 'Agency websites' },
+        { icon: 'user', title: 'Solo broker', text: 'A personal brand that attracts sellers and showcases your listings.', id: 'ind-realestate', cta: 'Broker websites' },
+        { icon: 'users', title: 'Team', text: 'Leads routed to the right person, and follow-up nobody forgets.', id: 'ind-realestate', cta: 'Team websites' },
+        { icon: 'building', title: 'Agency or banner', text: 'A consistent brand, broker pages and recruiting.', id: 'ind-realestate', cta: 'Agency websites' },
       ];
   return html`
   <section class="section situations" aria-labelledby="sit-h">
@@ -261,7 +273,7 @@ export const featuredCase = (lang) => {
           <p>${t[lang]}</p>
           ${fr ? html`<footer>${t.name} · <span class="muted">traduit de l’anglais</span></footer>` : html`<footer>${t.name}</footer>`}
         </blockquote>
-        <div class="btn-row">${arrowBtn(link('work', lang), fr ? 'Voir nos réalisations' : 'See our work')}<a class="link" href="${link('re-websites', lang)}">${fr ? 'Site web de courtier' : 'Broker websites'} ${icon('arrow')}</a></div>
+        <div class="btn-row">${arrowBtn(link('work', lang), fr ? 'Voir nos réalisations' : 'See our work')}<a class="link" href="${link('ind-realestate', lang)}">${fr ? 'Sites immobiliers' : 'Real estate websites'} ${icon('arrow')}</a></div>
       </div>
     </div>
   </section>`;
@@ -300,12 +312,12 @@ export const utilmoSpotlight = (lang) => {
   <section class="section utilmo" aria-labelledby="utilmo-h">
     <div class="container utilmo__in">
       <div class="utilmo__copy">
-        ${sectionHead({ eyebrow: fr ? 'Notre CRM' : 'Our CRM', title: fr ? 'Utilmo : chaque prospect, suivi jusqu’au mandat' : 'Utilmo: every lead, followed to the listing', id: 'utilmo-h' })}
+        ${sectionHead({ eyebrow: fr ? 'Notre CRM' : 'Our CRM', title: fr ? 'Utilmo : chaque prospect, suivi jusqu’à la vente' : 'Utilmo: every lead, followed up to the sale', id: 'utilmo-h' })}
         <ul class="ticks reveal">
           ${(fr ? ['Pages d’atterrissage reliées au CRM', 'Pipeline de prospects avec leur source', 'Campagnes courriel et relances automatiques', 'Statistiques : ce qui rapporte vraiment'] : ['Landing pages connected to the CRM', 'Lead pipeline with each source', 'Email campaigns and automatic follow-ups', 'Analytics: what actually pays off']).map((x) => html`<li>${icon('check')}${x}</li>`)}
         </ul>
         <p class="reveal small muted">${fr ? 'Utilmo est développé et opéré par Marketing Websites Inc. — peu d’agences d’ici possèdent leur propre CRM.' : 'Utilmo is built and operated by Marketing Websites Inc. — few local agencies own their CRM.'}</p>
-        <div class="btn-row reveal">${arrowBtn(link('demo', lang), T(lang).cta.demo, { cta: 'demo' })}<a class="link" href="${link('re-utilmo', lang)}">${fr ? 'Découvrir Utilmo' : 'Discover Utilmo'} ${icon('arrow')}</a></div>
+        <div class="btn-row reveal">${arrowBtn(link('demo', lang), T(lang).cta.demo, { cta: 'demo' })}<a class="link" href="${link('svc-crm', lang)}">${fr ? 'Découvrir Utilmo' : 'Discover Utilmo'} ${icon('arrow')}</a></div>
       </div>
       <div class="utilmo__visual reveal" data-delay="2">${utilmoMock(lang)}</div>
     </div>
@@ -459,7 +471,7 @@ export const finalCta = (lang, { title, lead, type = 'consultation' } = {}) => {
 export const relatedServices = (lang, ids) => html`
   <div class="cards-related">
     ${ids.map((id, i) => {
-      const s = reServices.find((x) => x.id === id);
-      return html`<a class="card card--link related reveal" data-delay="${i + 1}" href="${link(id, lang)}"><span class="situation__icon">${icon(s.icon)}</span><div><h3>${s[lang].nav}</h3><p>${s[lang].description}</p></div>${icon('arrow', 'related__arrow')}</a>`;
+      const s = getService(id);
+      return html`<a class="card card--link related reveal" data-delay="${i + 1}" href="${link(id, lang)}"><span class="situation__icon">${icon(s.icon)}</span><div><h3>${s[lang].nav}</h3><p>${s[lang].short}</p></div>${icon('arrow', 'related__arrow')}</a>`;
     })}
   </div>`;

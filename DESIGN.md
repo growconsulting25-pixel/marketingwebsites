@@ -185,3 +185,23 @@ Signature motion count on the homepage: hero H1 words · H2 reveals · listing s
 - **Bento / grids:** 1 col < 640 → 2 cols ≥ 640 → 4/12-col layouts ≥ 1024.
 - **Touch targets** ≥ 44×44px; form fields 48px tall; no horizontal overflow at 320px (marquee is clipped by `overflow: hidden` on its wrapper).
 - **Type** fluid via `clamp()`; tables become stacked cards < 768px.
+
+---
+
+## v4 — Full-service redesign (Nov 19, 2026)
+
+**Brief (client):** refocus from real estate only to *all industries*, led by services; keep the brand colours; cleaner, more modern, more motion, 3D device elements, cool backgrounds; keep and grow existing SEO authority.
+
+**Direction in one sentence:** a *new-gen full-service agency* site — near-black brand dark (#191B28) and brand red (#C02942) on white, bold Montserrat, floating 3D device scenes, spotlight cards and continuous motion, with services as the spine and industries as proof.
+
+**Information architecture (SEO-first):** English stays at the root and French under `/fr/`, exactly as on the live site (all 26 indexed page URLs kept). New pages: Services hub, Industries hub, Clinics, Construction & trades, Professional services, Utilmo CRM, Quote, Utilmo demo. Real estate becomes one industry page (`/real-estate-website-design/`). See `migration/seo-audit.md`.
+
+**Signature elements (L3-lite, CSS + vanilla JS, no WebGL):**
+1. Hero: animated gradient mesh + blueprint grid; H1 with a rotating industry word; a 3D scene of a laptop (client site), phone (booking form), Google result card and lead toast, layered with `translateZ` and tilted by pointer and scroll.
+2. Services bento with a cursor-following spotlight and 3D tilt.
+3. Industries and portfolio as infinite carousels; testimonials as two opposite marquees.
+4. Stats band with count-up; scroll progress bar; word-by-word heading reveals.
+
+**Tokens:** unchanged from v3/v5 (`--deep #191B28`, `--accent #C02942`, white surfaces, neutral greys); motion respects `prefers-reduced-motion` (all loops, tilt and autoplay off).
+
+**Don'ts added:** no industry-only wording on shared pages; no invented metrics, ratings or guarantees (the old "ranking in 90 days or we work for free" promise is not carried over without written confirmation); no client personal data in product screenshots.

@@ -1,42 +1,46 @@
-// Every page has a French path (default language) and an English twin.
-// Final slugs depend on the URL audit (strategy §10): where an existing URL
-// already ranks, change the path here and add a redirect in migration/redirects.csv.
+// URL map. Every page has an English and a French twin.
+//
+// SEO: these paths are the ones already indexed on marketingwebsites.ca
+// (English at the root, French under /fr/). Keep them: changing a path loses
+// its rankings unless a 301 is added to migration/redirects.csv.
+// Pages marked "new" did not exist on the old site.
 
 export const routes = {
-  home:        { fr: '/',                                  en: '/en/' },
+  home:          { en: '/',                                   fr: '/fr/' },
 
-  // Real estate hub
-  re:          { fr: '/immobilier/',                       en: '/en/real-estate/' },
-  're-websites': { fr: '/immobilier/site-web-courtier/',   en: '/en/real-estate/broker-websites/' },
-  're-centris':  { fr: '/immobilier/integration-centris/', en: '/en/real-estate/centris-integration/' },
-  're-teams':    { fr: '/immobilier/sites-equipes-agences/', en: '/en/real-estate/team-agency-websites/' },
-  're-ads':      { fr: '/immobilier/publicite-google-meta/', en: '/en/real-estate/google-meta-ads/' },
-  're-seo':      { fr: '/immobilier/seo-local-courtier/',  en: '/en/real-estate/local-seo/' },
-  're-landing':  { fr: '/immobilier/pages-atterrissage/',  en: '/en/real-estate/landing-pages/' },
-  're-utilmo':   { fr: '/immobilier/crm-utilmo/',          en: '/en/real-estate/utilmo-crm/' },
-  're-packages': { fr: '/immobilier/forfaits/',            en: '/en/real-estate/packages/' },
+  // Services
+  services:      { en: '/services/',                          fr: '/fr/services/' },                              // new hub
+  'svc-web':     { en: '/web-design/',                        fr: '/fr/conception-web/' },
+  'svc-ecom':    { en: '/e-commerce/',                        fr: '/fr/e-commerce/' },
+  'svc-app':     { en: '/app-development/',                   fr: '/fr/developpement-dapplications-web/' },
+  'svc-seo':     { en: '/seo/',                               fr: '/fr/referencement-naturel/' },
+  'svc-ads':     { en: '/google-ads-management/',             fr: '/fr/gestion-de-google-ads/' },
+  'svc-social':  { en: '/social-media-marketing/',            fr: '/fr/gestion-des-medias-sociaux/' },
+  'svc-analytics': { en: '/website-analytics/',               fr: '/fr/analyse-de-site-web/' },
+  'svc-crm':     { en: '/utilmo-crm/',                        fr: '/fr/crm-utilmo/' },                            // new
 
-  // General services hub
-  services:    { fr: '/services/',                         en: '/en/services/' },
-  'svc-web':   { fr: '/services/conception-site-web/',     en: '/en/services/web-design/' },
-  'svc-seo':   { fr: '/services/referencement-seo/',       en: '/en/services/seo/' },
-  'svc-ads':   { fr: '/services/google-ads/',              en: '/en/services/google-ads/' },
-  'svc-social':{ fr: '/services/medias-sociaux/',          en: '/en/services/social-media/' },
-  'svc-ecom':  { fr: '/services/commerce-electronique/',   en: '/en/services/ecommerce/' },
-  'svc-dev':   { fr: '/services/developpement-sur-mesure/', en: '/en/services/custom-development/' },
+  // Industries
+  industries:    { en: '/industries/',                        fr: '/fr/industries/' },                            // new hub
+  'ind-realestate': { en: '/real-estate-website-design/',     fr: '/fr/site-web-pour-courtier-immobilier/' },
+  'ind-restaurant': { en: '/restaurant-website-design/',      fr: '/fr/site-web-pour-restaurant/' },
+  'ind-health':  { en: '/clinic-website-design/',             fr: '/fr/site-web-pour-clinique/' },                // new
+  'ind-construction': { en: '/construction-website-design/',  fr: '/fr/site-web-pour-entrepreneur/' },            // new
+  'ind-pro':     { en: '/professional-services-website-design/', fr: '/fr/site-web-services-professionnels/' },  // new
 
-  work:        { fr: '/realisations/',                     en: '/en/work/' },
-  resources:   { fr: '/ressources/',                       en: '/en/resources/' },
-  'art-pages':    { fr: '/ressources/pages-essentielles-site-courtier/', en: '/en/resources/essential-broker-website-pages/' },
-  'art-response': { fr: '/ressources/delai-de-reponse-prospects/',     en: '/en/resources/lead-response-time/' },
-  'art-budget':   { fr: '/ressources/budget-publicite-courtier/',      en: '/en/resources/broker-ad-budget/' },
+  // Company
+  work:          { en: '/portfolio/',                         fr: '/fr/portfolio/' },
+  about:         { en: '/about-us/',                          fr: '/fr/a-propos/' },
+  blog:          { en: '/blog/',                              fr: '/fr/blogue/' },
+  'art-pages':   { en: '/blog/essential-broker-website-pages/', fr: '/fr/blogue/pages-essentielles-site-courtier/' },  // new
+  'art-response': { en: '/blog/lead-response-time/',          fr: '/fr/blogue/delai-de-reponse-prospects/' },          // new
+  'art-budget':  { en: '/blog/ad-budget/',                    fr: '/fr/blogue/budget-publicitaire/' },                 // new
 
-  about:       { fr: '/a-propos/',                         en: '/en/about/' },
-  contact:     { fr: '/contact/',                          en: '/en/contact/' },
-  quote:       { fr: '/soumission/',                       en: '/en/quote/' },
-  demo:        { fr: '/demo-utilmo/',                      en: '/en/utilmo-demo/' },
-  thanks:      { fr: '/merci/',                            en: '/en/thank-you/' },
-  privacy:     { fr: '/confidentialite/',                  en: '/en/privacy/' },
+  // Conversion
+  contact:       { en: '/contact/',                           fr: '/fr/contactez-nous/' },
+  quote:         { en: '/quote/',                             fr: '/fr/soumission/' },                            // new
+  demo:          { en: '/utilmo-demo/',                       fr: '/fr/demo-utilmo/' },                           // new
+  thanks:        { en: '/thank-you/',                         fr: '/fr/merci/' },
+  privacy:       { en: '/privacy-policy/',                    fr: '/fr/politique-de-confidentialite/' },
 };
 
 export const link = (id, lang) => {

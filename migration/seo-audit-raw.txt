@@ -1,0 +1,182 @@
+## https://marketingwebsites.ca/
+TITLE: Web Design & Online Marketing Services | Marketing Websites
+DESC: We help small business owners & real estate agents achieve their web design & marketing objectives. We are ready to help you succeed.
+H1: ['We Are', 'Marketing', 'Websites']
+H2: ["Let's Make Great Things Together", 'Your', 'one-stop shop', 'for all your business needs', 'Our Creative', 'Team', 'A few of our clients', 'Testimonials']
+ALT: []
+
+## https://marketingwebsites.ca/fr/
+TITLE: Agence Web, Agence de Marketing Numerique
+DESC: Nous sommes une agence web qui vous écoute, planifie et exécute des stratégies novatrices de marketing pour atteindre les objectifs de nos clients.
+H1: ['Nous sommes agence', 'Marketing', 'Websites']
+H2: ['Créons de grandes choses ensemble', 'Votre agence de', 'services numériques complète', 'pour tous vos besoins professionnels', 'Notre équipe', 'créative', 'Quelques-uns de nos clients', 'Témoignages']
+ALT: []
+
+## https://marketingwebsites.ca/app-development/
+TITLE: Web Application Development Services - Marketing Websites
+DESC: We are ready to help you make your project become a reality, our web application development services are renound for using the best techmology.
+H1: ['Featured Work Portfolio']
+H2: ['We’ll Bring', 'Your Idea', 'From dreams to reality!', 'Why Us You Ask?', 'Let Us Help You', 'Tell Us', 'How We Can Help', 'You']
+ALT: []
+
+## https://marketingwebsites.ca/portfolio/
+TITLE: Portfolio - Digital Marketing Agency Montreal | Marketing Websites
+DESC: A website should be so much more than just an online representation of you and your business.
+H1: []
+H2: ['Get Pricing & Features']
+ALT: []
+
+## https://marketingwebsites.ca/contact/
+TITLE: Contact us | Marketing Websites
+DESC: Feel free to get in touch with us through email, phone, or filling out a simple contact us form. Marketing Websites will be in touch with you within 24h.
+H1: []
+H2: ['Tell Us', 'How We Can Help', 'You', 'Get Pricing & Features']
+ALT: []
+
+## https://marketingwebsites.ca/website-analytics/
+TITLE: Website Analytics - Insight That Makes All The Difference
+DESC: Making smart business decision for your Website Starts with website analytics. Our website is designed with the specific purpose of supporting your goals.
+H1: []
+H2: ['Knowledge is', 'POWER', 'Audit', 'Our Tools', 'Speak With an Expert', 'Tell Us', 'How We Can Help', 'You']
+ALT: []
+
+## https://marketingwebsites.ca/fr/analyse-de-site-web/
+TITLE: Analyse de site Web - Des idées qui font toute la différence
+DESC: Prendre des décisions d'affaires intelligentes pour votre site Web Commence avec l'analyse de site Web. Notre site Web est conçu dans le but spécifique de soutenir vos objectifs.
+H1: []
+H2: ['La guerre est constituée à 90%', "d'informations", 'Audit', 'Nos outils', 'Parler avec un expert', 'Dites-nous comment', 'nous pouvons', 'vous aider']
+ALT: []
+
+## https://marketingwebsites.ca/fr/e-commerce/
+TITLE: E-Commerce - Agence de marketing numérique Montréal | Marketing Websites
+DESC: Avec un site Web d’eCommerce responsif sur pc de bureau, tablette et mobile, vous serez en mesure d’augmenter votre taux de conversion et de développer votre ligne de fond sur tous les appareils
+H1: ['Œuvres en vedette']
+H2: ['Fonctionnalités', 'et capacités', 'Estimation personnalisé', 'Nos outils', 'Parlez avec un expert', 'Dites-nous comment', 'nous pouvons', 'vous aider']
+ALT: []
+
+## https://marketingwebsites.ca/fr/contactez-nous/
+TITLE: Contactez Nous | Marketing Websites
+DESC: Sentez-vous libre pour entrer en contact avec nous par e-mail ou téléphone. Marketing Websites seront en contact avec vous dans les 24h.
+H1: []
+H2: ['Dites-nous comment', 'nous pouvons', 'vous aider', 'Obtenir les prix et les caractéristiques']
+ALT: []
+
+## https://marketingwebsites.ca/fr/developpement-dapplications-web/
+TITLE: Applications Web - Agence de marketing numérique Montréal | Marketing Websites
+DESC: Quelles que soient vos exigences spécifiques en matière de Web, nous vous accompagnerons à travers chaque phase de développement en fournissant des conseils judicieux.
+H1: ['Œuvres en vedette']
+H2: ['Nous Menons', 'Votre Idée', 'Du rêve à la réalité!', 'Pourquoi Nous?', 'Laissez-Nous Vous Aider', 'Dites-nous comment', 'nous pouvons', 'vous aider']
+ALT: []
+
+## https://marketingwebsites.ca/fr/gestion-de-google-ads/
+TITLE: Gestion de Google Ads - Marketing Websites
+DESC: Obtenez gratuitement un conseil Professional grâce à notre équipe d’expert en Google ads. Notre site est structuré dans le but premier de soutenir vos objectifs de marketing numérique.
+H1: []
+H2: ["L'AVANTAGE DU", 'MARKETING GOOGLE ADS', 'Atteignez votre potentiel Google Ads', 'Nos outils', 'Campagnes Google Ads', 'Dites-nous comment', 'nous pouvons', 'vous aider']
+ALT: []
+
+## https://marketingwebsites.ca/fr/portfolio/
+TITLE: Portfolio - Agence de marketing numérique Montréal | Marketing Websites
+DESC: Un site web devrait être tellement plus qu’une simple représentation en ligne de vous et de votre entreprise.
+H1: []
+H2: ['Obtenir les prix et les caractéristiques']
+ALT: []
+
+## https://marketingwebsites.ca/google-ads-management/
+TITLE: Google Ads Management Services | Google Ads Management Company
+DESC: Our experienced Google ads management team is ready to help you reach your goals, we have different winning strategies for each industry.
+H1: []
+H2: ['THE ADVANTAGE', 'OF GOOGLE ADS MANAGMENT', 'Reach Your Google Ads Potential', 'Our Tools', 'Google Ads Campaigns', 'Tell Us', 'How We Can Help', 'You']
+ALT: []
+
+## https://marketingwebsites.ca/seo/
+TITLE: SEO Services - SEO Montreal Agency
+DESC: Receive a professional free SEO service consultation. Our SEO services offers guaranteed ranking in 90 days or we work for free!
+H1: ['OUR', 'SEO SERVICES GUARANTEE']
+H2: ['Local SEO', 'Our Tools', 'Speak With an Expert', 'Tell Us', 'How We Can Help', 'You', 'Get Pricing & Features']
+ALT: []
+
+## https://marketingwebsites.ca/fr/gestion-des-medias-sociaux/
+TITLE: Gestion des médias sociaux Montreal - Marketing Websites
+DESC: Chez Marketing Websites, nous cherchons à concevoir efficacement une stratégie de gestion et de marketing des médias sociaux qui satisfasse nos clients locaux de Montréal ainsi que nos demandes et demandes internationales.
+H1: []
+H2: ['Les avantages', 'des médias sociaux', 'Le contenu est', 'ROI', 'Nos outils', 'Nos Services comprennent', 'Dites-nous comment', 'nous pouvons']
+ALT: []
+
+## https://marketingwebsites.ca/fr/site-web-pour-restaurant/
+TITLE: Conception de sites web pour les restaurants | Marketing Websites
+DESC: Nous créons des sites Web de restaurants élégants qui souligne votre image de marque, qu'il s'agisse de cafés, de fast-foods ou de restaurants gastronomiques.
+H1: ['Œuvres en vedette']
+H2: ['Votre site web est votre', 'meilleur vendeur', 'Marque de restaurant', 'Optimisation du référencement et du trafic', 'Commençons ensemble', 'Dites-nous comment', 'nous pouvons', 'vous aider']
+ALT: []
+
+## https://marketingwebsites.ca/social-media-marketing/
+TITLE: Social Media Management Montreal - Marketing Websites
+DESC: At Marketing Websites we seek to effectively design a social media management and marketing strategy that satisfies our clients.
+H1: []
+H2: ['The Advantages', 'Of Social Media', 'Content Is', 'KING', 'Our Tools', 'Our Service Includes', 'Tell Us', 'How We Can Help']
+ALT: []
+
+## https://marketingwebsites.ca/web-design/
+TITLE: Web Design Montreal | Web Design Agency | Marketing Websites
+DESC: Beautiful websites designed to fit your brand & achieve your objectives. Our web design Montreal agency offers solutions for small & medium size businesses.
+H1: ['Featured Work Portfolio']
+H2: ['Montreal', 'Web Design Agency', 'Our Tools', 'A Memorable Experience', 'Tell Us', 'How We Can Help', 'You', 'Get Pricing & Features']
+ALT: []
+
+## https://marketingwebsites.ca/fr/conception-web/
+TITLE: Conception Web - Agence de marketing numérique Montréal | Marketing Websites
+DESC: une agence engagée à aider les entreprises à se différencier de leur compétiteur sur le web. Renommé pour ses designs attrayants, modernes et efficaces.
+H1: ['Œuvres en vedette']
+H2: ['Agence De Conception Web', 'à Montréal', 'Nos outils', 'Une Expérience Mémorable', 'Dites-nous comment', 'nous pouvons', 'vous aider', 'Obtenir les prix et les caractéristiques']
+ALT: []
+
+## https://marketingwebsites.ca/e-commerce/
+TITLE: Ecommerce Website Design | Personalized Custom Solutions
+DESC: With a desktop, tablet and mobile responsive eCommerce website, you’ll be able to increase your conversion rate and grow your bottom line across all devices.
+H1: ['Featured Work Portfolio']
+H2: ['Robust', 'Features', 'and Capabilities', 'Personalized Estimate', 'Our Tools', 'Speak With an Expert', 'Tell Us', 'How We Can Help']
+ALT: []
+
+## https://marketingwebsites.ca/restaurant-website-design/
+TITLE: Restaurant Website Design | Marketing Websites
+DESC: Looking for a stylish restaurant website design that will accentuate your branding? From cafes & fast food to fine dining, the inspiration is always there.
+H1: ['RESTAURANT WEBSITE DESIGN', 'Portfolio', 'RESTAURANT', 'WEBSITE DESIGN', 'Restaurant Branding', 'SEO Ranking & Traffic', 'Optimized', "Let's Get", 'Started']
+H2: ['Tell Us', 'How We Can Help', 'You', 'Get Pricing & Features']
+ALT: []
+
+## https://marketingwebsites.ca/fr/referencement-naturel/
+TITLE: Services de référencement - Marketing Websites
+DESC: Le processus commence par une consultation gratuite (sans engagement), au cours de laquelle nous prenons le temps de vous comprendre, ainsi que vos produits ou services.
+H1: ['Notre garantie', 'de services de référencement']
+H2: ['Référencement local', 'Nos outils', 'Parlez avec un expert', 'Dites-nous comment', 'nous pouvons', 'vous aider', 'Obtenir les prix et les caractéristiques']
+ALT: []
+
+## https://marketingwebsites.ca/real-estate-website-design/
+TITLE: Real Estate Website Design Services | Marketing Websites
+DESC: We offer professional real estate website design services, comes loaded with options including Centris, Crea or IDX integration.
+H1: ['Featured', 'Real Estate Website Design Services', 'A WEBSITE', 'IS YOUR BEST SALESMAN', 'Stay Ahead Of Trends', 'Real Estate', 'CRM', 'What Makes Us the', 'Experts']
+H2: ['What Our Clients Are Saying', 'Tell Us', 'How We Can Help', 'You', 'Get Pricing & Features']
+ALT: []
+
+## https://marketingwebsites.ca/fr/site-web-pour-courtier-immobilier/
+TITLE: Sites web pour courtiers immobiliers | Marketing Websites
+DESC: Donnez à vos clients une expérience inoubliable avec une conception de sites web pour courtiers immobiliers, adaptative et attrayante.
+H1: ['Sites web pour courtiers immobiliers', 'en vedette']
+H2: ['Un site web est votre', 'meilleur vendeur', "Restez à l'affût des tendances", 'CRM immobilier', 'Nous sommes des experts dans notre domaine. Découvrez pourquoi!', 'Ce que disent nos clients', 'Dites-nous comment', 'nous pouvons']
+ALT: []
+
+## https://marketingwebsites.ca/about-us/
+TITLE: About Marketing Websites
+DESC: Our agency is committed to offering the maximum value possible through providing services specially designed to satisfy all of your needs and demands.
+H1: []
+H2: ['Who', 'We Are', 'Our Team', 'Tell Us', 'How We Can Help You', 'Get Pricing & Features']
+ALT: []
+
+## https://marketingwebsites.ca/fr/a-propos/
+TITLE: À propos de Marketing Websites
+DESC: Notre agence s'engage à offrir le maximum de valeur possible en fournissant des services spécialement conçus pour satisfaire tous vos besoins et demandes.
+H1: []
+H2: ['Qui', 'nous sommes', 'Notre équipe', 'Dites-nous', 'comment nous pouvons vous aider', 'Obtenir les prix et les caractéristiques']
+ALT: []
+

@@ -1,26 +1,42 @@
 import { link } from '../routes.mjs';
 import { ui } from '../content/ui.mjs';
-import { html, icon, animWords } from '../lib/html.mjs';
+import { html, icon } from '../lib/html.mjs';
 import { organizationSchema } from '../lib/layout.mjs';
-import {
-  heroMock, proofStrip, logoStrip, systemSection, situations, featuredCase, portfolioGrid, utilmoSpotlight,
-  otherIndustries, processSteps, testimonials, latestResources, finalCta, sectionHead, arrowBtn,
-} from '../lib/components.mjs';
+import { logoStrip, systemSection, utilmoSpotlight, processSteps, latestResources, finalCta, sectionHead, arrowBtn, faqBlock, faqSchema } from '../lib/components.mjs';
+import { heroScene, rotator, servicesBento, industriesCarousel, statsBand, portfolioCarousel, testimonialsMarquee } from '../lib/sections.mjs';
 
 const copy = {
-  fr: {
-    title: 'Marketing immobilier et sites web pour courtiers au Québec | Marketing Websites',
-    description: 'Sites web bilingues avec intégration Centris, publicité et CRM Utilmo pour courtiers et agences immobilières du Québec. Agence montréalaise depuis 2015.',
-    eyebrow: 'Marketing immobilier · Québec',
-    h1: 'Le marketing qui fait grandir les <em>courtiers immobiliers</em> du Québec',
-    sub: 'Site web bilingue relié à Centris, publicité Google et Meta, et CRM Utilmo pour suivre chaque prospect — un seul partenaire depuis 2015.',
-  },
   en: {
-    title: 'Real Estate Marketing & Broker Websites in Quebec | Marketing Websites',
-    description: 'Bilingual websites with Centris integration, advertising and the Utilmo CRM for Quebec real estate brokers and agencies. Montreal agency since 2015.',
-    eyebrow: 'Real estate marketing · Quebec',
-    h1: 'Marketing that grows Quebec’s <em>real estate brokers</em>',
-    sub: 'A bilingual website connected to Centris, Google and Meta ads, and the Utilmo CRM to follow every lead — one partner since 2015.',
+    title: 'Web Design & Online Marketing Services | Marketing Websites',
+    description: 'Full-service digital marketing agency in Montreal: web design, SEO, Google Ads, social media, e-commerce and the Utilmo CRM for businesses in every industry.',
+    eyebrow: 'Full-service digital agency · Montreal',
+    h1a: 'Digital marketing & website design', h1b: 'for',
+    words: ['small businesses', 'restaurants', 'clinics', 'contractors', 'professionals', 'real estate brokers'],
+    sub: 'Websites, SEO, Google Ads, social media and our own CRM — one Montreal team that turns your online presence into customers, since 2015.',
+    trust: ['Since 2015', 'Bilingual FR/EN', 'Our own CRM'],
+    faq: [
+      ['What services does Marketing Websites offer?', 'Web design, e-commerce, web application development, SEO, Google Ads, social media management, website analytics and our own CRM, Utilmo — for businesses in every industry.'],
+      ['Do you only work with Montreal businesses?', 'We are based in Montreal and work with businesses across Quebec and Canada, in French and English.'],
+      ['How much does a website or campaign cost?', 'Every project is different. After a short call we send a clear, written quote with a price range.'],
+      ['Can you redesign my site without losing my Google rankings?', 'Yes. We keep URLs that rank, redirect every old page and monitor Search Console after launch.'],
+      ['Do I own my website and ad accounts?', 'Yes. Your domain, your content, your ad accounts and your data belong to you.'],
+    ],
+  },
+  fr: {
+    title: 'Agence Web et Marketing Numérique à Montréal | Marketing Websites',
+    description: 'Agence de marketing numérique à Montréal : conception web, SEO, Google Ads, médias sociaux, e-commerce et CRM Utilmo pour toutes les industries.',
+    eyebrow: 'Agence numérique à service complet · Montréal',
+    h1a: 'Agence web et marketing numérique', h1b: 'pour les',
+    words: ['PME', 'restaurants', 'cliniques', 'entrepreneurs', 'professionnels', 'courtiers immobiliers'],
+    sub: 'Sites web, SEO, Google Ads, médias sociaux et notre propre CRM : une seule équipe montréalaise qui transforme votre présence en ligne en clients, depuis 2015.',
+    trust: ['Depuis 2015', 'Bilingue FR/EN', 'Notre propre CRM'],
+    faq: [
+      ['Quels services offre Marketing Websites?', 'Conception web, commerce électronique, développement d’applications web, SEO, Google Ads, gestion des médias sociaux, analyse de site web et notre propre CRM, Utilmo, pour les entreprises de toutes les industries.'],
+      ['Travaillez-vous seulement avec des entreprises de Montréal?', 'Nous sommes basés à Montréal et accompagnons des entreprises partout au Québec et au Canada, en français et en anglais.'],
+      ['Combien coûte un site web ou une campagne?', 'Chaque projet est différent. Après un court appel, nous envoyons une soumission claire, par écrit, avec une fourchette de prix.'],
+      ['Pouvez-vous refaire mon site sans perdre mon classement Google?', 'Oui. Nous gardons les adresses qui se classent, redirigeons chaque ancienne page et surveillons la Search Console après le lancement.'],
+      ['Mon site et mes comptes publicitaires m’appartiennent-ils?', 'Oui. Votre domaine, votre contenu, vos comptes publicitaires et vos données vous appartiennent.'],
+    ],
   },
 };
 
@@ -29,70 +45,62 @@ export const home = (lang) => {
   const t = ui[lang];
   const fr = lang === 'fr';
   return {
-    id: 'home', lang, title: c.title, description: c.description,
-    schema: [organizationSchema(), { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Marketing Websites', url: 'https://marketingwebsites.ca/', inLanguage: `${lang}-CA` }],
-    bodyClass: 'page-home',
+    id: 'home', lang, title: c.title, description: c.description, bodyClass: 'page-home',
+    schema: [organizationSchema(), { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Marketing Websites', url: 'https://marketingwebsites.ca/', inLanguage: `${lang}-CA` }, faqSchema(c.faq)],
     body: html`
-    <section class="hero" aria-labelledby="hero-h">
-      <div class="hero__glow" aria-hidden="true"></div>
+    <section class="hero hero--v4" aria-labelledby="hero-h">
+      <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="container hero__in">
         <div class="hero__copy">
           <p class="eyebrow">${c.eyebrow}</p>
-          <h1 id="hero-h" class="h-anim">${animWords(c.h1)}</h1>
+          <h1 id="hero-h"><span class="h1a">${c.h1a}</span> <span class="h1b">${c.h1b} ${rotator(c.words)}</span></h1>
           <p class="lead hero__sub">${c.sub}</p>
           <div class="btn-row">
-            ${arrowBtn('#consultation', t.cta.consult, { cls: 'btn--lg', cta: 'consultation' })}
+            ${arrowBtn(link('quote', lang), t.cta.quote, { cls: 'btn--lg btn--magnetic', cta: 'quote' })}
             <a class="btn btn--ghost btn--lg" href="${link('work', lang)}">${t.cta.work}</a>
           </div>
-          <p class="hero__alt"><a href="${link('services', lang)}">${t.notRe} ${icon('arrow')}</a></p>
+          <ul class="hero__trust">${c.trust.map((x) => html`<li>${icon('check')}${x}</li>`)}</ul>
         </div>
-        <div class="hero__visual">${heroMock(lang)}</div>
+        <div class="hero__visual">${heroScene(lang)}</div>
       </div>
+      <a class="scroll-cue" href="#svc-h" aria-label="${fr ? 'Défiler vers les services' : 'Scroll to services'}"><span></span></a>
     </section>
 
     ${logoStrip(lang)}
-    ${proofStrip(lang)}
+    ${servicesBento(lang)}
+    ${statsBand(lang)}
     ${systemSection(lang)}
-    ${situations(lang)}
-    ${featuredCase(lang)}
-
-    <section class="section" aria-labelledby="work-h">
-      <div class="container">
-        <div class="split-head">
-          ${sectionHead({ eyebrow: fr ? 'Réalisations' : 'Our work', title: fr ? 'Des sites de courtiers qui travaillent' : 'Broker sites that do the work', id: 'work-h' })}
-          <a class="link reveal" href="${link('work', lang)}">${fr ? 'Toutes les réalisations' : 'All projects'} ${icon('arrow')}</a>
-        </div>
-        ${portfolioGrid(lang, { limit: 6, realEstateOnly: true })}
-      </div>
-    </section>
-
+    ${industriesCarousel(lang)}
+    ${portfolioCarousel(lang)}
     ${utilmoSpotlight(lang)}
-    ${otherIndustries(lang)}
+    ${testimonialsMarquee(lang)}
 
     <section class="section" aria-labelledby="process-h">
       <div class="container process-wrap">
-        ${sectionHead({ eyebrow: fr ? 'Comment ça marche' : 'How it works', title: fr ? 'De la consultation à la croissance' : 'From consultation to growth', lead: fr ? 'Un processus clair, un interlocuteur, et un site en ligne en environ six semaines.' : 'A clear process, one point of contact, and a site live in about six weeks.', id: 'process-h' })}
-        ${processSteps(lang)}
+        ${sectionHead({ eyebrow: fr ? 'Comment on travaille' : 'How we work', title: fr ? html`De la consultation <em>à la croissance</em>` : html`From consultation <em>to growth</em>`, lead: fr ? 'Un processus clair, un seul interlocuteur et des rapports qui parlent de ventes, pas seulement de clics.' : 'A clear process, one point of contact and reports that talk about sales, not just clicks.', id: 'process-h' })}
+        ${processSteps(lang, fr
+          ? [['Consultation', '30 minutes pour comprendre vos objectifs, vos clients et vos concurrents.', 'Semaine 0'], ['Stratégie', 'Plan, pages, mots-clés, campagnes et indicateurs.', 'Semaine 1'], ['Conception', 'Design, rédaction FR/EN, développement et intégrations.', 'Semaines 2 à 6'], ['Lancement', 'Tests, redirections, suivi analytique et mise en ligne.', 'Semaine 6 à 8'], ['Croissance', 'SEO, publicité, contenu et rapport mensuel.', 'En continu']]
+          : [['Consultation', '30 minutes to understand your goals, customers and competitors.', 'Week 0'], ['Strategy', 'Plan, pages, keywords, campaigns and KPIs.', 'Week 1'], ['Design & build', 'Design, FR/EN copy, development and integrations.', 'Weeks 2–6'], ['Launch', 'Testing, redirects, analytics and go-live.', 'Weeks 6–8'], ['Growth', 'SEO, ads, content and monthly reporting.', 'Ongoing']])}
       </div>
     </section>
 
-    <section class="section section--sand" aria-labelledby="quotes-h">
-      <div class="container">
-        ${sectionHead({ eyebrow: fr ? 'Témoignages' : 'Testimonials', title: fr ? 'Ce que disent les courtiers' : 'What brokers say', id: 'quotes-h', center: true })}
-        ${testimonials(lang, 3, { skip: ['melissa'] })}
+    <section class="section section--sand" aria-labelledby="faq-h">
+      <div class="container faq-wrap">
+        ${sectionHead({ eyebrow: 'FAQ', title: fr ? 'Questions fréquentes' : 'Frequently asked questions', id: 'faq-h' })}
+        ${faqBlock(lang, c.faq)}
       </div>
     </section>
 
     <section class="section" aria-labelledby="res-h">
       <div class="container">
         <div class="split-head">
-          ${sectionHead({ eyebrow: fr ? 'Ressources' : 'Resources', title: fr ? 'Conseils concrets pour courtiers' : 'Practical advice for brokers', id: 'res-h' })}
-          <a class="link reveal" href="${link('resources', lang)}">${fr ? 'Toutes les ressources' : 'All resources'} ${icon('arrow')}</a>
+          ${sectionHead({ eyebrow: t.nav.blog, title: fr ? html`Conseils <em>concrets</em>` : html`Practical <em>advice</em>`, id: 'res-h' })}
+          <a class="link reveal" href="${link('blog', lang)}">${fr ? 'Tous les articles' : 'All articles'} ${icon('arrow')}</a>
         </div>
         ${latestResources(lang)}
       </div>
     </section>
 
-    ${finalCta(lang)}`,
+    ${finalCta(lang, { type: 'quote', title: fr ? html`Parlons de <em>votre croissance</em>` : html`Let’s talk about <em>your growth</em>`, lead: fr ? 'Décrivez votre projet en deux minutes. Nous vous répondons en un jour ouvrable avec une approche et une fourchette de prix.' : 'Describe your project in two minutes. We reply within one business day with an approach and a price range.' })}`,
   };
 };

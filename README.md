@@ -5,18 +5,16 @@ French-first, bilingual rebuild of marketingwebsites.ca, built from the
 
 **Positioning:** *Le marketing numérique des courtiers immobiliers du Québec — site web, Centris, publicité et CRM dans un seul système*, with a clearly signposted path to the general services (web design, SEO, Google Ads, social, ecommerce, custom dev).
 
-## What's in it
+## What's in it (v4 — full-service redesign)
 
-- **56 pages** (28 FR + 28 EN twins, `hreflang` fr-CA / en-CA / x-default, language switch goes to the equivalent page).
-- **Homepage** with the 12 sections from strategy §4 (hero, proof strip, the 4-step system, "choose your situation", case study, portfolio, Utilmo spotlight, other industries, process, testimonials, resources, consultation form).
-- **Real estate hub** + 7 service pages (broker websites, Centris, teams/agencies, Google & Meta ads, local SEO, landing pages, Utilmo CRM) on the 11-block template from §5, plus **packages** (Présence / Croissance / Système complet). Short-form video is shown as *Bientôt* (toggle in `site.config.mjs`).
-- **General services hub** + 6 service pages.
-- **Portfolio** with filters, **resource hub** (4 topic hubs) with 3 starter articles, **about**, **privacy (Law 25 draft)**.
-- **Three conversion paths** (§6): consultation (`/contact/`), quote (`/soumission/`), Utilmo demo (`/demo-utilmo/`) + thank-you pages (noindex).
-- Forms post to Utilmo with `form_type`, `page_url`, `language`, `referrer`, `utm_*`, `gclid`, `fbclid`; honeypot spam trap; accessible inline validation.
-- **GA4 only after consent** (Law 25). Events: `generate_lead` (with `form_type`), `book_consultation`, `book_demo`, `click_phone`, `click_email`, `form_start`, `cta_click`.
-- **SEO:** canonical, hreflang, Organization/LocalBusiness, Service, Article, BreadcrumbList, FAQPage (only where the FAQ is visible), per-language XML sitemaps, robots.txt, `_redirects` generated from the migration map.
-- **Performance:** static HTML, no frameworks, ~10 KB JS, self-hosted variable fonts, illustrations drawn in SVG/CSS (no slider plugins, no stock photos).
+- **Positioning:** full-service web & digital marketing agency in Montreal for businesses in every industry; services are the spine, industries are proof. Brand colours #191B28 / #C02942, Montserrat, 3D device scenes and continuous motion (see `DESIGN.md` §v4).
+- **54 pages** (27 EN + 27 FR). **English at the root, French under `/fr/`, exactly like the live site** — all indexed page URLs are kept (see `migration/seo-audit.md`).
+- **8 services:** web design, e-commerce, web apps, SEO (incl. AI search), Google Ads, social media, website analytics, Utilmo CRM — plus a services hub.
+- **5 industries:** real estate (Centris), restaurants, clinics & health, construction & trades, professional services — plus an industries hub.
+- Portfolio (53 real projects), 8 real testimonials, blog hub with 3 starter articles, about, contact, quote, Utilmo demo, thank-you, privacy.
+- SEO: canonical, hreflang (en-CA / fr-CA / x-default = EN), Organization/ProfessionalService, Service, FAQPage, Article, BreadcrumbList, ItemList, sitemaps per language.
+
+**Before launch:** migrate or keep serving the 186 blog posts and the marketplace legal pages at their current URLs (`migration/blog-urls-to-preserve.txt`).
 
 ## Run it
 

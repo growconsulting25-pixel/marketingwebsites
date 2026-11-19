@@ -60,8 +60,8 @@ for (const builder of pageBuilders) {
   }
 }
 // 404 pages
-await write('/404.html', layout(notFound('fr'), assets));
-await write('/en/404.html', layout(notFound('en'), assets));
+await write('/404.html', layout(notFound('en'), assets));
+await write('/fr/404.html', layout(notFound('fr'), assets));
 
 // Sitemaps (one per language) + index.
 const today = new Date().toISOString().slice(0, 10);
@@ -77,12 +77,12 @@ for (const lang of ['fr', 'en']) {
   await write(`/sitemap-${lang}.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);
 }
 await write('/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap><loc>${abs('/sitemap-fr.xml')}</loc><lastmod>${today}</lastmod></sitemap>\n  <sitemap><loc>${abs('/sitemap-en.xml')}</loc><lastmod>${today}</lastmod></sitemap>\n</sitemapindex>\n`);
-await write('/robots.txt', `User-agent: *\nAllow: /\nDisallow: /merci/\nDisallow: /en/thank-you/\n\nSitemap: ${abs('/sitemap.xml')}\n`);
+await write('/robots.txt', `User-agent: *\nAllow: /\nDisallow: /thank-you/\nDisallow: /fr/merci/\n\nSitemap: ${abs('/sitemap.xml')}\n`);
 
 // Redirects (Netlify / Cloudflare Pages `_redirects` format) from the migration map.
 const csv = (await readFile(path.join(root, 'migration', 'redirects.csv'), 'utf8')).split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#') && !l.startsWith('old_path'));
 const redirectLines = csv.map((l) => { const [from, to, type = '301'] = l.split(','); return type === '410' ? `${from}  /404.html  410` : `${from}  ${to}  ${type}`; });
-await write('/_redirects', [...redirectLines, '/en/*  /en/404.html  404', '/*  /404.html  404'].join('\n') + '\n');
+await write('/_redirects', [...redirectLines, '/fr/*  /fr/404.html  404', '/*  /404.html  404'].join('\n') + '\n');
 
 // Security & caching headers (Netlify / Cloudflare Pages `_headers` format).
 await write('/_headers', `/*
@@ -92,9 +92,9 @@ await write('/_headers', `/*
   X-Frame-Options: SAMEORIGIN
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
-/merci/*
+/thank-you/*
   X-Robots-Tag: noindex
-/en/thank-you/*
+/fr/merci/*
   X-Robots-Tag: noindex
 `);
 

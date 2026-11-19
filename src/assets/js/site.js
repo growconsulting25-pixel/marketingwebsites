@@ -188,8 +188,9 @@
       }, 120);
     }, { passive: true });
     const go = (dir) => track.scrollBy({ left: dir * setW(), behavior: reduced ? 'auto' : 'smooth' });
-    $('[data-carousel-prev]', root)?.addEventListener('click', () => go(-1));
-    $('[data-carousel-next]', root)?.addEventListener('click', () => go(1));
+    const btns = (sel) => [...$$(sel, root), ...(track.id ? $$(`${sel}[aria-controls="${track.id}"]`) : [])];
+    btns('[data-carousel-prev]').forEach((b) => b.addEventListener('click', () => go(-1)));
+    btns('[data-carousel-next]').forEach((b) => b.addEventListener('click', () => go(1)));
     track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
     // Slow autoplay; stops on hover, focus or touch, and never with reduced motion.
     if (reduced) return;
@@ -199,6 +200,66 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(root);
     setInterval(() => { if (!paused && visible && !document.hidden) go(1); }, 4500);
   });
+
+  /* ── v7: rotating word in the hero ───────────────────────────────────── */
+  $$('[data-rotator]').forEach((r) => {
+    const words = $$('.rotator__w', r);
+    if (reduced || words.length < 2) return;
+    let k = 0;
+    setInterval(() => {
+      const cur = words[k]; k = (k + 1) % words.length; const nxt = words[k];
+      cur.classList.remove('is-on'); cur.classList.add('is-out'); cur.setAttribute('aria-hidden', 'true');
+      nxt.classList.remove('is-out'); nxt.classList.add('is-on'); nxt.removeAttribute('aria-hidden');
+      setTimeout(() => cur.classList.remove('is-out'), 700);
+    }, 2400);
+  });
+
+  /* ── v7: 3D scenes follow the pointer and the scroll ─────────────────── */
+  const scenes = $$('[data-scene]');
+  if (scenes.length && !reduced && window.matchMedia('(min-width: 640px)').matches) {
+    let px = 0, py = 0, raf2 = 0;
+    const paint = () => {
+      raf2 = 0;
+      scenes.forEach((sc) => {
+        const r = sc.getBoundingClientRect();
+        const prog = Math.max(-1, Math.min(1, (r.top + r.height / 2 - innerHeight / 2) / innerHeight));
+        const stage = $('.scene__stage', sc);
+        if (stage) stage.style.transform = `rotateX(${(6 - py * 8 + prog * 6).toFixed(2)}deg) rotateY(${(-14 + px * 16).toFixed(2)}deg)`;
+      });
+    };
+    const ask = () => { if (!raf2) raf2 = requestAnimationFrame(paint); };
+    if (window.matchMedia('(hover: hover)').matches) window.addEventListener('pointermove', (e) => { px = e.clientX / innerWidth - 0.5; py = e.clientY / innerHeight - 0.5; ask(); }, { passive: true });
+    window.addEventListener('scroll', ask, { passive: true });
+    ask();
+  }
+
+  /* ── v7: spotlight + tilt on cards ───────────────────────────────────── */
+  if (!reduced && window.matchMedia('(hover: hover)').matches) {
+    $$('[data-tilt-card]').forEach((el) => {
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width; const y = (e.clientY - r.top) / r.height;
+        el.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+        el.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+        el.style.setProperty('--ty', ((x - 0.5) * 7).toFixed(2) + 'deg');
+        el.style.setProperty('--tx', (-(y - 0.5) * 7).toFixed(2) + 'deg');
+      });
+      el.addEventListener('pointerleave', () => { el.style.setProperty('--tx', '0deg'); el.style.setProperty('--ty', '0deg'); });
+    });
+    $$('.btn--magnetic').forEach((b) => {
+      b.addEventListener('pointermove', (e) => { const r = b.getBoundingClientRect(); b.style.setProperty('--bx', ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + 'px'); b.style.setProperty('--by', ((e.clientY - r.top - r.height / 2) * 0.25).toFixed(1) + 'px'); });
+      b.addEventListener('pointerleave', () => { b.style.setProperty('--bx', '0px'); b.style.setProperty('--by', '0px'); });
+    });
+  }
+
+  /* ── v7: scroll progress bar ─────────────────────────────────────────── */
+  const bar = $('[data-progress]');
+  if (bar) {
+    let raf3 = 0;
+    const upd = () => { raf3 = 0; const h = document.documentElement.scrollHeight - innerHeight; bar.style.setProperty('--p', h > 0 ? (scrollY / h).toFixed(4) : 0); };
+    window.addEventListener('scroll', () => { if (!raf3) raf3 = requestAnimationFrame(upd); }, { passive: true });
+    upd();
+  }
 
   /* ── Sticky CTA hides while a form is on screen ──────────────────────── */
   const sticky = $('[data-sticky]');
