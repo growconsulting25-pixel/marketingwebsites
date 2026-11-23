@@ -275,6 +275,24 @@
     }
   }
 
+  /* ── v8: process timeline fills as you scroll ────────────────────────── */
+  const tls = $$('[data-tl]');
+  if (tls.length) {
+    let rafT = 0;
+    const paintT = () => {
+      rafT = 0;
+      tls.forEach((w) => {
+        const r = w.getBoundingClientRect();
+        const p = reduced ? 1 : Math.max(0, Math.min(1, (innerHeight * 0.75 - r.top) / (r.height + innerHeight * 0.15)));
+        w.style.setProperty('--tl', p.toFixed(3));
+        const steps = $$('.tl__step', w);
+        steps.forEach((st, i) => st.classList.toggle('is-on', p >= (steps.length > 1 ? i / (steps.length - 1) : 0) - 0.02));
+      });
+    };
+    window.addEventListener('scroll', () => { if (!rafT) rafT = requestAnimationFrame(paintT); }, { passive: true });
+    paintT();
+  }
+
   /* ── v7: scroll progress bar ─────────────────────────────────────────── */
   const bar = $('[data-progress]');
   if (bar) {

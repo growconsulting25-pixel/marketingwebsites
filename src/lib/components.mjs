@@ -346,9 +346,11 @@ export const processSteps = (lang, steps) => {
     ? [['Consultation', '30 minutes pour comprendre vos objectifs et votre marché.', 'Semaine 0'], ['Stratégie', 'Plan, pages, campagnes et indicateurs à suivre.', 'Semaine 1'], ['Conception', 'Design, rédaction FR/EN, intégrations Centris et Utilmo.', 'Semaines 2–5'], ['Lancement', 'Tests, mise en ligne, formation.', 'Semaine 6'], ['Croissance', 'Publicité, contenu et rapport mensuel.', 'En continu']]
     : [['Consultation', '30 minutes to understand your goals and market.', 'Week 0'], ['Strategy', 'Plan, pages, campaigns and KPIs to track.', 'Week 1'], ['Design', 'Design, FR/EN copy, Centris and Utilmo integrations.', 'Weeks 2–5'], ['Launch', 'Testing, go-live, training.', 'Week 6'], ['Growth', 'Ads, content and monthly reporting.', 'Ongoing']]);
   return html`
-  <ol class="process">
-    ${s.map(([t, d, w], i) => html`<li class="process__step reveal" data-delay="${Math.min(i + 1, 4)}"><span class="process__n tabnum">${String(i + 1).padStart(2, '0')}</span><div><h3>${t}</h3><p>${d}</p>${w ? html`<span class="process__when">${w}</span>` : ''}</div></li>`)}
-  </ol>`;
+  <div class="tl-wrap" data-tl>
+    <ol class="tl" style="--n: ${s.length}">
+      ${s.map(([t, d, w], i) => html`<li class="tl__step reveal" data-delay="${Math.min(i + 1, 4)}"><span class="tl__dot tabnum">${String(i + 1).padStart(2, '0')}</span><div class="tl__body">${w ? html`<span class="tl__when">${w}</span>` : ''}<h3>${t}</h3><p>${d}</p></div></li>`)}
+    </ol>
+  </div>`;
 };
 
 export const testimonials = (lang, n = 3, { skip = [] } = {}) => {

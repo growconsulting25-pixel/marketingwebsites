@@ -310,3 +310,28 @@ export const workShowcase = (lang) => {
     </div>
   </section>`;
 };
+
+// Team / studio section (replaces the repeated "how it works" carousel)
+export const teamSection = (lang) => {
+  const fr = lang === 'fr';
+  const pts = fr
+    ? [['user', 'Un seul interlocuteur', 'Une personne qui connaît votre entreprise et vous répond rapidement, du premier appel au rapport mensuel.'], ['globe', 'Bilingue par défaut', 'Chaque page, annonce et courriel est rédigé en français et en anglais.'], ['inbox', 'Notre propre technologie', 'Nous avons créé Utilmo, notre CRM, pour qu’aucun prospect ne vous échappe.']]
+    : [['user', 'One point of contact', 'Someone who knows your business and answers fast, from the first call to the monthly report.'], ['globe', 'Bilingual by default', 'Every page, ad and email is written in English and French.'], ['inbox', 'Our own technology', 'We built Utilmo, our CRM, so no lead ever slips through the cracks.']];
+  const ring = fr ? 'MARKETING WEBSITES · MONTRÉAL · DEPUIS 2015 · ' : 'MARKETING WEBSITES · MONTREAL · SINCE 2015 · ';
+  return html`
+  <section class="section team2" aria-labelledby="team-h">
+    <div class="container team2__in">
+      <div class="team2__media reveal" data-todo="${fr ? 'Remplacer par une vraie photo de l’équipe' : 'Replace with a real team photo'}">
+        <figure class="team2__main" data-tilt-card><img src="/assets/img/photos/equipe.webp" alt="${fr ? 'L’équipe de Marketing Websites au travail' : 'The Marketing Websites team at work'}" width="1600" height="625" loading="lazy" decoding="async"></figure>
+        <figure class="team2__sub"><img src="/assets/img/industries/equipe-travail-560.webp" alt="" width="560" height="373" loading="lazy" decoding="async"></figure>
+        <div class="team2__ring" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ringp" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0"/></defs><text><textPath href="#ringp">${ring}${ring}</textPath></text></svg><span>MW</span></div>
+        <div class="team2__card"><span class="team2__faces">${testimonialsData.slice(0, 4).map((t) => html`<img src="${t.photo}" alt="" width="40" height="40" loading="lazy">`)}</span><span><span class="quote__stars" aria-hidden="true">${[1, 2, 3, 4, 5].map(() => icon('star'))}</span><b>${fr ? `${testimonialsData.length} clients témoignent` : `${testimonialsData.length} client reviews`}</b></span></div>
+      </div>
+      <div class="team2__copy">
+        ${sectionHead({ eyebrow: fr ? 'L’équipe' : 'The team', title: fr ? html`Une équipe montréalaise <em>à qui vous parlez vraiment</em>` : html`A Montreal team <em>you actually talk to</em>`, lead: fr ? `Depuis 2015, Nizaar et l’équipe de Marketing Websites ont livré plus de ${portfolio.length} sites web pour des entreprises d’ici. Vous travaillez avec les mêmes personnes du début à la fin.` : `Since 2015, Nizaar and the Marketing Websites team have delivered more than ${portfolio.length} websites for local businesses. You work with the same people from start to finish.`, id: 'team-h' })}
+        <ul class="team2__pts">${pts.map(([ic, t, d], i) => html`<li class="reveal" data-delay="${i + 1}"><span class="team2__ic">${icon(ic)}</span><span><b>${t}</b><span>${d}</span></span></li>`)}</ul>
+        <div class="btn-row reveal">${arrowBtn(link('about', lang), fr ? 'Découvrir l’équipe' : 'Meet the team', { cls: '' })}<a class="link" href="${link('contact', lang)}">${fr ? 'Prendre un café avec nous' : 'Grab a coffee with us'} ${icon('arrow')}</a></div>
+      </div>
+    </div>
+  </section>`;
+};

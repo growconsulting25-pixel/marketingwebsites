@@ -2,8 +2,8 @@ import { link } from '../routes.mjs';
 import { ui } from '../content/ui.mjs';
 import { html, icon } from '../lib/html.mjs';
 import { organizationSchema } from '../lib/layout.mjs';
-import { logoStrip, systemSection, utilmoSpotlight, processSteps, latestResources, finalCta, sectionHead, arrowBtn, faqBlock, faqSchema } from '../lib/components.mjs';
-import { heroStudio, rotator, servicesIndex, industriesCarousel, statsBand, workShowcase, testimonialsMarquee } from '../lib/sections.mjs';
+import { logoStrip, utilmoSpotlight, processSteps, latestResources, finalCta, sectionHead, arrowBtn, faqBlock, faqSchema } from '../lib/components.mjs';
+import { heroStudio, rotator, servicesIndex, industriesCarousel, statsBand, workShowcase, testimonialsMarquee, teamSection } from '../lib/sections.mjs';
 
 const copy = {
   en: {
@@ -71,13 +71,13 @@ export const home = (lang) => {
     ${statsBand(lang)}
     ${workShowcase(lang)}
     ${industriesCarousel(lang)}
-    ${systemSection(lang)}
+    ${teamSection(lang)}
     ${utilmoSpotlight(lang)}
     ${testimonialsMarquee(lang)}
 
-    <section class="section" aria-labelledby="process-h">
-      <div class="container process-wrap">
-        ${sectionHead({ eyebrow: fr ? 'Comment on travaille' : 'How we work', title: fr ? html`De la consultation <em>à la croissance</em>` : html`From consultation <em>to growth</em>`, lead: fr ? 'Un processus clair, un seul interlocuteur et des rapports qui parlent de ventes, pas seulement de clics.' : 'A clear process, one point of contact and reports that talk about sales, not just clicks.', id: 'process-h' })}
+    <section class="section sec-blue process-blue" aria-labelledby="process-h">
+      <div class="container">
+        ${sectionHead({ eyebrow: fr ? 'Comment on travaille' : 'How we work', title: fr ? html`De la consultation <em>à la croissance</em>` : html`From consultation <em>to growth</em>`, lead: fr ? 'Un processus clair, un seul interlocuteur et des rapports qui parlent de ventes, pas seulement de clics.' : 'A clear process, one point of contact and reports that talk about sales, not just clicks.', id: 'process-h', center: true })}
         ${processSteps(lang, fr
           ? [['Consultation', '30 minutes pour comprendre vos objectifs, vos clients et vos concurrents.', 'Semaine 0'], ['Stratégie', 'Plan, pages, mots-clés, campagnes et indicateurs.', 'Semaine 1'], ['Conception', 'Design, rédaction FR/EN, développement et intégrations.', 'Semaines 2 à 6'], ['Lancement', 'Tests, redirections, suivi analytique et mise en ligne.', 'Semaine 6 à 8'], ['Croissance', 'SEO, publicité, contenu et rapport mensuel.', 'En continu']]
           : [['Consultation', '30 minutes to understand your goals, customers and competitors.', 'Week 0'], ['Strategy', 'Plan, pages, keywords, campaigns and KPIs.', 'Week 1'], ['Design & build', 'Design, FR/EN copy, development and integrations.', 'Weeks 2–6'], ['Launch', 'Testing, redirects, analytics and go-live.', 'Weeks 6–8'], ['Growth', 'SEO, ads, content and monthly reporting.', 'Ongoing']])}
