@@ -3,16 +3,16 @@ import { ui } from '../content/ui.mjs';
 import { html, icon } from '../lib/html.mjs';
 import { organizationSchema } from '../lib/layout.mjs';
 import { logoStrip, systemSection, utilmoSpotlight, processSteps, latestResources, finalCta, sectionHead, arrowBtn, faqBlock, faqSchema } from '../lib/components.mjs';
-import { heroScene, rotator, servicesBento, industriesCarousel, statsBand, portfolioCarousel, testimonialsMarquee } from '../lib/sections.mjs';
+import { heroStudio, rotator, servicesIndex, industriesCarousel, statsBand, workShowcase, testimonialsMarquee } from '../lib/sections.mjs';
 
 const copy = {
   en: {
     title: 'Web Design & Online Marketing Services | Marketing Websites',
-    description: 'Full-service digital marketing agency in Montreal: web design, SEO, Google Ads, social media, e-commerce and the Utilmo CRM for businesses in every industry.',
+    description: 'Web design and online marketing services in Montreal: websites, SEO, Google Ads, social media, e-commerce and the Utilmo CRM for businesses in every industry.',
     eyebrow: 'Full-service digital agency · Montreal',
-    h1a: 'Digital marketing & website design', h1b: 'for',
-    words: ['small businesses', 'restaurants', 'clinics', 'contractors', 'professionals', 'real estate brokers'],
-    sub: 'Websites, SEO, Google Ads, social media and our own CRM — one Montreal team that turns your online presence into customers, since 2015.',
+    h1a: 'Web design & digital marketing agency', h1b: 'for',
+    words: ['businesses', 'restaurants', 'clinics', 'contractors', 'professionals', 'realtors'],
+    sub: 'Website design, SEO, Google Ads, social media and our own CRM: website marketing services from one Montreal team that turns visitors into customers, since 2015.',
     trust: ['Since 2015', 'Bilingual FR/EN', 'Our own CRM'],
     faq: [
       ['What services does Marketing Websites offer?', 'Web design, e-commerce, web application development, SEO, Google Ads, social media management, website analytics and our own CRM, Utilmo — for businesses in every industry.'],
@@ -23,12 +23,12 @@ const copy = {
     ],
   },
   fr: {
-    title: 'Agence Web et Marketing Numérique à Montréal | Marketing Websites',
-    description: 'Agence de marketing numérique à Montréal : conception web, SEO, Google Ads, médias sociaux, e-commerce et CRM Utilmo pour toutes les industries.',
+    title: 'Agence Marketing Web à Montréal | Marketing Websites',
+    description: 'Agence de marketing web à Montréal : conception de sites web, référencement SEO, Google Ads, médias sociaux, e-commerce et CRM Utilmo pour les entreprises de toutes les industries.',
     eyebrow: 'Agence numérique à service complet · Montréal',
-    h1a: 'Agence web et marketing numérique', h1b: 'pour les',
-    words: ['PME', 'restaurants', 'cliniques', 'entrepreneurs', 'professionnels', 'courtiers immobiliers'],
-    sub: 'Sites web, SEO, Google Ads, médias sociaux et notre propre CRM : une seule équipe montréalaise qui transforme votre présence en ligne en clients, depuis 2015.',
+    h1a: 'Agence de marketing web et de sites web', h1b: 'pour les',
+    words: ['PME', 'restaurants', 'cliniques', 'entrepreneurs', 'professionnels', 'courtiers'],
+    sub: 'Conception de sites web, SEO, Google Ads, médias sociaux et notre propre CRM : une seule équipe de marketing web à Montréal qui transforme vos visiteurs en clients, depuis 2015.',
     trust: ['Depuis 2015', 'Bilingue FR/EN', 'Notre propre CRM'],
     faq: [
       ['Quels services offre Marketing Websites?', 'Conception web, commerce électronique, développement d’applications web, SEO, Google Ads, gestion des médias sociaux, analyse de site web et notre propre CRM, Utilmo, pour les entreprises de toutes les industries.'],
@@ -61,17 +61,17 @@ export const home = (lang) => {
           </div>
           <ul class="hero__trust">${c.trust.map((x) => html`<li>${icon('check')}${x}</li>`)}</ul>
         </div>
-        <div class="hero__visual">${heroScene(lang)}</div>
+        <div class="hero__visual">${heroStudio(lang)}</div>
       </div>
       <a class="scroll-cue" href="#svc-h" aria-label="${fr ? 'Défiler vers les services' : 'Scroll to services'}"><span></span></a>
     </section>
 
     ${logoStrip(lang)}
-    ${servicesBento(lang)}
+    ${servicesIndex(lang)}
     ${statsBand(lang)}
-    ${systemSection(lang)}
+    ${workShowcase(lang)}
     ${industriesCarousel(lang)}
-    ${portfolioCarousel(lang)}
+    ${systemSection(lang)}
     ${utilmoSpotlight(lang)}
     ${testimonialsMarquee(lang)}
 

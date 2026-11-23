@@ -224,7 +224,7 @@
         const r = sc.getBoundingClientRect();
         const prog = Math.max(-1, Math.min(1, (r.top + r.height / 2 - innerHeight / 2) / innerHeight));
         const stage = $('.scene__stage', sc);
-        if (stage) stage.style.transform = `rotateX(${(6 - py * 8 + prog * 6).toFixed(2)}deg) rotateY(${(-14 + px * 16).toFixed(2)}deg)`;
+        if (stage) stage.style.transform = `rotateX(${(4 - py * 6 + prog * 5).toFixed(2)}deg) rotateY(${(-9 + px * 12).toFixed(2)}deg)`;
       });
     };
     const ask = () => { if (!raf2) raf2 = requestAnimationFrame(paint); };
@@ -250,6 +250,29 @@
       b.addEventListener('pointermove', (e) => { const r = b.getBoundingClientRect(); b.style.setProperty('--bx', ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + 'px'); b.style.setProperty('--by', ((e.clientY - r.top - r.height / 2) * 0.25).toFixed(1) + 'px'); });
       b.addEventListener('pointerleave', () => { b.style.setProperty('--bx', '0px'); b.style.setProperty('--by', '0px'); });
     });
+  }
+
+  /* ── v8: services index — floating preview follows the pointer ──────── */
+  const sx = $('[data-sx]');
+  if (sx && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
+    const fl = $('.sx__float', sx); const fim = fl && $('img', fl);
+    let x = 0, y = 0, cx = 0, cy = 0, on = false, rafS = 0;
+    const loop = () => {
+      cx += (x - cx) * 0.16; cy += (y - cy) * 0.16;
+      fl.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px) translate(-50%, -50%) rotate(${((x - cx) * 0.02).toFixed(2)}deg)`;
+      rafS = (on || Math.abs(x - cx) > 0.5 || Math.abs(y - cy) > 0.5) ? requestAnimationFrame(loop) : 0;
+    };
+    if (fl && fim) {
+      sx.addEventListener('pointermove', (e) => { x = e.clientX + 200; y = e.clientY; }, { passive: true });
+      $$('[data-sx-img]', sx).forEach((a) => {
+        a.addEventListener('pointerenter', (e) => {
+          const th = $('.sx__thumb', a); if (th) fim.src = th.currentSrc || th.src;
+          if (!on && !fl.classList.contains('is-on')) { x = cx = e.clientX + 200; y = cy = e.clientY; }
+          on = true; fl.classList.add('is-on'); if (!rafS) rafS = requestAnimationFrame(loop);
+        });
+        a.addEventListener('pointerleave', () => { on = false; fl.classList.remove('is-on'); });
+      });
+    }
   }
 
   /* ── v7: scroll progress bar ─────────────────────────────────────────── */

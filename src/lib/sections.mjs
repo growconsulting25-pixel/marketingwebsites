@@ -181,3 +181,132 @@ export const testimonialsMarquee = (lang) => {
     ${fr ? html`<p class="quotes__note muted small center">Témoignages traduits de l’anglais.</p>` : ''}
   </section>`;
 };
+
+// ── v8 (agency look) ────────────────────────────────────────────────────────
+// Hero: a website being designed in an editor on a laptop, with the mobile
+// version on a phone. Built in HTML so it stays sharp at every size.
+export const heroStudio = (lang) => {
+  const fr = lang === 'fr';
+  const L = fr
+    ? { brand: 'Rénovation Laurier', nav: ['Services', 'Projets', 'Avis', 'Contact'], cta: 'Soumission gratuite', kick: 'Rénovation · Montréal', h: 'Votre maison, rénovée sans surprise.', cards: ['Cuisines', 'Salles de bain', 'Sous-sols'], layers: ['En-tête', 'Bannière', 'Services', 'Avis', 'Formulaire'], pages: 'Pages', page: ['Accueil', 'Services', 'Projets'], publish: 'Publier', colors: 'Couleurs', type: 'Typographie', seo: 'SEO et vitesse', checks: ['Titre et méta', 'H1 unique', 'Bilingue FR/EN'], tag: 'Bannière · 1440 × 720' }
+    : { brand: 'Laurier Renovation', nav: ['Services', 'Projects', 'Reviews', 'Contact'], cta: 'Free quote', kick: 'Renovation · Montreal', h: 'Your home, renovated with no surprises.', cards: ['Kitchens', 'Bathrooms', 'Basements'], layers: ['Header', 'Hero', 'Services', 'Reviews', 'Form'], pages: 'Pages', page: ['Home', 'Services', 'Projects'], publish: 'Publish', colors: 'Colours', type: 'Typography', seo: 'SEO & speed', checks: ['Title & meta', 'Single H1', 'Bilingual FR/EN'], tag: 'Hero · 1440 × 720' };
+  const cardImgs = ['industries/services-pro-560', 'photos/convertir-560', 'industries/construction-560'];
+  return html`
+  <div class="scene studio" data-scene role="img" aria-label="${fr ? 'Création d’un site web : la maquette d’un site de rénovation est conçue dans un éditeur sur ordinateur, avec sa version mobile sur un téléphone' : 'Website creation: a renovation company site being designed in an editor on a laptop, with its mobile version on a phone'}">
+    <div class="scene__stage">
+      <div class="scene__laptop layer" style="--z: 0px">
+        <div class="lap">
+          <div class="lap__screen">
+            <div class="ed">
+              <div class="ed__bar"><span class="ed__dots"><i></i><i></i><i></i></span><span class="ed__file">${L.brand} — ${L.page[0]}</span><span class="ed__who"><i>MW</i><i>JD</i></span><span class="ed__pub">${L.publish}</span></div>
+              <div class="ed__body">
+                <div class="ed__side">
+                  <small>${L.pages}</small>
+                  ${L.page.map((p, i) => html`<span class="ed__row${i === 0 ? ' is-on' : ''}">${p}</span>`)}
+                  <small>Layers</small>
+                  ${L.layers.map((p, i) => html`<span class="ed__row${i < 3 ? ` ed__layer ed__layer--${i + 1}` : ''}">▢ ${p}</span>`)}
+                </div>
+                <div class="ed__canvas">
+                  <div class="site site--build">
+                    <div class="site__nav bl bl--1"><b>${L.brand}</b>${L.nav.map((n) => html`<span>${n}</span>`)}<em>${L.cta}</em></div>
+                    <div class="site__hero bl bl--2">
+                      <img src="/assets/img/industries/construction-560.webp" alt="" width="560" height="371" fetchpriority="high">
+                      <div class="site__hero-txt"><small>${L.kick}</small><strong>${L.h}</strong><span class="site__cta">${L.cta}</span></div>
+                    </div>
+                    <div class="site__cards bl bl--3">${L.cards.map((c, i) => html`<span><img src="/assets/img/${cardImgs[i]}.webp" alt="" width="560" height="373" loading="lazy"><b>${c}</b></span>`)}</div>
+                  </div>
+                  <span class="ed__sel" aria-hidden="true"><i></i><i></i><i></i><i></i><b>${L.tag}</b></span>
+                  <span class="ed__cursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 2l16 9-7 2-3 7z" fill="currentColor" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg><b>Marketing Websites</b></span>
+                </div>
+                <div class="ed__props">
+                  <small>${L.colors}</small>
+                  <span class="ed__sw"><i style="background:#1B2C57"></i><i style="background:#C02942"></i><i style="background:#F4F4F6"></i><i style="background:#191B28"></i></span>
+                  <small>${L.type}</small>
+                  <span class="ed__font">Montserrat <b>800</b></span>
+                  <small>${L.seo}</small>
+                  ${L.checks.map((c) => html`<span class="ed__ok">${icon('check')}${c}</span>`)}
+                  <span class="ed__score"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15.5" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="3"/><circle class="ed__ring" cx="18" cy="18" r="15.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" pathLength="100" stroke-dasharray="98 100" transform="rotate(-90 18 18)"/></svg><b>98</b><span>PageSpeed</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lap__base"></div>
+        </div>
+      </div>
+      <div class="scene__phone layer" style="--z: 90px">
+        <div class="phone">
+          <i class="phone__island"></i>
+          <div class="phone__screen phone__screen--site">
+            <span class="ms__nav"><b>${L.brand}</b><i></i></span>
+            <span class="ms__hero"><img src="/assets/img/industries/construction-560.webp" alt="" width="560" height="371" loading="lazy"><b>${L.h}</b></span>
+            <span class="ms__btn">${L.cta}</span>
+            <span class="ms__cards">${L.cards.slice(0, 2).map((c, i) => html`<span><img src="/assets/img/${cardImgs[i]}.webp" alt="" width="560" height="373" loading="lazy"><b>${c}</b></span>`)}</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene__toast layer" style="--z: 150px">${icon('globe')}<span><b>${fr ? 'Site en ligne' : 'Site is live'}</b>renovationlaurier.ca</span></div>
+    </div>
+  </div>`;
+};
+
+// Services as an agency-style index: big numbered rows, image on hover.
+const svcImg = { 'svc-web': '/assets/img/work/renovationaf-com.webp', 'svc-ecom': '/assets/img/work/daboomdesserts-com.webp', 'svc-app': '/assets/img/work/powerupleads-com-2.webp', 'svc-seo': '/assets/img/photos/attirer-720.webp', 'svc-ads': '/assets/img/industries/paiement-560.webp', 'svc-social': '/assets/img/industries/commerce-560.webp', 'svc-analytics': '/assets/img/photos/mesurer-720.webp', 'svc-crm': '/assets/img/photos/suivre-720.webp' };
+const svcOrder = ['svc-web', 'svc-seo', 'svc-ads', 'svc-social', 'svc-ecom', 'svc-app', 'svc-analytics', 'svc-crm'];
+export const servicesIndex = (lang) => {
+  const fr = lang === 'fr';
+  const t = ui[lang];
+  const list = svcOrder.map((id) => services.find((s) => s.id === id)).filter(Boolean);
+  return html`
+  <section class="section sx" aria-labelledby="svc-h" data-sx>
+    <div class="container">
+      <div class="sx__head">
+        ${sectionHead({ eyebrow: fr ? 'Nos services' : 'Our services', title: fr ? html`Agence marketing web : <em>tout sous un même toit</em>` : html`Website marketing services, <em>all under one roof</em>`, lead: fr ? 'Conception de sites web, référencement, publicité et suivi des clients : une seule équipe à Montréal, en français et en anglais.' : 'Website design, SEO, advertising and lead follow-up: one Montreal team, in English and French.', id: 'svc-h' })}
+        <a class="btn btn--ghost reveal" href="${link('services', lang)}">${t.nav.svcHub} ${icon('arrow')}</a>
+      </div>
+      <ol class="sx__list">
+        ${list.map((s, i) => html`
+          <li class="sx__item reveal" data-delay="${(i % 4) + 1}">
+            <a href="${link(s.id, lang)}" data-sx-img="${svcImg[s.id]}">
+              <span class="sx__n tabnum">${String(i + 1).padStart(2, '0')}</span>
+              <span class="sx__t">${s[lang].nav}</span>
+              <span class="sx__d">${s[lang].short}</span>
+              <span class="sx__go">${icon('arrow')}</span>
+              <img class="sx__thumb" src="${svcImg[s.id]}" alt="" loading="lazy" decoding="async" width="560" height="350">
+            </a>
+          </li>`)}
+      </ol>
+    </div>
+    <div class="sx__float" aria-hidden="true"><img alt="" width="560" height="350"></div>
+  </section>`;
+};
+
+// Selected work: large real project mockups on the brand blue.
+export const workShowcase = (lang) => {
+  const fr = lang === 'fr';
+  const picks = [
+    ['renovationaf-com', fr ? 'Construction et rénovation' : 'Construction & renovation'],
+    ['daboomdesserts-com', fr ? 'Restauration · E-commerce' : 'Food · E-commerce'],
+    ['irsa-laser', fr ? 'Clinique esthétique' : 'Aesthetic clinic'],
+    ['eliterealestategroup', fr ? 'Immobilier' : 'Real estate'],
+    ['thermoshades-com', fr ? 'Commerce de détail' : 'Retail'],
+    ['mynotaire-ca', fr ? 'Services professionnels' : 'Professional services'],
+  ].map(([slug, cat]) => ({ ...portfolio.find((p) => p.slug === slug), cat })).filter((p) => p.slug);
+  return html`
+  <section class="section sec-blue wk" aria-labelledby="wk-h">
+    <div class="container">
+      <div class="split-head">
+        ${sectionHead({ eyebrow: fr ? 'Réalisations' : 'Selected work', title: fr ? html`Des sites conçus <em>pour vendre</em>` : html`Websites designed <em>to sell</em>`, lead: fr ? `Plus de ${portfolio.length} sites livrés à Montréal, pour des entreprises de toutes les industries.` : `More than ${portfolio.length} websites delivered in Montreal, for businesses in every industry.`, id: 'wk-h' })}
+        <a class="btn btn--light reveal" href="${link('work', lang)}">${fr ? `Voir les ${portfolio.length} projets` : `See all ${portfolio.length} projects`} ${icon('arrow')}</a>
+      </div>
+      <ul class="wk__grid">
+        ${picks.map((p, i) => html`
+          <li class="wk__item reveal" data-delay="${(i % 2) + 1}">
+            <a href="${link('work', lang)}" data-tilt-card>
+              <span class="wk__media"><img src="${p.image}" alt="${fr ? 'Site web de' : 'Website for'} ${esc(p.name)}" width="${p.w}" height="${p.h}" loading="lazy" decoding="async"></span>
+              <span class="wk__cap"><b>${p.name}</b><small>${p.cat}</small><span class="wk__go">${icon('arrow')}</span></span>
+            </a>
+          </li>`)}
+      </ul>
+    </div>
+  </section>`;
+};
