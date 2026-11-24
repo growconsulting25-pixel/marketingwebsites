@@ -293,6 +293,16 @@
     paintT();
   }
 
+  /* ── v10: hero background video (pause button, reduced motion) ─────── */
+  const hv = $('[data-hero-video]');
+  const hb = $('[data-video-toggle]');
+  if (hv) {
+    const setBtn = () => { if (!hb) return; const paused = hv.paused; hb.classList.toggle('is-paused', paused); hb.setAttribute('aria-label', paused ? hb.dataset.labelPlay : hb.dataset.labelPause); };
+    if (reduced) { hv.removeAttribute('autoplay'); hv.pause(); }
+    hv.addEventListener('play', setBtn); hv.addEventListener('pause', setBtn); setBtn();
+    hb?.addEventListener('click', () => { if (hv.paused) hv.play().catch(() => {}); else hv.pause(); });
+  }
+
   /* ── v7: scroll progress bar ─────────────────────────────────────────── */
   const bar = $('[data-progress]');
   if (bar) {

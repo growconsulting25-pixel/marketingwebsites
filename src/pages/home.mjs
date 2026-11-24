@@ -3,7 +3,7 @@ import { ui } from '../content/ui.mjs';
 import { html, icon } from '../lib/html.mjs';
 import { organizationSchema } from '../lib/layout.mjs';
 import { logoStrip, utilmoSpotlight, processSteps, latestResources, finalCta, sectionHead, arrowBtn } from '../lib/components.mjs';
-import { heroStudio, rotator, servicesIndex, industriesCarousel, statsBand, workShowcase, testimonialsMarquee, teamSection } from '../lib/sections.mjs';
+import { rotator, servicesIndex, industriesCarousel, statsBand, workShowcase, testimonialsMarquee } from '../lib/sections.mjs';
 
 export const copy = {
   en: {
@@ -48,8 +48,13 @@ export const home = (lang) => {
     id: 'home', lang, title: c.title, description: c.description, bodyClass: 'page-home',
     schema: [organizationSchema(), { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Marketing Websites', url: 'https://marketingwebsites.ca/', inLanguage: `${lang}-CA` }],
     body: html`
-    <section class="hero hero--v4" aria-labelledby="hero-h">
-      <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
+    <section class="hero hero--v4 hero--video" aria-labelledby="hero-h">
+      <div class="hero__media" aria-hidden="true">
+        <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="/assets/img/mw-hero-poster.webp" data-hero-video>
+          <source src="/assets/video/mw-hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <button class="hero__vbtn" type="button" data-video-toggle aria-label="${fr ? 'Mettre la vidéo en pause' : 'Pause the video'}" data-label-play="${fr ? 'Lire la vidéo' : 'Play the video'}" data-label-pause="${fr ? 'Mettre la vidéo en pause' : 'Pause the video'}"><span class="hero__vbtn-pause" aria-hidden="true"></span></button>
       <div class="container hero__in">
         <div class="hero__copy">
           <p class="eyebrow">${c.eyebrow}</p>
@@ -61,7 +66,6 @@ export const home = (lang) => {
           </div>
           <ul class="hero__trust">${c.trust.map((x) => html`<li>${icon('check')}${x}</li>`)}</ul>
         </div>
-        <div class="hero__visual">${heroStudio(lang)}</div>
       </div>
       <a class="scroll-cue" href="#svc-h" aria-label="${fr ? 'Défiler vers les services' : 'Scroll to services'}"><span></span></a>
     </section>
@@ -71,7 +75,6 @@ export const home = (lang) => {
     ${statsBand(lang)}
     ${workShowcase(lang)}
     ${industriesCarousel(lang)}
-    ${teamSection(lang)}
     ${utilmoSpotlight(lang)}
     ${testimonialsMarquee(lang)}
 

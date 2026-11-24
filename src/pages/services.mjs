@@ -5,7 +5,7 @@ import { industries } from '../content/industries.mjs';
 import { html, icon, esc } from '../lib/html.mjs';
 import { breadcrumbs, abs } from '../lib/layout.mjs';
 import { sectionHead, arrowBtn, finalCta, utilmoMock, processSteps } from '../lib/components.mjs';
-import { servicesBento, portfolioCarousel, testimonialsMarquee, industriesCarousel } from '../lib/sections.mjs';
+import { servicesBento, portfolioCarousel, testimonialsMarquee, industriesCarousel, heroStudio } from '../lib/sections.mjs';
 
 const label = { fr: 'Services', en: 'Services' };
 
@@ -51,7 +51,7 @@ export const servicePage = (s, lang) => {
   const t = ui[lang];
   const isDemo = s.cta === 'demo';
   const crumbs = [{ id: 'services', label: label[lang] }, { id: s.id, label: c.nav }];
-  const visual = s.id === 'svc-crm' ? utilmoMock(lang) : photoScene(`industries/${s.photo}`, c.included, c.h1);
+  const visual = s.id === 'svc-crm' ? utilmoMock(lang) : s.id === 'svc-web' ? heroStudio(lang) : photoScene(`industries/${s.photo}`, c.included, c.h1);
   const fitInd = industries.filter((d) => d.services.includes(s.id));
   return {
     id: s.id, lang, title: c.title, description: c.description, breadcrumbs: crumbs,

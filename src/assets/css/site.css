@@ -1816,3 +1816,23 @@ img.avatar { width: 48px; height: 48px; object-fit: cover; padding: 0; }
 .tq-rating__n { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; color: var(--text); }
 .tq-rating .quote__stars { display: inline-flex; gap: 2px; color: #F5B301; }
 .tq-rating .quote__stars .i { width: 18px; height: 18px; fill: currentColor; }
+
+/* ═══ v10 — homepage video banner ═══ */
+.hero--video { min-height: min(88vh, 860px); display: flex; align-items: center; background: #191B28; }
+.hero--video::after { display: none; }
+.hero__media { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.hero__video { width: 100%; height: 100%; object-fit: cover; }
+.hero__media::after { content: ""; position: absolute; inset: 0; background:
+  linear-gradient(90deg, rgb(25 27 40 / .92) 0%, rgb(25 27 40 / .78) 42%, rgb(25 27 40 / .35) 75%, rgb(25 27 40 / .25) 100%),
+  linear-gradient(0deg, rgb(25 27 40 / .7), transparent 35%); }
+.hero--video .hero__in { width: 100%; grid-template-columns: 1fr !important; }
+.hero--video .hero__copy { max-width: 760px; }
+.hero--video h1 { font-size: clamp(2.4rem, 1.3rem + 3.4vw, 4.6rem); }
+.hero__vbtn { position: absolute; right: clamp(16px, 4vw, 40px); bottom: clamp(16px, 4vw, 40px); z-index: 2; width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgb(255 255 255 / .4); background: rgb(25 27 40 / .5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #fff; cursor: pointer; display: grid; place-items: center; }
+.hero__vbtn:hover { background: var(--accent); border-color: var(--accent); }
+.hero__vbtn-pause { width: 12px; height: 14px; border-inline: 4px solid currentColor; }
+.hero__vbtn.is-paused .hero__vbtn-pause { width: 0; height: 0; border-inline: 0; border-style: solid; border-width: 8px 0 8px 13px; border-color: transparent transparent transparent currentColor; margin-left: 3px; }
+.hero--video .scroll-cue { left: 50%; }
+@media (max-width: 639px) { .hero--video { min-height: 0; } .hero__media::after { background: linear-gradient(0deg, rgb(25 27 40 / .88), rgb(25 27 40 / .62)); } }
+/* Studio scene inside service page heroes */
+.page-hero .studio { margin-right: 0; }
