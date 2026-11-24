@@ -255,7 +255,7 @@
   /* ── v8: services index — floating preview follows the pointer ──────── */
   const sx = $('[data-sx]');
   if (sx && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
-    const fl = $('.sx__float', sx); const fim = fl && $('img', fl);
+    const fl = $('.sx__float', sx); const fim = fl;
     let x = 0, y = 0, cx = 0, cy = 0, on = false, rafS = 0;
     const loop = () => {
       cx += (x - cx) * 0.16; cy += (y - cy) * 0.16;
@@ -266,7 +266,7 @@
       sx.addEventListener('pointermove', (e) => { x = e.clientX + 200; y = e.clientY; }, { passive: true });
       $$('[data-sx-img]', sx).forEach((a) => {
         a.addEventListener('pointerenter', (e) => {
-          const th = $('.sx__thumb', a); if (th) fim.src = th.currentSrc || th.src;
+          const pv = $('.sx__prev', a); if (pv) fl.innerHTML = pv.innerHTML;
           if (!on && !fl.classList.contains('is-on')) { x = cx = e.clientX + 200; y = cy = e.clientY; }
           on = true; fl.classList.add('is-on'); if (!rafS) rafS = requestAnimationFrame(loop);
         });

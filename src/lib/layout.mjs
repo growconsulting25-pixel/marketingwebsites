@@ -10,7 +10,7 @@ const telHref = (p) => 'tel:' + p.replace(/[^\d+]/g, '');
 
 const logo = (lang, variant = '') => html`
   <a class="logo" href="${link('home', lang)}" aria-label="Agence Marketing Websites — ${lang === 'fr' ? 'accueil' : 'home'}">
-    <img src="/assets/img/logo${variant}.svg" alt="Agence Marketing Websites" width="1573" height="1574">
+    <img src="/assets/img/logo${variant}.png" alt="Agence Marketing Websites" width="900" height="326">
   </a>`;
 
 const mega = (items, lang, hubId, hubLabel, lead) => html`
@@ -177,7 +177,7 @@ export const organizationSchema = () => {
     name: config.name,
     legalName: config.legalName,
     url: abs('/'),
-    logo: abs('/assets/img/logo.svg'),
+    logo: abs('/assets/img/icon-512.png'),
     image: abs('/assets/img/og.png'),
     foundingDate: String(config.foundingYear),
     areaServed: [{ '@type': 'City', name: 'Montréal' }, { '@type': 'AdministrativeArea', name: 'Québec' }],
@@ -227,7 +227,8 @@ ${page.noindex ? '' : `<link rel="alternate" hreflang="en-CA" href="${abs(routes
 <meta property="og:image" content="${abs('/assets/img/og.png')}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#191B28">
-<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${assets.css}">

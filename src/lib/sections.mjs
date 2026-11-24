@@ -220,7 +220,7 @@ export const heroStudio = (lang) => {
                 </div>
                 <div class="ed__props">
                   <small>${L.colors}</small>
-                  <span class="ed__sw"><i style="background:#1B2C57"></i><i style="background:#C02942"></i><i style="background:#F4F4F6"></i><i style="background:#191B28"></i></span>
+                  <span class="ed__sw"><i style="background:#191B28"></i><i style="background:#C02942"></i><i style="background:#FFFFFF"></i><i style="background:#222222"></i></span>
                   <small>${L.type}</small>
                   <span class="ed__font">Montserrat <b>800</b></span>
                   <small>${L.seo}</small>
@@ -249,9 +249,29 @@ export const heroStudio = (lang) => {
   </div>`;
 };
 
-// Services as an agency-style index: big numbered rows, image on hover.
-const svcImg = { 'svc-web': '/assets/img/work/renovationaf-com.webp', 'svc-ecom': '/assets/img/work/daboomdesserts-com.webp', 'svc-app': '/assets/img/work/powerupleads-com-2.webp', 'svc-seo': '/assets/img/photos/attirer-720.webp', 'svc-ads': '/assets/img/industries/paiement-560.webp', 'svc-social': '/assets/img/industries/commerce-560.webp', 'svc-analytics': '/assets/img/photos/mesurer-720.webp', 'svc-crm': '/assets/img/photos/suivre-720.webp' };
+// Services as an agency-style index: big numbered rows, a preview that shows
+// the actual deliverable (Google results, an ad, a post, a dashboard…) on hover.
 const svcOrder = ['svc-web', 'svc-seo', 'svc-ads', 'svc-social', 'svc-ecom', 'svc-app', 'svc-analytics', 'svc-crm'];
+const serp = (fr, ad) => {
+  const q = ad ? (fr ? 'rénovation cuisine montréal' : 'kitchen renovation montreal') : (fr ? 'conception site web montréal' : 'web design montreal');
+  const top = ad
+    ? html`<span class="pv-res pv-res--top"><i class="pv-tag">${fr ? 'Commandité' : 'Sponsored'}</i><small>renovationlaurier.ca</small><b>${fr ? 'Rénovation de cuisine — Soumission gratuite en 24 h' : 'Kitchen Renovation — Free Quote in 24 h'}</b><span>${fr ? 'Plus de 300 projets à Montréal. Garantie 5 ans.' : '300+ projects in Montreal. 5-year warranty.'}</span><span class="pv-ext"><em>${icon('phone')} ${fr ? 'Appeler' : 'Call'}</em><em>${fr ? 'Soumission' : 'Get a quote'}</em></span></span>`
+    : html`<span class="pv-res pv-res--top"><i class="pv-rank">#1</i><small>votreentreprise.ca › services</small><b>${fr ? 'Conception de sites web à Montréal | Votre Entreprise' : 'Web Design Montreal | Your Business'}</b><span class="pv-stars">${[1, 2, 3, 4, 5].map(() => icon('star'))}<u>4,9 (127)</u></span></span>`;
+  return html`<span class="pv pv-serp"><span class="pv-q">${icon('search')}<span>${q}</span></span>${top}<span class="pv-res pv-res--dim"><small>concurrent.ca</small><b>&nbsp;</b><span>&nbsp;</span></span><span class="pv-res pv-res--dim"><small>annuaire.com</small><b>&nbsp;</b></span></span>`;
+};
+const preview = (id, fr) => {
+  switch (id) {
+    case 'svc-web': return html`<span class="pv pv-img"><img src="/assets/img/work/renovationaf-com.webp" alt="" width="800" height="498" loading="lazy"></span>`;
+    case 'svc-ecom': return html`<span class="pv pv-img"><img src="/assets/img/work/daboomdesserts-com.webp" alt="" width="800" height="498" loading="lazy"></span>`;
+    case 'svc-app': return html`<span class="pv pv-img"><img src="/assets/img/work/powerupleads-com-2.webp" alt="" width="800" height="498" loading="lazy"></span>`;
+    case 'svc-seo': return serp(fr, false);
+    case 'svc-ads': return serp(fr, true);
+    case 'svc-social': return html`<span class="pv pv-social"><span class="pv-post"><span class="pv-post__head"><i>P</i><b>portovino.mtl</b><small>${fr ? 'Commandité' : 'Sponsored'}</small></span><img src="/assets/img/industries/restaurant-560.webp" alt="" width="560" height="373" loading="lazy"><span class="pv-post__cta">${fr ? 'Réserver une table' : 'Book a table'} ${icon('arrow')}</span><span class="pv-post__foot">♥ 1 284 · 96 ${fr ? 'commentaires' : 'comments'}</span></span><span class="pv-social__side"><b>+38 %</b><small>${fr ? 'réservations en ligne' : 'online bookings'}</small><b>4,2 k</b><small>${fr ? 'abonnés gagnés' : 'new followers'}</small></span></span>`;
+    case 'svc-analytics': return html`<span class="pv pv-an"><span class="pv-an__top"><span><small>${fr ? 'Visiteurs (30 j)' : 'Visitors (30 d)'}</small><b>12 480</b><em>+18 %</em></span><span><small>${fr ? 'Demandes' : 'Leads'}</small><b>214</b><em>+27 %</em></span></span><svg viewBox="0 0 200 60" aria-hidden="true"><path d="M0 50 L20 44 L40 46 L60 34 L80 38 L100 26 L120 30 L140 18 L160 20 L180 10 L200 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="pv-an__bars">${[['Google', 46], ['Google Ads', 28], ['Social', 16], ['Direct', 10]].map(([n, v]) => html`<span><i>${n}</i><u style="--v:${v}%"></u><b>${v} %</b></span>`)}</span></span>`;
+    case 'svc-crm': return html`<span class="pv pv-crm"><span class="pv-crm__head"><b>Utilmo</b><small>${fr ? 'Nouveaux prospects' : 'New leads'}</small></span>${[[fr ? 'Julie M.' : 'Julie M.', 'Google Ads', fr ? 'Nouveau' : 'New', 'is-new'], ['Marc T.', fr ? 'Site web' : 'Website', fr ? 'Relance aujourd’hui' : 'Follow up today', 'is-due'], ['Sofia R.', 'Facebook', fr ? 'Rendez-vous' : 'Meeting booked', 'is-ok']].map(([n, src, st, c]) => html`<span class="pv-lead"><i>${n[0]}</i><span><b>${n}</b><small>${src}</small></span><em class="${c}">${st}</em></span>`)}</span>`;
+    default: return '';
+  }
+};
 export const servicesIndex = (lang) => {
   const fr = lang === 'fr';
   const t = ui[lang];
@@ -266,17 +286,18 @@ export const servicesIndex = (lang) => {
       <ol class="sx__list">
         ${list.map((s, i) => html`
           <li class="sx__item reveal" data-delay="${(i % 4) + 1}">
-            <a href="${link(s.id, lang)}" data-sx-img="${svcImg[s.id]}">
+            <a href="${link(s.id, lang)}" data-sx-img>
               <span class="sx__n tabnum">${String(i + 1).padStart(2, '0')}</span>
               <span class="sx__t">${s[lang].nav}</span>
               <span class="sx__d">${s[lang].short}</span>
               <span class="sx__go">${icon('arrow')}</span>
-              <img class="sx__thumb" src="${svcImg[s.id]}" alt="" loading="lazy" decoding="async" width="560" height="350">
+              <span class="sx__thumb" aria-hidden="true">${icon(s.icon)}</span>
+              <span class="sx__prev" aria-hidden="true">${preview(s.id, fr)}</span>
             </a>
           </li>`)}
       </ol>
     </div>
-    <div class="sx__float" aria-hidden="true"><img alt="" width="560" height="350"></div>
+    <div class="sx__float" aria-hidden="true"></div>
   </section>`;
 };
 
@@ -324,7 +345,7 @@ export const teamSection = (lang) => {
       <div class="team2__media reveal" data-todo="${fr ? 'Remplacer par une vraie photo de l’équipe' : 'Replace with a real team photo'}">
         <figure class="team2__main" data-tilt-card><img src="/assets/img/photos/equipe.webp" alt="${fr ? 'L’équipe de Marketing Websites au travail' : 'The Marketing Websites team at work'}" width="1600" height="625" loading="lazy" decoding="async"></figure>
         <figure class="team2__sub"><img src="/assets/img/industries/equipe-travail-560.webp" alt="" width="560" height="373" loading="lazy" decoding="async"></figure>
-        <div class="team2__ring" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ringp" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0"/></defs><text><textPath href="#ringp">${ring}${ring}</textPath></text></svg><span>MW</span></div>
+        <div class="team2__ring" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ringp" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0"/></defs><text><textPath href="#ringp">${ring}${ring}</textPath></text></svg><img src="/assets/img/logo-mark-white.png" alt="" width="256" height="256"></div>
         <div class="team2__card"><span class="team2__faces">${testimonialsData.slice(0, 4).map((t) => html`<img src="${t.photo}" alt="" width="40" height="40" loading="lazy">`)}</span><span><span class="quote__stars" aria-hidden="true">${[1, 2, 3, 4, 5].map(() => icon('star'))}</span><b>${fr ? `${testimonialsData.length} clients témoignent` : `${testimonialsData.length} client reviews`}</b></span></div>
       </div>
       <div class="team2__copy">
