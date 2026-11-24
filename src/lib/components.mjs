@@ -422,18 +422,16 @@ export const leadForm = (lang, type = 'consultation', { idPrefix = 'f' } = {}) =
     fields.push(field(p('crm'), f.currentCrm, html`<input id="${p('crm')}" name="current_crm" type="text" aria-describedby="${p('crm')}-err">`, { lang }));
   } else {
     fields.push(field(p('role'), f.role, select(p('role'), 'role', f.roles, lang, true), { required: true, lang }));
+    const svcOpts = [...['svc-web', 'svc-seo', 'svc-ads', 'svc-social', 'svc-ecom', 'svc-app', 'svc-analytics', 'svc-crm'].map((id) => getService(id)[lang].nav), lang === 'fr' ? 'Plusieurs services / je ne sais pas encore' : 'Several services / not sure yet'];
+    fields.push(field(p('services'), f.services, select(p('services'), 'services', svcOpts, lang, false), { lang }));
   }
   if (type === 'quote') {
-    const svcOpts = lang === 'fr'
-      ? ['Site web de courtier', 'Intégration Centris', 'Site d’équipe ou d’agence', 'Publicité Google / Meta', 'SEO', 'CRM Utilmo', 'Site web PME', 'Commerce électronique', 'Développement sur mesure']
-      : ['Broker website', 'Centris integration', 'Team or agency site', 'Google / Meta ads', 'SEO', 'Utilmo CRM', 'SME website', 'Ecommerce', 'Custom development'];
-    fields.push(html`<fieldset class="field field--full"><legend>${f.services}</legend><div class="checks">${svcOpts.map((o, i) => html`<label class="check"><input type="checkbox" name="services" value="${o}"><span>${o}</span></label>`)}</div></fieldset>`);
     fields.push(field(p('budget'), f.budget, select(p('budget'), 'budget', f.budgets, lang, true), { required: true, lang }));
     fields.push(field(p('timeline'), f.timeline, select(p('timeline'), 'timeline', f.timelines, lang, true), { required: true, lang }));
-    fields.push(field(p('site'), f.site, html`<input id="${p('site')}" name="current_site" type="url" inputmode="url" placeholder="https://" aria-describedby="${p('site')}-err">`, { lang, full: true }));
+    fields.push(field(p('site'), f.site, html`<input id="${p('site')}" name="current_site" type="url" inputmode="url" placeholder="https://" aria-describedby="${p('site')}-err">`, { lang }));
   }
   if (type !== 'demo') {
-    fields.push(field(p('goal'), f.goal, html`<textarea id="${p('goal')}" name="goal" rows="3" placeholder="${esc(f.goalPh)}" aria-describedby="${p('goal')}-err"></textarea>`, { lang, full: true }));
+    fields.push(field(p('goal'), f.goal, html`<textarea id="${p('goal')}" name="goal" rows="2" placeholder="${esc(f.goalPh)}" aria-describedby="${p('goal')}-err"></textarea>`, { lang, full: true }));
   }
   return html`
   <form class="lead-form" method="post" action="${config.formEndpoint || link('thanks', lang)}" data-lead-form="${type}" novalidate>

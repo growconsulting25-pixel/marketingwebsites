@@ -1790,3 +1790,12 @@ img.avatar { width: 48px; height: 48px; object-fit: cover; padding: 0; }
 .logo img { height: 52px; }
 .site-header.is-scrolled .logo img { height: 44px; }
 @media (max-width: 639px) { .logo img { height: 40px; } }
+/* v9c — wider, shorter lead form */
+@media (min-width: 1024px) { .final-cta__in { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); align-items: center; } }
+@media (min-width: 640px) { .lead-form .form-grid { grid-template-columns: 1fr 1fr; column-gap: var(--s-5); } }
+@media (min-width: 1200px) { .final-cta .lead-form .form-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.lead-form textarea { min-height: 0; }
+@media (min-width: 1200px) { .final-cta .lead-form .field:has(input[type="url"]) { grid-column: span 2; } }
+@media (min-width: 1024px) { .form-page { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); } }
+@media (min-width: 1200px) { .form-page .lead-form .form-grid { grid-template-columns: 1fr 1fr 1fr; } .form-page .lead-form .field:has(input[type="url"]) { grid-column: span 2; } }
+@media (min-width: 1200px) { .lead-form[data-lead-form="consultation"] .field:has(select[name="services"]) { grid-column: span 2; } }
