@@ -1852,3 +1852,9 @@ img.avatar { width: 48px; height: 48px; object-fit: cover; padding: 0; }
 .carousel__track { cursor: grab; }
 .carousel__track.is-drag { cursor: grabbing; user-select: none; }
 .carousel__track.is-drag a { pointer-events: none; }
+/* Web design page: studio scene at the same size it had on the homepage */
+@media (min-width: 1024px) {
+  .page-hero--split .page-hero__in:has(.studio) { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: var(--s-6); }
+  .page-hero .studio { margin-right: calc(-1 * min(6vw, 90px)); padding: 4% 4% 10% 0; }
+  .page-hero:has(.studio) h1 { font-size: clamp(2.3rem, 1.2rem + 2.7vw, 3.9rem); }
+}
