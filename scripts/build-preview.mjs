@@ -18,7 +18,7 @@ const rel = (fromFile, url) => {
 for (const f of files) {
   if (f.endsWith('.html')) {
     let h = await readFile(f, 'utf8');
-    h = h.replace(/(href|src|action)="(\/(?!\/)[^"]*)"/g, (_, a, u) => `${a}="${rel(f, u)}"`);
+    h = h.replace(/(href|src|action|poster)="(\/(?!\/)[^"]*)"/g, (_, a, u) => `${a}="${rel(f, u)}"`);
     h = h.replace(/srcset="([^"]*)"/g, (_, v) => `srcset="${v.split(',').map((part) => part.trim().replace(/^\/(?!\/)\S+/, (u) => rel(f, u))).join(', ')}"`);
     h = h.replace(/"thanks":"(\/[^"]*)"/, (_, u) => `"thanks":"${rel(f, u)}"`);
     h = h.replace(/(<script defer src="[^"?]+)\?v=[^"]*"/, '$1"').replace(/(<link rel="stylesheet" href="[^"?]+)\?v=[^"]*"/, '$1"');
