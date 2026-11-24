@@ -1836,3 +1836,19 @@ img.avatar { width: 48px; height: 48px; object-fit: cover; padding: 0; }
 @media (max-width: 639px) { .hero--video { min-height: 0; } .hero__media::after { background: linear-gradient(0deg, rgb(25 27 40 / .88), rgb(25 27 40 / .62)); } }
 /* Studio scene inside service page heroes */
 .page-hero .studio { margin-right: 0; }
+
+/* ═══ v11 — dark menu bar like the current site (white text, red active line) ═══ */
+.site-header, .site-header.is-scrolled, body.menu-open .site-header { background: #191B28; box-shadow: 0 1px 0 rgb(255 255 255 / .08); }
+.header-phone, .header-phone .i { color: #fff; }
+.lang { color: #fff; border-color: rgb(255 255 255 / .35); background: transparent; }
+.lang:hover { border-color: #fff; }
+.menu-btn { background: #fff; color: #191B28; }
+@media (min-width: 1024px) {
+  .site-header .nav__link, .site-header .sub-toggle { color: #fff; }
+  .site-header .nav__link:hover { color: #fff; }
+  .site-header .sub { color: var(--text); }
+}
+/* carousels: drag with the mouse */
+.carousel__track { cursor: grab; }
+.carousel__track.is-drag { cursor: grabbing; user-select: none; }
+.carousel__track.is-drag a { pointer-events: none; }

@@ -192,6 +192,39 @@
     btns('[data-carousel-prev]').forEach((b) => b.addEventListener('click', () => go(-1)));
     btns('[data-carousel-next]').forEach((b) => b.addEventListener('click', () => go(1)));
     track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
+    // Drag with the mouse (touch and trackpads already scroll natively).
+    let drag = null;
+    track.addEventListener('dragstart', (e) => e.preventDefault());
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button) return;
+      drag = { x: e.clientX, l: track.scrollLeft, moved: false };
+      track.style.scrollSnapType = 'none'; track.style.scrollBehavior = 'auto'; track.classList.add('is-drag');
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x; if (Math.abs(dx) > 5) drag.moved = true;
+      track.scrollLeft = drag.l - dx;
+    });
+    window.addEventListener('pointerup', () => {
+      if (!drag) return;
+      if (drag.moved) track.dataset.dragged = '1';
+      drag = null; track.classList.remove('is-drag'); track.style.scrollSnapType = ''; track.style.scrollBehavior = '';
+      setTimeout(() => { delete track.dataset.dragged; }, 50);
+    });
+    track.addEventListener('click', (e) => { if (track.dataset.dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+    // Optional: the row slides sideways while the page scrolls past it.
+    let inView = false;
+    if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => { inView = en.isIntersecting; }).observe(root);
+    if (root.hasAttribute('data-scroll-link') && !reduced) {
+      let lastY = window.scrollY; let snapT;
+      window.addEventListener('scroll', () => {
+        const dy = window.scrollY - lastY; lastY = window.scrollY;
+        if (!inView || drag) return;
+        track.style.scrollSnapType = 'none'; track.style.scrollBehavior = 'auto';
+        track.scrollLeft += dy * 0.9;
+        clearTimeout(snapT); snapT = setTimeout(() => { track.style.scrollSnapType = ''; track.style.scrollBehavior = ''; }, 250);
+      }, { passive: true });
+    }
     // Slow autoplay; stops on hover, focus or touch, and never with reduced motion.
     if (reduced) return;
     let paused = false; let visible = false;

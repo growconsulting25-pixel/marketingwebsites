@@ -32,7 +32,7 @@ const header = (page) => {
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
   <header class="site-header" data-header>
     <div class="container site-header__in">
-      ${logo(lang)}
+      ${logo(lang, '-white')}
       <nav class="nav" id="site-nav" aria-label="${fr ? 'Navigation principale' : 'Main navigation'}" data-nav>
         <ul class="nav__list">
           <li class="nav__item has-sub">

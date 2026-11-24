@@ -5,6 +5,7 @@ import { articles, hubs } from '../content/articles.mjs';
 import { portfolio } from '../content/portfolio.mjs';
 import { html, icon, animWords, todo } from '../lib/html.mjs';
 import { breadcrumbs, abs, organizationSchema } from '../lib/layout.mjs';
+import { teamSection } from '../lib/sections.mjs';
 import { sectionHead, arrowBtn, faqBlock, faqSchema, finalCta, portfolioGrid, articleCard, leadForm, processSteps, testimonials } from '../lib/components.mjs';
 
 export const simpleHero = (lang, id, crumbs, eyebrow, h1, lead, extra = '') => html`
@@ -136,6 +137,7 @@ export const about = (lang) => {
         </div>
       </div>
     </section>
+    ${teamSection(lang)}
     <section class="section">
       <div class="container process-wrap">
         ${sectionHead({ eyebrow: fr ? 'Processus' : 'Process', title: fr ? 'Comment nous travaillons' : 'How we work' })}
