@@ -4,3 +4,11 @@ old_path,new_path,type,reason
 # Example:
 # /services-immobilier/,/immobilier/,301,old real estate landing page
 # /en/real-estate-websites/,/en/real-estate/broker-websites/,301,renamed slug
+# --- Added Nov 24, 2026 from the live sitemaps + Ahrefs backlinks ---
+/custom-website/,/web-design/,301,old page (4 referring domains) already redirected on the live site
+/portfolio-archive/*,/portfolio/,301,110 old project pages (EN) -> portfolio
+/fr/portfolio-archive/*,/fr/portfolio/,301,old project pages (FR) -> portfolio
+/kc-section/*,/about-us/,301,page-builder fragments indexed by mistake
+/category/*,/blog/,301,blog categories (until the posts are migrated)
+/fr/category/*,/fr/blogue/,301,blog categories FR
+/fr,/fr/,301,no trailing slash (5 referring domains)

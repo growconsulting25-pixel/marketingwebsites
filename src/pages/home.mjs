@@ -7,7 +7,7 @@ import { rotator, servicesIndex, industriesCarousel, statsBand, workShowcase, te
 
 export const copy = {
   en: {
-    title: 'Web Design & Online Marketing Services | Marketing Websites',
+    title: 'Web Design & Digital Marketing Agency Montreal | Marketing Websites',
     description: 'Web design and online marketing services in Montreal: websites, SEO, Google Ads, social media, e-commerce and the Utilmo CRM for businesses in every industry.',
     eyebrow: 'Full-service digital agency · Montreal',
     h1a: 'Web design & digital marketing agency', h1b: 'for',
@@ -23,7 +23,7 @@ export const copy = {
     ],
   },
   fr: {
-    title: 'Agence Marketing Web à Montréal | Marketing Websites',
+    title: 'Agence Web Montréal | Agence Marketing Web | Marketing Websites',
     description: 'Agence de marketing web à Montréal : conception de sites web, référencement SEO, Google Ads, médias sociaux, e-commerce et CRM Utilmo pour les entreprises de toutes les industries.',
     eyebrow: 'Agence numérique à service complet · Montréal',
     h1a: 'Agence de marketing web et de sites web', h1b: 'pour les',
