@@ -53,7 +53,7 @@ export const home = (lang) => {
       <div class="container hero__in">
         <div class="hero__copy">
           <p class="eyebrow">${c.eyebrow}</p>
-          <h1 id="hero-h"><span class="h1a">${c.h1a}</span> <span class="h1b">${c.h1b} ${rotator(c.words)}</span></h1>
+          <h1 id="hero-h"><span class="h1a">${c.h1a} <span class="h1for">${c.h1b}</span></span> <span class="h1b">${rotator(c.words)}</span></h1>
           <p class="lead hero__sub">${c.sub}</p>
           <div class="btn-row">
             ${arrowBtn(link('quote', lang), t.cta.quote, { cls: 'btn--lg btn--magnetic', cta: 'quote' })}
