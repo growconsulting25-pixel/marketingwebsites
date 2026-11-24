@@ -95,6 +95,7 @@ const footer = (page) => {
               <li><a href="${link('work', lang)}">${t.nav.work}</a></li>
               <li><a href="${link('about', lang)}">${t.nav.about}</a></li>
               <li><a href="${link('blog', lang)}">${t.nav.blog}</a></li>
+              <li><a href="${link('faq', lang)}">${lang === 'fr' ? 'Questions fréquentes' : 'FAQ'}</a></li>
               <li><a href="${link('demo', lang)}">${t.cta.demo}</a></li>
               <li><a href="${link('contact', lang)}">Contact</a></li>
             </ul>

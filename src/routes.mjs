@@ -41,6 +41,7 @@ export const routes = {
   demo:          { en: '/utilmo-demo/',                       fr: '/fr/demo-utilmo/' },                           // new
   thanks:        { en: '/thank-you/',                         fr: '/fr/merci/' },
   privacy:       { en: '/privacy-policy/',                    fr: '/fr/politique-de-confidentialite/' },
+  faq:           { en: '/faq/',                               fr: '/fr/questions-frequentes/' },                  // new
 };
 
 export const link = (id, lang) => {

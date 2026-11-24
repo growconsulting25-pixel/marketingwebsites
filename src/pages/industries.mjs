@@ -4,7 +4,7 @@ import { industries } from '../content/industries.mjs';
 import { getService } from '../content/services.mjs';
 import { html, icon } from '../lib/html.mjs';
 import { breadcrumbs, abs } from '../lib/layout.mjs';
-import { sectionHead, arrowBtn, faqBlock, faqSchema, finalCta, heroMock } from '../lib/components.mjs';
+import { sectionHead, arrowBtn, finalCta, heroMock } from '../lib/components.mjs';
 import { portfolioCarousel, testimonialsMarquee, servicesBento } from '../lib/sections.mjs';
 import { photoScene } from './services.mjs';
 
@@ -53,7 +53,6 @@ export const industryPage = (d, lang) => {
     id: d.id, lang, title: c.title, description: c.description, breadcrumbs: crumbs,
     schema: [
       { '@context': 'https://schema.org', '@type': 'Service', name: c.h1, serviceType: c.nav, description: c.description, provider: { '@id': abs('/#organization') }, audience: { '@type': 'BusinessAudience', name: c.nav }, areaServed: { '@type': 'AdministrativeArea', name: 'Québec' }, url: abs(link(d.id, lang)) },
-      faqSchema(c.faq),
     ],
     body: html`
     <section class="page-hero page-hero--v4 page-hero--split">
@@ -89,12 +88,6 @@ export const industryPage = (d, lang) => {
     ${portfolioCarousel(lang, { ids: d.work, title: fr ? html`Projets <em>${c.nav.toLowerCase()}</em>` : html`${c.nav} <em>projects</em>` })}
     ${testimonialsMarquee(lang)}
 
-    <section class="section section--sand" aria-labelledby="faq-h">
-      <div class="container faq-wrap">
-        ${sectionHead({ eyebrow: 'FAQ', title: fr ? 'Questions fréquentes' : 'Frequently asked questions', id: 'faq-h' })}
-        ${faqBlock(lang, c.faq)}
-      </div>
-    </section>
 
     ${finalCta(lang, { type: 'quote', title: fr ? html`Parlons de votre <em>projet</em>` : html`Let’s talk about your <em>project</em>` })}`,
   };

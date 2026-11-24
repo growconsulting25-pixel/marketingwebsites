@@ -2,10 +2,10 @@ import { link } from '../routes.mjs';
 import { ui } from '../content/ui.mjs';
 import { html, icon } from '../lib/html.mjs';
 import { organizationSchema } from '../lib/layout.mjs';
-import { logoStrip, utilmoSpotlight, processSteps, latestResources, finalCta, sectionHead, arrowBtn, faqBlock, faqSchema } from '../lib/components.mjs';
+import { logoStrip, utilmoSpotlight, processSteps, latestResources, finalCta, sectionHead, arrowBtn } from '../lib/components.mjs';
 import { heroStudio, rotator, servicesIndex, industriesCarousel, statsBand, workShowcase, testimonialsMarquee, teamSection } from '../lib/sections.mjs';
 
-const copy = {
+export const copy = {
   en: {
     title: 'Web Design & Online Marketing Services | Marketing Websites',
     description: 'Web design and online marketing services in Montreal: websites, SEO, Google Ads, social media, e-commerce and the Utilmo CRM for businesses in every industry.',
@@ -46,7 +46,7 @@ export const home = (lang) => {
   const fr = lang === 'fr';
   return {
     id: 'home', lang, title: c.title, description: c.description, bodyClass: 'page-home',
-    schema: [organizationSchema(), { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Marketing Websites', url: 'https://marketingwebsites.ca/', inLanguage: `${lang}-CA` }, faqSchema(c.faq)],
+    schema: [organizationSchema(), { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Marketing Websites', url: 'https://marketingwebsites.ca/', inLanguage: `${lang}-CA` }],
     body: html`
     <section class="hero hero--v4" aria-labelledby="hero-h">
       <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -84,12 +84,6 @@ export const home = (lang) => {
       </div>
     </section>
 
-    <section class="section section--sand" aria-labelledby="faq-h">
-      <div class="container faq-wrap">
-        ${sectionHead({ eyebrow: 'FAQ', title: fr ? 'Questions fréquentes' : 'Frequently asked questions', id: 'faq-h' })}
-        ${faqBlock(lang, c.faq)}
-      </div>
-    </section>
 
     <section class="section" aria-labelledby="res-h">
       <div class="container">

@@ -4,7 +4,7 @@ import { services, getService } from '../content/services.mjs';
 import { industries } from '../content/industries.mjs';
 import { html, icon, esc } from '../lib/html.mjs';
 import { breadcrumbs, abs } from '../lib/layout.mjs';
-import { sectionHead, arrowBtn, faqBlock, faqSchema, finalCta, utilmoMock, processSteps } from '../lib/components.mjs';
+import { sectionHead, arrowBtn, finalCta, utilmoMock, processSteps } from '../lib/components.mjs';
 import { servicesBento, portfolioCarousel, testimonialsMarquee, industriesCarousel } from '../lib/sections.mjs';
 
 const label = { fr: 'Services', en: 'Services' };
@@ -58,7 +58,6 @@ export const servicePage = (s, lang) => {
     stickyCta: isDemo ? { id: 'demo', label: fr ? 'Démo' : 'Demo', cta: 'demo' } : undefined,
     schema: [
       { '@context': 'https://schema.org', '@type': 'Service', name: c.h1, serviceType: c.nav, description: c.description, provider: { '@id': abs('/#organization') }, areaServed: [{ '@type': 'City', name: 'Montréal' }, { '@type': 'AdministrativeArea', name: 'Québec' }], url: abs(link(s.id, lang)) },
-      faqSchema(c.faq),
     ],
     body: html`
     <section class="page-hero page-hero--v4 page-hero--split">
@@ -107,12 +106,6 @@ export const servicePage = (s, lang) => {
 
     ${testimonialsMarquee(lang)}
 
-    <section class="section section--sand" aria-labelledby="faq-h">
-      <div class="container faq-wrap">
-        ${sectionHead({ eyebrow: 'FAQ', title: fr ? 'Questions fréquentes' : 'Frequently asked questions', id: 'faq-h' })}
-        ${faqBlock(lang, c.faq)}
-      </div>
-    </section>
 
     ${isDemo ? finalCta(lang, { type: 'demo', title: fr ? 'Voyez Utilmo avec vos propres cas' : 'See Utilmo with your own cases', lead: fr ? 'Une démo de 30 minutes, en français ou en anglais.' : 'A 30-minute demo, in French or English.' }) : finalCta(lang, { type: 'quote', title: fr ? html`Prêt à démarrer votre projet de <em>${c.nav.toLowerCase()}</em>?` : html`Ready to start your <em>${c.nav.toLowerCase()}</em> project?` })}`,
   };

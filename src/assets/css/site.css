@@ -1799,3 +1799,15 @@ img.avatar { width: 48px; height: 48px; object-fit: cover; padding: 0; }
 @media (min-width: 1024px) { .form-page { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); } }
 @media (min-width: 1200px) { .form-page .lead-form .form-grid { grid-template-columns: 1fr 1fr 1fr; } .form-page .lead-form .field:has(input[type="url"]) { grid-column: span 2; } }
 @media (min-width: 1200px) { .lead-form[data-lead-form="consultation"] .field:has(select[name="services"]) { grid-column: span 2; } }
+/* FAQ page */
+.faqp__in { display: grid; gap: var(--s-7); }
+@media (min-width: 1024px) { .faqp__in { grid-template-columns: 260px minmax(0, 1fr); align-items: start; } .faqp__nav { position: sticky; top: 110px; } }
+.faqp__nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+@media (min-width: 1024px) { .faqp__nav ul { flex-direction: column; flex-wrap: nowrap; gap: 2px; } }
+.faqp__nav a { display: inline-flex; min-height: 40px; align-items: center; padding: 0 14px; border-radius: 999px; border: 1px solid var(--border); color: var(--text); text-decoration: none; font-weight: 600; font-size: var(--fs-small); }
+@media (min-width: 1024px) { .faqp__nav a { border: 0; border-radius: 10px; width: 100%; } }
+.faqp__nav a:hover { background: var(--surface-2); color: var(--accent); }
+.faqp__groups { display: grid; gap: var(--s-8); }
+.faqp__group { scroll-margin-top: 110px; }
+.faqp__h { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--s-3); margin-bottom: var(--s-4); }
+.faqp__h h2 { font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); margin: 0; }

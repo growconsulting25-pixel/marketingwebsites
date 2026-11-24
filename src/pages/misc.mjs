@@ -7,7 +7,7 @@ import { html, icon, animWords, todo } from '../lib/html.mjs';
 import { breadcrumbs, abs, organizationSchema } from '../lib/layout.mjs';
 import { sectionHead, arrowBtn, faqBlock, faqSchema, finalCta, portfolioGrid, articleCard, leadForm, processSteps, testimonials } from '../lib/components.mjs';
 
-const simpleHero = (lang, id, crumbs, eyebrow, h1, lead, extra = '') => html`
+export const simpleHero = (lang, id, crumbs, eyebrow, h1, lead, extra = '') => html`
   <section class="page-hero">
     <div class="container narrow">
       ${crumbs ? breadcrumbs({ lang, id, breadcrumbs: crumbs }) : ''}
