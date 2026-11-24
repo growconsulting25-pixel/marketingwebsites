@@ -48,6 +48,9 @@ export default {
 
   // Proof strip. null = shown as a placeholder until verified.
   // Only publish numbers you can back up (see strategy §6).
+  // Google Business Profile rating (update when it changes).
+  reviews: { rating: 4.9, count: 39, source: 'Google' },
+
   proof: {
     brokerSites: null,   // number of broker sites launched, e.g. 350
     googleRating: null,  // e.g. 4.9

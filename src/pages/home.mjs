@@ -13,7 +13,7 @@ export const copy = {
     h1a: 'Web design & digital marketing agency', h1b: 'for',
     words: ['businesses', 'restaurants', 'clinics', 'contractors', 'professionals', 'realtors'],
     sub: 'Website design, SEO, Google Ads, social media and our own CRM: website marketing services from one Montreal team that turns visitors into customers, since 2015.',
-    trust: ['Since 2015', 'Bilingual FR/EN', 'Our own CRM'],
+    trust: ['4.9 ★ · 39 Google reviews', 'Since 2015', 'Bilingual FR/EN'],
     faq: [
       ['What services does Marketing Websites offer?', 'Web design, e-commerce, web application development, SEO, Google Ads, social media management, website analytics and our own CRM, Utilmo — for businesses in every industry.'],
       ['Do you only work with Montreal businesses?', 'We are based in Montreal and work with businesses across Quebec and Canada, in French and English.'],
@@ -29,7 +29,7 @@ export const copy = {
     h1a: 'Agence de marketing web et de sites web', h1b: 'pour les',
     words: ['PME', 'restaurants', 'cliniques', 'entrepreneurs', 'professionnels', 'courtiers'],
     sub: 'Conception de sites web, SEO, Google Ads, médias sociaux et notre propre CRM : une seule équipe de marketing web à Montréal qui transforme vos visiteurs en clients, depuis 2015.',
-    trust: ['Depuis 2015', 'Bilingue FR/EN', 'Notre propre CRM'],
+    trust: ['4,9 ★ · 39 avis Google', 'Depuis 2015', 'Bilingue FR/EN'],
     faq: [
       ['Quels services offre Marketing Websites?', 'Conception web, commerce électronique, développement d’applications web, SEO, Google Ads, gestion des médias sociaux, analyse de site web et notre propre CRM, Utilmo, pour les entreprises de toutes les industries.'],
       ['Travaillez-vous seulement avec des entreprises de Montréal?', 'Nous sommes basés à Montréal et accompagnons des entreprises partout au Québec et au Canada, en français et en anglais.'],
