@@ -114,7 +114,7 @@ export const industriesCarousel = (lang) => {
         </div>
       </div>
     </div>
-    <div class="carousel carousel--bleed" data-carousel data-carousel-external data-scroll-link>
+    <div class="carousel carousel--bleed" data-carousel data-carousel-external data-wheel>
       <ul class="carousel__track ind-track" id="ind-track" tabindex="0" aria-label="${fr ? 'Industries — faites défiler' : 'Industries — scroll'}" data-carousel-track>
         ${industries.map((d) => html`
           <li class="ind-card" data-slide>

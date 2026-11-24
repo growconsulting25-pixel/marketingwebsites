@@ -215,15 +215,16 @@
     // Optional: the row slides sideways while the page scrolls past it.
     let inView = false;
     if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => { inView = en.isIntersecting; }).observe(root);
-    if (root.hasAttribute('data-scroll-link') && !reduced) {
-      let lastY = window.scrollY; let snapT;
-      window.addEventListener('scroll', () => {
-        const dy = window.scrollY - lastY; lastY = window.scrollY;
-        if (!inView || drag) return;
+    // Mouse wheel over the row scrolls it sideways (only while the pointer is on it).
+    if (root.hasAttribute('data-wheel')) {
+      let snapT;
+      track.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // trackpad side-swipe: native
+        e.preventDefault();
         track.style.scrollSnapType = 'none'; track.style.scrollBehavior = 'auto';
-        track.scrollLeft += dy * 0.9;
-        clearTimeout(snapT); snapT = setTimeout(() => { track.style.scrollSnapType = ''; track.style.scrollBehavior = ''; }, 250);
-      }, { passive: true });
+        track.scrollLeft += e.deltaY;
+        clearTimeout(snapT); snapT = setTimeout(() => { track.style.scrollSnapType = ''; track.style.scrollBehavior = ''; }, 200);
+      }, { passive: false });
     }
     // Slow autoplay; stops on hover, focus or touch, and never with reduced motion.
     if (reduced) return;
