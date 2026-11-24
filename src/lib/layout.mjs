@@ -6,6 +6,8 @@ import { industries } from '../content/industries.mjs';
 import { html, esc, icon } from './html.mjs';
 
 export const abs = (path) => config.siteUrl.replace(/\/$/, '') + path;
+// Language switch: the twin page, or the other language's blog/home when a page exists in one language only.
+const otherHref = (id, other) => routes[id][other] || link(String(id).startsWith('post:') ? 'blog' : 'home', other);
 const telHref = (p) => 'tel:' + p.replace(/[^\d+]/g, '');
 
 const logo = (lang, variant = '') => html`
@@ -52,7 +54,7 @@ const header = (page) => {
       </nav>
       <div class="site-header__tools">
         ${config.phone ? html`<a class="header-phone" href="${telHref(config.phone)}" data-track="click_phone">${icon('phone')}<span>${config.phone.replace('+1 ', '')}</span></a>` : ''}
-        <a class="lang" href="${routes[id][other]}" hreflang="${other}-CA" lang="${other}" aria-label="${t.langSwitch.aria}"><span aria-hidden="true">${t.langSwitch.short}</span></a>
+        <a class="lang" href="${otherHref(id, other)}" hreflang="${other}-CA" lang="${other}" aria-label="${t.langSwitch.aria}"><span aria-hidden="true">${t.langSwitch.short}</span></a>
         <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu>
           <span class="menu-btn__open">${icon('menu')}<span class="sr-only">${t.nav.menu}</span></span>
           <span class="menu-btn__close">${icon('close')}<span class="sr-only">${t.nav.close}</span></span>
@@ -111,7 +113,7 @@ const footer = (page) => {
               ${config.phone ? html`<br><a href="${telHref(config.phone)}" itemprop="telephone" data-track="click_phone">${config.phone}</a>` : ''}
               ${config.email ? html`<br><a href="mailto:${config.email}" itemprop="email" data-track="click_email">${config.email}</a>` : ''}
             </address>
-            <a class="lang-footer" href="${routes[id][other]}" hreflang="${other}-CA" lang="${other}">${icon('globe')} ${t.langSwitch.label}</a>
+            <a class="lang-footer" href="${otherHref(id, other)}" hreflang="${other}-CA" lang="${other}">${icon('globe')} ${t.langSwitch.label}</a>
           </div>
         </div>
       </div>
@@ -215,7 +217,7 @@ export const layout = (page, assets) => {
 <meta name="description" content="${esc(page.description)}">
 ${page.noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name="robots" content="index, follow, max-image-preview:large">'}
 <link rel="canonical" href="${url}">
-${page.noindex ? '' : `<link rel="alternate" hreflang="en-CA" href="${abs(routes[id].en)}">
+${page.noindex || !(routes[id].en && routes[id].fr) ? '' : `<link rel="alternate" hreflang="en-CA" href="${abs(routes[id].en)}">
 <link rel="alternate" hreflang="fr-CA" href="${abs(routes[id].fr)}">
 <link rel="alternate" hreflang="x-default" href="${abs(routes[id].en)}">`}
 <meta property="og:type" content="${page.ogType || 'website'}">
@@ -225,7 +227,7 @@ ${page.noindex ? '' : `<link rel="alternate" hreflang="en-CA" href="${abs(routes
 <meta property="og:title" content="${esc(page.title)}">
 <meta property="og:description" content="${esc(page.description)}">
 <meta property="og:url" content="${url}">
-<meta property="og:image" content="${abs('/assets/img/og.png')}">
+<meta property="og:image" content="${page.ogImage || abs('/assets/img/og.png')}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#191B28">
 <link rel="icon" href="/assets/img/favicon-48.png" type="image/png" sizes="48x48">

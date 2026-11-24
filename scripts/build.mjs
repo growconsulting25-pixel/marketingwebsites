@@ -48,7 +48,7 @@ const write = async (urlPath, content) => {
 
 const built = [];
 for (const builder of pageBuilders) {
-  for (const lang of ['fr', 'en']) {
+  for (const lang of builder.langs || ['fr', 'en']) {
     const before = todos.length;
     setCurrentPage('');
     const page = builder(lang);
@@ -68,10 +68,11 @@ const today = new Date().toISOString().slice(0, 10);
 for (const lang of ['fr', 'en']) {
   const urls = built.filter((b) => b.page.lang === lang && !b.page.noindex).map((b) => {
     const r = routes[b.page.id];
-    return `  <url><loc>${abs(r[lang])}</loc><lastmod>${today}</lastmod>
+    const alts = r.fr && r.en ? `
     <xhtml:link rel="alternate" hreflang="fr-CA" href="${abs(r.fr)}"/>
     <xhtml:link rel="alternate" hreflang="en-CA" href="${abs(r.en)}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(r.fr)}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(r.en)}"/>` : '';
+    return `  <url><loc>${abs(r[lang])}</loc><lastmod>${today}</lastmod>${alts}
   </url>`;
   });
   await write(`/sitemap-${lang}.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);

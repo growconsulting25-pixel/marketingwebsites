@@ -337,6 +337,26 @@
     hb?.addEventListener('click', () => { if (hv.paused) hv.play().catch(() => {}); else hv.pause(); });
   }
 
+  /* ── Blog archive: topic filter + load more (without JS, every post is listed) ── */
+  const arch = $('[data-archive]');
+  if (arch) {
+    const cards = $$('.lp-card', arch); const more = $('[data-load-more]', arch);
+    let topic = 'all'; let shown = 12;
+    const apply = () => {
+      const match = cards.filter((c) => topic === 'all' || c.dataset.topics.split(' ').includes(topic));
+      cards.forEach((c) => { c.hidden = true; });
+      match.slice(0, shown).forEach((c) => { c.hidden = false; c.classList.add('is-in'); });
+      if (more) more.hidden = match.length <= shown;
+    };
+    $$('[data-filter]', arch).forEach((b) => b.addEventListener('click', () => {
+      topic = b.dataset.filter; shown = 12;
+      $$('[data-filter]', arch).forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', String(on)); });
+      apply();
+    }));
+    more?.addEventListener('click', () => { shown += 12; apply(); });
+    apply();
+  }
+
   /* ── v7: scroll progress bar ─────────────────────────────────────────── */
   const bar = $('[data-progress]');
   if (bar) {

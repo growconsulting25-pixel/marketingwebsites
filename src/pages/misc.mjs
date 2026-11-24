@@ -6,6 +6,7 @@ import { portfolio } from '../content/portfolio.mjs';
 import { html, icon, animWords, todo } from '../lib/html.mjs';
 import { breadcrumbs, abs, organizationSchema } from '../lib/layout.mjs';
 import { teamSection } from '../lib/sections.mjs';
+import { legacyArchive } from './legacy.mjs';
 import { sectionHead, arrowBtn, faqBlock, faqSchema, finalCta, portfolioGrid, articleCard, leadForm, processSteps, testimonials } from '../lib/components.mjs';
 
 export const simpleHero = (lang, id, crumbs, eyebrow, h1, lead, extra = '') => html`
@@ -60,6 +61,7 @@ export const resources = (lang) => {
         })}
       </div>
     </section>
+    ${legacyArchive(lang)}
     ${finalCta(lang)}`,
   };
 };

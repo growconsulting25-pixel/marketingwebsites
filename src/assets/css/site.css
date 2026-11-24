@@ -1858,3 +1858,18 @@ img.avatar { width: 48px; height: 48px; object-fit: cover; padding: 0; }
   .page-hero .studio { margin-right: calc(-1 * min(6vw, 90px)); padding: 4% 4% 10% 0; }
   .page-hero:has(.studio) h1 { font-size: clamp(2.3rem, 1.2rem + 2.7vw, 3.9rem); }
 }
+
+/* ═══ Migrated blog posts + legal pages ═══ */
+.lp-prose img { max-width: 100%; height: auto; border-radius: 14px; margin-block: var(--s-4); }
+.lp-prose iframe { width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; border-radius: 14px; margin-block: var(--s-4); }
+.lp-prose table { width: 100%; border-collapse: collapse; margin-block: var(--s-5); font-size: var(--fs-small); display: block; overflow-x: auto; }
+.lp-prose th, .lp-prose td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+.lp-prose h2 { margin-top: var(--s-7); }
+.lp-prose h3 { margin-top: var(--s-6); }
+.lp-prose a { overflow-wrap: anywhere; }
+.lp-meta { margin-top: var(--s-4); }
+.lp-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--s-6); }
+.lp-filters .tag--btn.is-on { background: #191B28; color: #fff; border-color: #191B28; }
+.lp-card[hidden] { display: none !important; }
+.lp-more-wrap { margin-top: var(--s-7); }
+.lp-card h3 { font-size: 1.15rem; }

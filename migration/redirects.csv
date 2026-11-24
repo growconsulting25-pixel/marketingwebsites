@@ -12,3 +12,24 @@ old_path,new_path,type,reason
 /category/*,/blog/,301,blog categories (until the posts are migrated)
 /fr/category/*,/fr/blogue/,301,blog categories FR
 /fr,/fr/,301,no trailing slash (5 referring domains)
+/blog/page/*,/blog/,301,old WordPress pagination
+/fr/blogue/page/*,/fr/blogue/,301,old WordPress pagination FR
+# --- Old internal URLs found inside migrated posts (resolved through the live site) ---
+/digital-marketing-services/,/#home_serv,301,old URL linked from blog posts
+/digital-marketing-services/ppc-management/,/google-ads-management/,301,old URL linked from blog posts
+/digital-marketing-services/seo/,/seo/,301,old URL linked from blog posts
+/digital-marketing-services/social-media-marketing/,/social-media-marketing/,301,old URL linked from blog posts
+/digital-marketing-services/website-analytics/,/website-analytics/,301,old URL linked from blog posts
+/fr/conception/site-web-pour-courtier-immobilier/,/fr/site-web-pour-courtier-immobilier/,301,old URL linked from blog posts
+/fr/contact/,/fr/contactez-nous/,301,old URL linked from blog posts
+/fr/marketing-numerique/gestion-des-medias-sociaux/,/fr/gestion-des-medias-sociaux/,301,old URL linked from blog posts
+/fr/marketing-numerique/referencement-naturel/,/fr/referencement-naturel/,301,old URL linked from blog posts
+/fr/marketing-numerique/referencement-payant/,/fr/gestion-de-google-ads/,301,old URL linked from blog posts
+/fr/seo/,/fr/referencement-naturel/,301,old URL linked from blog posts
+/fr/web-design/,/fr/conception-web/,301,old URL linked from blog posts
+/real-estate-marketing-strategies-2018/,/real-estate-marketing-strategies-2020/,301,old URL linked from blog posts
+/the-importance-of-mobile-seo-in-2023/,/the-importance-of-mobile-seo/,301,old URL linked from blog posts
+/web-design/app-development/,/app-development/,301,old URL linked from blog posts
+/web-design/custom-website/,/web-design/,301,old URL linked from blog posts
+/web-design/e-commerce/,/e-commerce/,301,old URL linked from blog posts
+/web-design/real-estate-website-design/,/real-estate-website-design/,301,old URL linked from blog posts

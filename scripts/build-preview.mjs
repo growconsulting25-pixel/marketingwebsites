@@ -35,6 +35,22 @@ console.log(`Preview written to ${out} (${files.length} files)`);
 // main.html without its own <html>/<head>/<body> wrapper; host-only files are dropped).
 if (process.argv.includes('--artifact')) {
   const { unlink } = await import('node:fs/promises');
+  // Artifacts cap the number of files: blog images are inlined into the pages
+  // that use them (preview only; the real site keeps them as files).
+  const blogDir = path.join(out, 'assets', 'img', 'blog');
+  const cache = new Map();
+  const dataUri = async (name) => {
+    if (!cache.has(name)) cache.set(name, 'data:image/webp;base64,' + (await readFile(path.join(blogDir, name))).toString('base64'));
+    return cache.get(name);
+  };
+  for (const f of (await walk(out)).filter((x) => x.endsWith('.html'))) {
+    let h = await readFile(f, 'utf8');
+    const names = [...new Set([...h.matchAll(/src="[^"]*assets\/img\/blog\/([^"/]+\.webp)"/g)].map((m) => m[1]))];
+    if (!names.length) continue;
+    for (const n of names) { const uri = await dataUri(n).catch(() => null); if (uri) h = h.split(new RegExp(`src="[^"]*assets/img/blog/${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`, 'g')).join(`src="${uri}"`); }
+    await writeFile(f, h);
+  }
+  await rm(blogDir, { recursive: true, force: true });
   for (const f of ['_redirects', '_headers', 'placeholders.json', 'robots.txt', 'sitemap.xml', 'sitemap-fr.xml', 'sitemap-en.xml']) await unlink(path.join(out, f)).catch(() => {});
   let h = await readFile(path.join(out, 'index.html'), 'utf8');
   h = h.replace(/^<!doctype html>\s*<html[^>]*>\s*<head>\s*/i, '').replace('</head>\n', '').replace('</body>\n</html>', '').replace(/<body class="[^"]*">/, '');
